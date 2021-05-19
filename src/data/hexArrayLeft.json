@@ -1,6 +1,6 @@
  [   { "left": -1, "top": -1 },
     { "left": 1, "top": 0 },
-    { "left": 2, "top": 0 },
+
     { "left": -1, "top": 1 },
     { "left": 1, "top": 2 },
     { "left": -1, "top": 3 },

@@ -28,12 +28,12 @@ const Outerclip = styled.div`
   margin-left: ${(props) => `calc(${props.left} * 38px)`};
   margin-right: ${(props) => `calc(${props.right} * 38px)`};
 
-  &:nth-child(7):hover > div,
-  &:nth-child(9):hover > div,
-  &:nth-child(13):hover > div,
+  &:nth-child(12):hover > div,
+  &:nth-child(8):hover > div,
+  &:nth-child(6):hover > div,
   &:nth-child(39):hover > div,
-  &:nth-child(41):hover > div,
-  &:nth-child(45):hover > div {
+  &:nth-child(37):hover > div,
+  &:nth-child(43):hover > div {
     background: darkcyan;
   }
 `;
@@ -63,11 +63,11 @@ const MenuTitles = styled.h2`
 export const Sidebar = () => {
   const setMenuTitles = (index) => {
     switch (index) {
-      case 6:
+      case 5:
         return 'Top 10';
-      case 8:
+      case 7:
         return 'Newest';
-      case 12:
+      case 11:
         return 'Popular';
       default:
         return '';

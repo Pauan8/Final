@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 
-const Wrapper = styled.div`
+const Wrapper = styled.header`
   position: relative;
   height: 207px;
   z-index: 3;
@@ -39,7 +39,6 @@ const Title = styled.h1`
 
 const SubTitle = styled.h2`
   margin: 0%;
-  font-family: "Raleway", sans-serif;
   color: darkslategrey;
 `;
 

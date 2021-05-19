@@ -49,19 +49,20 @@ font-size: 20px;`
 
 const Button = styled.button`
 z-index: 5;
-background: white;
+background: transparent;
 border: none;
-color: darkslategrey;
-text-shadow: 2px 2px grey;
+border-radius: 10px;
+height: 20%;
+align-self: center;
+color: lightslategray;
+text-shadow: 2px 2px lightgray;
 padding:5px;
 margin: 3px 0;
-box-shadow: 2px 2px 2px 2px gray;
 
 &:hover {
     font-size: 1.1em;
     padding: 3px;
-    color: white;
-    background: darkslategrey;
+    color: darkslategrey;
 }
 `
 let slideNumber = 0;

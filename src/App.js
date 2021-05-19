@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import Home from './Pages/Home'
+import Home from './pages/Home'
+import { Footer } from './components/Footer'
 
 const Wrapper = styled.div`
   min-height: 100vh;
@@ -28,6 +29,7 @@ export const App = () => {
     <Wrapper>
       <Overlay />
       <Home />
+      <Footer />
     </Wrapper>
   )
 }
