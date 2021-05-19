@@ -1,9 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Sidebar } from './components/Sidebar'
-import { Header } from './components/Header'
-import { Slideshow } from './components/Slideshow'
+import Home from './Pages/Home'
 
 const Wrapper = styled.div`
   min-height: 100vh;
@@ -29,9 +27,7 @@ export const App = () => {
   return (
     <Wrapper>
       <Overlay />
-      <Header />
-      <Sidebar />
-      <Slideshow />
+      <Home />
     </Wrapper>
   )
 }
