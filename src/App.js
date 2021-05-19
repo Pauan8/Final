@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { Sidebar } from './components/Sidebar'
 import { Header } from './components/Header'
+import { Slideshow } from './components/Slideshow'
 
 const Wrapper = styled.div`
   min-height: 100vh;
@@ -11,26 +12,26 @@ const Wrapper = styled.div`
   background-size: cover;
   background-position-y: top;
   background-repeat: no-repeat;
-  position: relative;`
+  position: relative;
+`;
 
 const Overlay = styled.div`
   position: absolute;
   top: 0;
-    right: 0;
-bottom: 0;
-left: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: white;
   opacity: 0.9;
-`
+`;
 
 export const App = () => {
   return (
     <Wrapper>
       <Overlay />
-    <div style={{ background: 'black' }}>
       <Header />
       <Sidebar />
-    </div>
+      <Slideshow />
     </Wrapper>
   )
 }
