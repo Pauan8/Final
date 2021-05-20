@@ -25,14 +25,14 @@ const Outerclip = styled.div`
   margin-left: ${(props) => `calc(${props.left} * 38px)`};
   
  
-  &:nth-child(12) > div,
+  &:nth-child(4) > div,
   &:nth-child(8) > div
   {
     background: #D7BD8F;
     color: white;
   }
 
-  &:nth-child(12):hover > div,
+  &:nth-child(4):hover > div,
   &:nth-child(8):hover > div
   {
     background: darkcyan;
@@ -63,9 +63,9 @@ const MenuTitles = styled.h2`
 export const Sidebar = () => {
   const setMenuTitles = (index) => {
     switch (index) {
-      case 7:
+      case 3:
         return 'Sign Up';
-      case 11:
+      case 7:
         return 'Log In';
       default:
         return '';

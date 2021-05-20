@@ -32,10 +32,10 @@ export const App = () => {
       <Switch>
         <Wrapper>
           <Overlay />
-          <Route path="/">
+          <Route path="/" exact>
             <Home />
           </Route>
-          <Route path="/GameList">
+          <Route path="/GameList/:type">
             <GameList />
           </Route>
           <Footer />
