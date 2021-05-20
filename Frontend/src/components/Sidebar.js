@@ -57,7 +57,6 @@ const MenuTitles = styled.h2`
   -webkit-transform: skew(-300deg);
   -ms-transform: skew(-30deg);
   transform: skew(-30deg);
-  font-family: "Raleway", sans-serif;
 `;
 
 export const Sidebar = () => {

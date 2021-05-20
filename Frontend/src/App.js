@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import Home from './pages/Home'
+import GameList from './pages/GameList'
 import { Footer } from './components/Footer'
 
 const Wrapper = styled.div`
@@ -26,10 +28,19 @@ const Overlay = styled.div`
 
 export const App = () => {
   return (
-    <Wrapper>
-      <Overlay />
-      <Home />
-      <Footer />
-    </Wrapper>
+    <Router>
+      <Switch>
+        <Wrapper>
+          <Overlay />
+          <Route path="/">
+            <Home />
+          </Route>
+          <Route path="/GameList">
+            <GameList />
+          </Route>
+          <Footer />
+        </Wrapper>
+      </Switch>
+    </Router>
   )
 }

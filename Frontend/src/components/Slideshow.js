@@ -15,7 +15,7 @@ display: ${(props) => (props.index === props.slideIndex ? 'flex' : 'none')};
 width: 100%;
 
 @media (min-width: 768px) {
-    width: 400px;
+    width: 300px;
 }
 
 @media (min-width: 1024px) {
