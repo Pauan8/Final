@@ -1,14 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import hexArrL from 'data/hexArrayLeft.json'
-import hexArrR from 'data/hexArrayRight.json'
+import hexArr from 'data/hexArrayLeft.json'
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  z-index: 2;
+  z-index: 5;
 `;
 
 const Outerclip = styled.div`
@@ -19,21 +18,23 @@ const Outerclip = styled.div`
   transform: skew(-30deg);
   overflow: hidden;
   display: inline-block;
-  right: ${(props) => (props.align === 'right' ? 0 : '')};
-  left: ${(props) => (props.align === 'left' ? 0 : '')};
-  opacity: 0.9;
+  opacity: 1;
   height: 100px;
   width: 100px;
   top: ${(props) => `calc(${props.up} * 53px)`};
   margin-left: ${(props) => `calc(${props.left} * 38px)`};
-  margin-right: ${(props) => `calc(${props.right} * 38px)`};
+  
+ 
+  &:nth-child(12) > div,
+  &:nth-child(8) > div
+  {
+    background: #D7BD8F;
+    color: white;
+  }
 
   &:nth-child(12):hover > div,
-  &:nth-child(8):hover > div,
-  &:nth-child(6):hover > div,
-  &:nth-child(39):hover > div,
-  &:nth-child(37):hover > div,
-  &:nth-child(43):hover > div {
+  &:nth-child(8):hover > div
+  {
     background: darkcyan;
   }
 `;
@@ -45,15 +46,15 @@ const Innerclip = styled.div`
   transform: skew(50deg);
   overflow: hidden;
   display: inline-block;
-  background: #b9cdd8;
+  background: #B5D5B5;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-right: solid beige;
 `;
 
 const MenuTitles = styled.h2`
   font-size: 16px;
-  color: white;
   -webkit-transform: skew(-300deg);
   -ms-transform: skew(-30deg);
   transform: skew(-30deg);
@@ -62,23 +63,19 @@ const MenuTitles = styled.h2`
 export const Sidebar = () => {
   const setMenuTitles = (index) => {
     switch (index) {
-      case 5:
-        return 'Top 10';
       case 7:
-        return 'Newest';
+        return 'Sign Up';
       case 11:
-        return 'Popular';
+        return 'Log In';
       default:
         return '';
     }
   };
-  const onMapArray = (arr, alignment) => {
+  const onMapArray = (arr) => {
     if (window.innerWidth > 767) {
       return arr.map((hex, i) => (
         <Outerclip
-          align={alignment}
-          left={alignment === 'left' ? hex.left : ''}
-          right={alignment === 'right' ? hex.right : ''}
+          left={hex.left}
           up={hex.top}>
           <Innerclip>
             <MenuTitles>{setMenuTitles(i)}</MenuTitles>
@@ -91,8 +88,7 @@ export const Sidebar = () => {
   };
   return (
     <Wrapper>
-      {onMapArray(hexArrL, 'left')}
-      {onMapArray(hexArrR, 'right')}
+      {onMapArray(hexArr)}
     </Wrapper>
   );
 };

@@ -4,6 +4,7 @@ import styled from 'styled-components/macro'
 import { Sidebar } from '../components/Sidebar'
 import { Header } from '../components/Header'
 import { Slideshow } from '../components/Slideshow'
+import { Searchbar } from '../components/Searchbar'
 import test from '../data/test.json'
 
 const Section = styled.section`
@@ -27,6 +28,7 @@ const Home = () => {
       <Slideshow data={test.categories} />
       <Title>New 2021</Title>
       <Slideshow data={test.categories} />
+      <Searchbar />
     </Section>)
 }
 
