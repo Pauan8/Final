@@ -5,6 +5,9 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Home from './pages/Home'
 import GameList from './pages/GameList'
 import { Footer } from './components/Footer'
+import SingleGame from './pages/SingleGame'
+import Signup from './pages/Signup'
+import Login from './pages/Login'
 
 const Wrapper = styled.div`
   min-height: 100vh;
@@ -32,12 +35,11 @@ export const App = () => {
       <Switch>
         <Wrapper>
           <Overlay />
-          <Route path="/" exact>
-            <Home />
-          </Route>
-          <Route path="/GameList/:type">
-            <GameList />
-          </Route>
+          <Route path="/" exact component={Home} />
+          <Route path="/Login" exact component={Login} />
+          <Route path="/Signup" exact component={Signup} />
+          <Route path="/GameList/:type" component={GameList} />
+          <Route path="/Game/:Id" component={SingleGame} />
           <Footer />
         </Wrapper>
       </Switch>
