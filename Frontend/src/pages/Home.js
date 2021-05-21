@@ -5,7 +5,7 @@ import styled from 'styled-components/macro'
 import { Sidebar } from '../components/Sidebar'
 import { Header } from '../components/Header'
 import { Slideshow } from '../components/Slideshow'
-import { Searchbar } from '../components/Searchbar'
+import { SearchMenu } from '../components/SearchMenu'
 import test2 from '../data/test2.json'
 
 const Section = styled.section`
@@ -24,6 +24,7 @@ const Home = () => {
   return (
     <Section>
       <Header />
+      <SearchMenu />
       <Sidebar />
       <ListLink to="/GameList/Categories">
         <Title>Catgories</Title>
@@ -37,7 +38,6 @@ const Home = () => {
         <Title>New 2021</Title>
       </ListLink>
       <Slideshow data={test2.games} />
-      <Searchbar />
     </Section>)
 }
 

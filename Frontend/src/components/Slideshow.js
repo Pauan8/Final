@@ -17,6 +17,7 @@ z-index: 6;
 const ContainerOuter = styled.div`
 display: ${(props) => (props.index === props.slideIndex ? 'flex' : 'none')};
 width: 100%;
+justify-content: center;
 
 @media (min-width: 768px) {
     width: fit-content;
@@ -64,7 +65,7 @@ export const Slideshow = ({ data }) => {
 
   // used to be able to display 3 slides at a time on bigger screens
   // and 1 at smaller
-  if (window.innerWidth >= 1024) {
+  if (window.innerWidth >= 1024 && window.innerWidth <= 1500) {
     slideNumber = 2;
   } else if (window.innerWidth >= 1500) {
     slideNumber = 3;
