@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import boardGames from './reducers/boardGames';
+import user from './reducers/user';
 
 import Home from './pages/Home'
 import GameList from './pages/GameList'
@@ -38,7 +39,8 @@ min-height: calc(100vh - 100px);
 padding-bottom: 50px;`
 
 const reducer = combineReducers({
-  boardGames: boardGames.reducer
+  boardGames: boardGames.reducer,
+  user: user.reducer
 });
 
 const store = configureStore({ reducer });
@@ -49,13 +51,13 @@ export const App = () => {
       <Router>
         <Switch>
           <Wrapper>
-          <Main>
-            <Overlay />
-            <Route path="/" exact component={Home} />
-            <Route path="/Login" exact component={Login} />
-            <Route path="/Signup" exact component={Signup} />
-            <Route path="/GameList/:type" component={GameList} />
-            <Route path="/Game/:Id" component={SingleGame} />
+            <Main>
+              <Overlay />
+              <Route path="/" exact component={Home} />
+              <Route path="/Login" exact component={Login} />
+              <Route path="/Signup" exact component={Signup} />
+              <Route path="/GameList/:type" component={GameList} />
+              <Route path="/Game/:Id" component={SingleGame} />
             </Main>
             <Footer />
           </Wrapper>

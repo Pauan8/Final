@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 
-import test from '../data/test.json';
+import test from '../../data/test.json';
 import { DropDown } from './DropDown';
-import { TextInput } from './TextInput';
+import { Search } from './Search';
 import { RadioButtons } from './RadioButtons';
 
 const Wrapper = styled.div`
@@ -90,7 +90,7 @@ export const SearchMenu = () => {
     <Wrapper>
       <Form noValidate autoComplete="off">
         <Container>
-          <TextInput />
+          <Search />
         </Container>
         <ExpandButton onClick={() => setExpand(!expand)}> Filter </ExpandButton>
         <Expand expand={expand}>

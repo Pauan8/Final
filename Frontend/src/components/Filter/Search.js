@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export const TextInput = () => {
+export const Search = () => {
   const classes = useStyles();
 
   return (

@@ -5,7 +5,7 @@ import styled from 'styled-components/macro'
 import { Sidebar } from '../components/Sidebar'
 import { Header } from '../components/Header'
 import { Slideshow } from '../components/Slideshow'
-import { SearchMenu } from '../components/SearchMenu'
+import { SearchMenu } from '../components/Filter/SearchMenu'
 
 const Section = styled.section`
 `
