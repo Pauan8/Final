@@ -1,8 +1,12 @@
 import React from 'react'
 import styled from 'styled-components/macro'
+import {useDispatch} from 'react-redux'
 
-import { TextInput } from '../components/Login/TextInput'
-import { PasswordInput } from '../components/Login/PasswordInput'
+import { TextInput } from '../components/LoginSignup/TextInput'
+import { PasswordInput } from '../components/LoginSignup/PasswordInput'
+import { SubmitButton } from '../components/LoginSignup/SubmitButton'
+
+import { addUser } from '../reducers/user'
 
 const Wrapper = styled.div`
 position: relative;
@@ -18,6 +22,7 @@ const Title = styled.h1`
 `
 
 const Signup = () => {
+  const dispatch = useDispatch()
   return (
     <Wrapper>
       <Title>Sign Up</Title>
@@ -25,6 +30,7 @@ const Signup = () => {
       <TextInput title="Surname" helptext="Your last name" />
       <TextInput title="Username" helptext="Choose a username 5-12 chars" />
       <PasswordInput type="Singup" />
+      <SubmitButton btntext="Submit" handleClick={() => dispatch(addUser())} />
     </Wrapper>
   )
 }

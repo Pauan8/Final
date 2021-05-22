@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import { useParams, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { GameCard } from '../components/GameCard';
+import { GameCard } from '../components/Games/GameCard';
 import { fetchSingleGame } from '../reducers/boardGames'
 
 const Wrapper = styled.div`

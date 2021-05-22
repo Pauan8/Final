@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 
-import { TextInput } from '../components/Login/TextInput'
-import { PasswordInput } from '../components/Login/PasswordInput'
+import { TextInput } from '../components/LoginSignup/TextInput'
+import { PasswordInput } from '../components/LoginSignup/PasswordInput'
+import { SubmitButton } from '../components/LoginSignup/SubmitButton'
 
 const Wrapper = styled.div`
 position: relative;
@@ -23,6 +24,7 @@ const Login = () => {
       <Title>Login</Title>
       <TextInput title="Username" helptext="Enter your Username" />
       <PasswordInput type="Login" />
+      <SubmitButton type="button" btntext="Login" handleClick={() => console.log('logged in')} />
     </Wrapper>
   );
 };

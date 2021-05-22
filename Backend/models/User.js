@@ -22,13 +22,15 @@ const ListSchema = mongoose.Schema([
 const UserSchema = mongoose.Schema(
   {
     name: {
-        type: String
+      type: String
     },
     surname: {
-        type: String
+      type: String
     },
     username: {
       type: String,
+      index: true,
+      unique: true,
       required: [true, 'A username is required.'],
       minlength: 5,
       maxlength: 12
@@ -52,10 +54,9 @@ const UserSchema = mongoose.Schema(
         }
       ]
     }
-  
   }
 )
   
 const User = mongoose.model('User', UserSchema);
-
+User.createIndexes();
 module.exports = User;

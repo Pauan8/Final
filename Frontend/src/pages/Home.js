@@ -4,7 +4,7 @@ import styled from 'styled-components/macro'
 
 import { Sidebar } from '../components/Sidebar'
 import { Header } from '../components/Header'
-import { Slideshow } from '../components/Slideshow'
+import { Slideshow } from '../components/Games/Slideshow'
 import { SearchMenu } from '../components/Filter/SearchMenu'
 
 const Section = styled.section`
