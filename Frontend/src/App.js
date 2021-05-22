@@ -1,6 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+
+import boardGames from './reducers/boardGames';
 
 import Home from './pages/Home'
 import GameList from './pages/GameList'
@@ -29,20 +33,34 @@ const Overlay = styled.div`
   opacity: 0.9;
 `;
 
+const Main = styled.div`
+min-height: calc(100vh - 100px);
+padding-bottom: 50px;`
+
+const reducer = combineReducers({
+  boardGames: boardGames.reducer
+});
+
+const store = configureStore({ reducer });
+
 export const App = () => {
   return (
-    <Router>
-      <Switch>
-        <Wrapper>
-          <Overlay />
-          <Route path="/" exact component={Home} />
-          <Route path="/Login" exact component={Login} />
-          <Route path="/Signup" exact component={Signup} />
-          <Route path="/GameList/:type" component={GameList} />
-          <Route path="/Game/:Id" component={SingleGame} />
-          <Footer />
-        </Wrapper>
-      </Switch>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <Switch>
+          <Wrapper>
+          <Main>
+            <Overlay />
+            <Route path="/" exact component={Home} />
+            <Route path="/Login" exact component={Login} />
+            <Route path="/Signup" exact component={Signup} />
+            <Route path="/GameList/:type" component={GameList} />
+            <Route path="/Game/:Id" component={SingleGame} />
+            </Main>
+            <Footer />
+          </Wrapper>
+        </Switch>
+      </Router>
+    </Provider>
   )
 }

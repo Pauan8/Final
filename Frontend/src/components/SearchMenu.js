@@ -55,7 +55,7 @@ const Expand = styled.div`
   border: solid lightgrey 0.1px;
   transition: height 2s ease-out;
 
-  ${ props => props.expand &&`
+  ${(props) => props.expand && `
     height: calc(400px);
     overflow-y: auto;
     visibility: visible;
@@ -64,7 +64,7 @@ const Expand = styled.div`
 @media (min-width: 1024px){
     flex-direction: row;
     
-    ${ props => props.expand &&`
+    ${(props) => props.expand && `
     height:200px;
     `};
 }`
@@ -85,7 +85,7 @@ grid-row-gap: 20px;
     `
 
 export const SearchMenu = () => {
-    const [expand, setExpand] = useState(false)
+  const [expand, setExpand] = useState(false)
   return (
     <Wrapper>
       <Form noValidate autoComplete="off">

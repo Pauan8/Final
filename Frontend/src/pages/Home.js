@@ -6,7 +6,6 @@ import { Sidebar } from '../components/Sidebar'
 import { Header } from '../components/Header'
 import { Slideshow } from '../components/Slideshow'
 import { SearchMenu } from '../components/SearchMenu'
-import test2 from '../data/test2.json'
 
 const Section = styled.section`
 `
@@ -26,18 +25,18 @@ const Home = () => {
       <Header />
       <SearchMenu />
       <Sidebar />
-      <ListLink to="/GameList/Categories">
-        <Title>Catgories</Title>
-      </ListLink>
-      <Slideshow data={test2.games} />
-      <ListLink to="/GameList/TopTen">
+      <ListLink to="/GameList/TopRated">
         <Title>Top Rated</Title>
       </ListLink>
-      <Slideshow data={test2.games} />
+      <Slideshow type="order_by" value="popularity" />
+      <ListLink to="/GameList/Discounted">
+        <Title>Discounted</Title>
+      </ListLink>
+      <Slideshow type="order_by" value="discount" />
       <ListLink to="/GameList/NewReleases">
         <Title>New 2021</Title>
       </ListLink>
-      <Slideshow data={test2.games} />
+      <Slideshow type="year_published" value="2021" />
     </Section>)
 }
 

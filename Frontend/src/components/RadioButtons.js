@@ -6,7 +6,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   checkboxLabel: {
     fontSize: 12
   },

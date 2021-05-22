@@ -71,32 +71,52 @@ export const GameCard = ({
   min_age,
   primary_publisher
 }) => {
+  const checkValue = (value) => {
+    return value || 'unknown';
+  };
+
+  const checkMultiples = (val1, val2) => {
+    return checkValue(val1) !== checkValue(val2)
+      ? `${checkValue(val1)}-${checkValue(val2)}`
+      : checkValue(val1);
+  };
+
   return (
-    <Container>
-      <ContainerInner>
-        <Title>{name}</Title>
-        <ImageContainer>
-          <Image src={image_url} />
-        </ImageContainer>
-        <InfoContainer>
-          <Info>
-            <Bold>Published: </Bold>
-            {year_published} by {primary_publisher.name}
-          </Info>
-          <Info>
-            <Bold>Minimum age: </Bold>
-            {min_age} years
-          </Info>
-          <Info>
-            <Bold>Playtime: </Bold>
-            {min_playtime}-{max_playtime} minutes
-          </Info>
-          <Info>
-            <Bold>Players: </Bold>
-            {min_players}-{max_players} persons
-          </Info>
-        </InfoContainer>
-      </ContainerInner>
-    </Container>
+    <>
+      {name ? (
+        <Container>
+          <ContainerInner>
+            <Title>{name}</Title>
+            <ImageContainer>
+              <Image src={image_url} />
+            </ImageContainer>
+            <InfoContainer>
+              <Info>
+                <Bold>Published (year): </Bold>
+                {checkValue(year_published)}
+              </Info>
+              <Info>
+                <Bold>Publisher: </Bold>
+                {checkValue(primary_publisher ? primary_publisher.name : null)}
+              </Info>
+              <Info>
+                <Bold>Minimum age (years): </Bold>
+                {checkValue(min_age)}
+              </Info>
+              <Info>
+                <Bold>Playtime (mins): </Bold>
+                {checkMultiples(min_playtime, max_playtime)}
+              </Info>
+              <Info>
+                <Bold>Players: </Bold>
+                {checkMultiples(min_players, max_players)}
+              </Info>
+            </InfoContainer>
+          </ContainerInner>
+        </Container>
+      ) : (
+        <></>
+      )}
+    </>
   );
 };

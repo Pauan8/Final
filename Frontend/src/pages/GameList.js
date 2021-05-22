@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 
 import { GameCard } from '../components/GameCard';
-import test2 from '../data/test2.json';
+import { fetchSingleGame } from '../reducers/boardGames'
 
 const Wrapper = styled.div`
   display: flex;
@@ -29,15 +30,31 @@ const Grid = styled.div`
     grid-template-columns: repeat(3, 1fr);
   }
 `;
-
+let arr = [];
 const GameList = () => {
   const { type } = useParams();
+  const dispatch = useDispatch();
+  const data = useSelector((store) => store.boardGames.gameLists)
+
+  if (type === 'TopRated') {
+    arr = data.popularity
+  } else if (type === 'Discounted') {
+    arr = data.discount
+  } else {
+    // eslint-disable-next-line prefer-destructuring
+    arr = data[2021]
+  }
+
   return (
     <Wrapper>
       <Title> {type.replace(/([A-Z])/g, ' $1').trim()} </Title>
       <Grid>
-        {test2.games.map((game) => (
-          <GameCard {...game} />
+        {arr.map((game) => (
+          <Link
+            to={`/Game/${game.id}`}
+            onClick={() => dispatch(fetchSingleGame(game.id))}>
+            <GameCard {...game} />
+          </Link>
         ))}
       </Grid>
     </Wrapper>
