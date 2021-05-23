@@ -15,12 +15,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export const TextInput = ({ title, helptext }) => {
+export const TextInput = ({ title, helptext, setValue, value }) => {
   const classes = useStyles();
-  const [name, setName] = useState('');
 
-  const handleChange = (event) => {
-    setName(event.target.value);
+  const handleChange = (event, type) => {
+    setValue[type](event.target.value);
   };
 
   return (
@@ -30,8 +29,8 @@ export const TextInput = ({ title, helptext }) => {
       <InputLabel htmlFor={title} required={title === 'Username'}>{title}</InputLabel>
       <OutlinedInput
         id={title}
-        value={name}
-        onChange={handleChange}
+        value={value[title]}
+        onChange={(e) => handleChange(e, title)}
         label={title} />
       <FormHelperText id={`${title}-helper-text`}>
         {helptext}
