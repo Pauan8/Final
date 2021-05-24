@@ -57,21 +57,41 @@ router.post('/auth/login', async (req, res) => {
   }
 })
 
-
 router.get('/profile/:id', authenticateUser)
 router.get('/profile/:id', async (req, res) => {
-  //user private profilepage
+  const { id } = req.params;
+  const { edit } = req.query;
+  const { avatar, name, surname } = req.body;
+  try {
+    let privateProfile = await User.findById(id).exec()
+    if (edit) {
+      privateProfile = await User.findByIdAndUpdate(id, { avatar, name, surname }).exec()
+    }
+    res.json(privateProfile)
+  } catch (err) {
+    catchError(res, err, "Invalid user id")
+  }
 })
 
 router.get('/user/:id', async (req, res) => {
-  //public profilepage
+  const { id } = req.params;
+  try {
+    const userProfile = await User.findById(id, {accessToken: 0}).exec()
+    res.json(userProfile)
+  } catch (err) {
+    catchError(res, err, "Invalid user id")
+  }
 })
 
 router.post('/users', async (req, res) => {
   const { username, pw } = req.body;
   try {
-    const newUser = await new User({ username, password: bcrypt.hashSync(pw) }).save()
-    res.json(newUser)
+    const salt = bcrypt.genSaltSync();
+    const newUser = await new User({ username, password: bcrypt.hashSync(pw, salt) }).save()
+    res.json({
+      username: newUser.username,
+      accessToken: newUser.accessToken
+    })
   } catch (err) {
     if (err.code === 11000) {
       res.json({ error: 'That username is already taken' })

@@ -19,22 +19,19 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export const PasswordInput = ({ type }) => {
+export const PasswordInput = ({ type, value, setValue }) => {
   const classes = useStyles();
-  const [values, setValues] = useState({
-    password: '',
-    showPassword: false
-  });
+  const [showPassword, setShowPassword] = useState(false)
 
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
+  const handleClick = () => {
+    setShowPassword(!showPassword);
   };
 
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
-  };
+  const handleChange = (event) => {
+    setValue({...value, password: event.target.value})
+  }
 
-  const handleMouseDownPassword = (event) => {
+  const handleMouseDown = (event) => {
     event.preventDefault();
   };
 
@@ -45,17 +42,17 @@ export const PasswordInput = ({ type }) => {
       <InputLabel htmlFor="password" required>Password</InputLabel>
       <OutlinedInput
         id="password"
-        type={values.showPassword ? 'text' : 'password'}
-        value={values.password}
-        onChange={handleChange('password')}
+        type={showPassword ? 'text' : 'password'}
+        value={value.password}
+        onChange={handleChange}
         endAdornment={
           <InputAdornment position="end">
             <IconButton
               aria-label="toggle password visibility"
-              onClick={handleClickShowPassword}
-              onMouseDown={handleMouseDownPassword}
+              onClick={handleClick}
+              onMouseDown={handleMouseDown}
               edge="end">
-              {values.showPassword ? <Visibility /> : <VisibilityOff />}
+              {showPassword ? <Visibility /> : <VisibilityOff />}
             </IconButton>
           </InputAdornment>
         }

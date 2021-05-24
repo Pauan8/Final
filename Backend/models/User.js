@@ -20,8 +20,7 @@ const UserSchema = mongoose.Schema(
     password: {
       type: String,
       required: [true, 'A password is required.'],
-      minlength: 8,
-      maxlength: 12
+      select: false //does not get returned 
     },
     accessToken: {
       type: String,

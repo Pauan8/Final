@@ -6,7 +6,7 @@ import { TextInput } from '../components/LoginSignup/TextInput'
 import { PasswordInput } from '../components/LoginSignup/PasswordInput'
 import { SubmitButton } from '../components/LoginSignup/SubmitButton'
 
-import { addUser } from '../reducers/user'
+import { signUp } from '../reducers/user'
 
 const Wrapper = styled.div`
 position: relative;
@@ -29,15 +29,15 @@ const Signup = () => {
     password: ''
   })
   const dispatch = useDispatch()
-
+console.log(value.username, value.password)
   return (
     <Wrapper>
       <Title>Sign Up</Title>
-      <TextInput title="name" helptext="Your first name" value={value} setValue={setValue}/>
-      <TextInput title="surname" helptext="Your last name" value={value} setValue={setValue}/>
-      <TextInput title="username" helptext="Choose a username 5-12 chars" value={value} setValue={setValue}/>
-      <PasswordInput type="Singup" />
-      <SubmitButton btntext="Submit" handleClick={() => dispatch(addUser())} />
+      <TextInput title="name" helptext="Your first name" value={value} setValue={setValue} />
+      <TextInput title="surname" helptext="Your last name" value={value} setValue={setValue} />
+      <TextInput title="username" helptext="Choose a username 5-12 chars" value={value} setValue={setValue} />
+      <PasswordInput type="Singup" value={value} setValue={setValue} />
+      <SubmitButton btntext="Submit" handleClick={() => dispatch(signUp(value.username, value.password, value.name, value.surname))} />
     </Wrapper>
   )
 }
