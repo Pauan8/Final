@@ -76,7 +76,7 @@ export const auth = (username, password) => {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
-          token: localStorage.getItem('token'),
+          'Authorization': localStorage.getItem('token'),
         },
         body: JSON.stringify({
           username,
