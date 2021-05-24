@@ -13,12 +13,14 @@ mongoose.connect(mongoUrl,
 mongoose.Promise = Promise
 
 const authenticateUser = async (res, req, next) => {
-  const currentUser = await User.finOne({ accessToken: req.headers('Authorization') })
+  try{ const currentUser = await User.finOne({ accessToken: req.headers('Authorization') })
   if (currentUser) {
     req.user = currentUser 
     next()
   } else {
     res.status(401).json({ loggedOut: true })
+  }} catch (error) {
+    res.send(error)
   }
 }
 
