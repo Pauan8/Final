@@ -84,15 +84,17 @@ router.get('/user/:id', async (req, res) => {
 })
 
 router.post('/users', async (req, res) => {
-  const { username, pw, name, surname } = req.body;
+  const { username, pw, name, surname, e_mail} = req.body;
   try {
     const salt = bcrypt.genSaltSync();
-    const newUser = await new User({ username, password: bcrypt.hashSync(pw, salt), name, surname }).save()
+    const newUser = await new User({ username, password: bcrypt.hashSync(pw, salt), name, surname, e_mail }).save()
     res.json({
+      userID: newUser._id,
       username: newUser.username,
       accessToken: newUser.accessToken,
       name: newUser.name,
-      surname: newUser.surname
+      surname: newUser.surname,
+      e_mail: newUser.e_mail
     })
   } catch (err) {
     if (err.code === 11000) {

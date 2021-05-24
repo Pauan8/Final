@@ -39,12 +39,14 @@ export const PasswordInput = ({ type, value, setValue }) => {
     <FormControl
       className={clsx(classes.margin, classes.textField)}
       variant="outlined">
-      <InputLabel htmlFor="password" required>Password</InputLabel>
+      <InputLabel htmlFor="password" required>password</InputLabel>
       <OutlinedInput
         id="password"
         type={showPassword ? 'text' : 'password'}
         value={value.password}
         onChange={handleChange}
+        minLength="6"
+        maxLength="15"
         endAdornment={
           <InputAdornment position="end">
             <IconButton
@@ -58,7 +60,7 @@ export const PasswordInput = ({ type, value, setValue }) => {
         }
         labelWidth={70} />
       <FormHelperText id="password-hepler-text">
-        {type === 'Login' ? 'Enter your password' : 'Choose password 8-12 chars'}
+        {type === 'Login' ? 'Enter your password' : 'Choose password 6-15 chars'}
       </FormHelperText>
     </FormControl>)
 }

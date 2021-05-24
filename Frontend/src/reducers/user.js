@@ -3,12 +3,15 @@ import { createSlice } from '@reduxjs/toolkit';
 const user = createSlice({
   name: 'user',
   initialState: {
+    signup: {
+      success: false
+    },
     userInfo: {
       avatar: null,
       name: null,
       surname: null,
       username: null,
-      e_mail: null
+      e_mail: null,
     },
     lists: {
       favourites: [{}],
@@ -25,6 +28,10 @@ const user = createSlice({
       const { name, surname } = action.payload;
       const updatedInfo = { ...store.userInfo, name, surname }
       store.userInfo = updatedInfo;
+    },
+    setSignUp: (store, action) => {
+      const isSucess = action.payload;
+      store.signup.success = isSucess;
     }
   }
 });
@@ -42,7 +49,7 @@ export const fetchProfile = () => {
   }
 }
 
-export const signUp = (username, password, name, surname) => {
+export const signUp = ({username, password, name, surname, e_mail}) => {
   return (dispatch, getState) => {
     fetch('https://secure-escarpment-13722.herokuapp.com/users',
       { method: 'POST',
@@ -53,39 +60,41 @@ export const signUp = (username, password, name, surname) => {
           username,
           password,
           name,
-          surname
+          surname,
+          e_mail
         }) 
       })
       .then((res) => res.json())
-      .then((data) => console.log(data))
-      .catch(error => console.log(error))
+      .then((data) => dispatch(user.actions.setSignUp(true)))
+      .catch(error => dispatch(user.actions.setSignUp(false)))
   }
 }
 
 export const auth = (username, password) => {
-  return (dispatch) => {
-    fetch('https://secure-escarpment-13722.herokuapp.com/auth/login',
+  return fetch('https://secure-escarpment-13722.herokuapp.com/auth/login',
       {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
-          token: localStorage.getItem('token')
+          token: localStorage.getItem('token'),
         },
         body: JSON.stringify({
           username,
-          password
+          password,
+          userID: localStorage.getItem('userID')
         })  
       })
     .then((res) => res.json())
   }
-}
+
 
 export const login = (username, password) => {
   return (dispatch) => {
-    dispatch(auth(username, password))
+      auth(username, password)
       .then((json) => {
         if (json.token) {
           localStorage.setItem('token', json.token)
+          localStorage.setItem('userID', json.userID)
           dispatch(user.actions.setUser(json))
         } else {
           console.log('error')

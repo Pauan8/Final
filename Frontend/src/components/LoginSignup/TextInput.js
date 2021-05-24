@@ -15,25 +15,39 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export const TextInput = ({ title, helptext, setValue, value }) => {
+export const TextInput = ({ title, setValue, value, min, max }) => {
   const classes = useStyles();
+  const [error, setError] = useState(false)
 
-  const handleChange = (prop) => (event) => {
-    setValue({...value, [prop]: event.target.value});
-  };
-
+  const handleChange = (e) => {
+      const newValue = e.target.value;
+      if ((newValue.length < min || newValue.length > max) 
+      && newValue.match(/[%<>\\$'"]/)){
+        setError(`Should be ${min}-${max} chars & not contain %<>$'\"`)
+      } else if(newValue.length < min || newValue.length > max){
+        setError(`Should be ${min}-${max} characters`)
+      } else if (newValue.match(/[%<>\\$'"]/)) {
+        setError("Forbidden: %<>$'\"")
+      } else {
+        setError( "");
+      }
+      setValue({...value, [title]: e.target.value});
+    }
+     
   return (
     <FormControl
       variant="outlined"
       className={clsx(classes.margin, classes.textField)}>
-      <InputLabel htmlFor={title} required={title === 'Username'}>{title}</InputLabel>
+      <InputLabel htmlFor={title} required={title === 'username'}>{title}</InputLabel>
       <OutlinedInput
         id={title}
         value={value.title}
-        onChange={handleChange(title)}
-        label={title} />
+        onChange={handleChange}
+        label={title}
+        error={!!error}
+        />
       <FormHelperText id={`${title}-helper-text`}>
-        {helptext}
+        {error}
       </FormHelperText>
     </FormControl>
   )

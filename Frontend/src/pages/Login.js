@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components/macro'
+import { useDispatch } from 'react-redux'
 
+import { login } from '../reducers/user'
 import { TextInput } from '../components/LoginSignup/TextInput'
 import { PasswordInput } from '../components/LoginSignup/PasswordInput'
 import { SubmitButton } from '../components/LoginSignup/SubmitButton'
@@ -19,12 +21,22 @@ const Title = styled.h1`
 `
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const [value, setValue] = useState({
+    username: '',
+    password: ''
+  });
+
+  const handleClick = () => {
+    dispatch(login(value.username, value.password))
+  }
+
   return (
     <Wrapper>
       <Title>Login</Title>
-      <TextInput title="Username" helptext="Enter your Username" />
-      <PasswordInput type="Login" />
-      <SubmitButton type="button" btntext="Login" handleClick={() => console.log('logged in')} />
+      <TextInput title="username" helptext="Enter your Username" value={value} setValue={setValue} />
+      <PasswordInput type="Login" value={value} setValue={setValue} />
+      <SubmitButton type="button" btntext="Login" handleClick={handleClick} />
     </Wrapper>
   );
 };
