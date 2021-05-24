@@ -13,14 +13,11 @@ const UserSchema = mongoose.Schema(
       type: String,
       index: true,
       unique: true,
-      required: [true, 'A username is required.'],
-      minlength: 5,
-      maxlength: 12
+      required: [true, 'A username is required.'],  
     },
     password: {
       type: String,
       required: [true, 'A password is required.'],
-      select: false //does not get returned 
     },
     accessToken: {
       type: String,

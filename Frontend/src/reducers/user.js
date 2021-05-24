@@ -65,9 +65,13 @@ export const signUp = ({username, password, name, surname, e_mail}) => {
         }) 
       })
       .then((res) => res.json())
-      .then((data) => dispatch(user.actions.setSignUp(true)))
+      .then((data) => (dispatch(user.actions.setSignUp(true))))
       .catch(error => dispatch(user.actions.setSignUp(false)))
   }
+}
+
+export const fetchUser = (username) => {
+  
 }
 
 export const auth = (username, password) => {
@@ -81,7 +85,6 @@ export const auth = (username, password) => {
         body: JSON.stringify({
           username,
           password,
-          userID: localStorage.getItem('userID')
         })  
       })
     .then((res) => res.json())
@@ -92,14 +95,14 @@ export const login = (username, password) => {
   return (dispatch) => {
       auth(username, password)
       .then((json) => {
-        if (json.token) {
-          localStorage.setItem('token', json.token)
-          localStorage.setItem('userID', json.userID)
+        console.log( json)
+        if (json.Authorization) {
+          localStorage.setItem('token', json.Authorization)
           dispatch(user.actions.setUser(json))
         } else {
           console.log('error')
         }
-      })
+      }).catch(error => console.log(error))
   }
 }
 export default user

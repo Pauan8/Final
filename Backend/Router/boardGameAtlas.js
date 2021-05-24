@@ -12,21 +12,25 @@ mongoose.connect(mongoUrl,
   { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 mongoose.Promise = Promise
 
-const authenticateUser = async (res, req, next) => {
-  try{ const currentUser = await User.finOne({ accessToken: req.headers('Authorization') })
-  if (currentUser) {
-    req.user = currentUser 
-    next()
-  } else {
-    res.status(401).json({ loggedOut: true })
-  }} catch (error) {
-    res.send(error)
+const authenticateUser = async (req, res, next) => {
+  console.log(req.header('Authorization'))
+  try {
+    const currentUser = await User.findOne({accessToken: req.header('Authorization')}).exec();
+    if (currentUser) {
+      req.user = currentUser;
+      next();
+    } else {
+      res.status(401).json({ loggedOut: true });
+    }
+  } catch (error) {
+    res.send("error");
   }
-}
+};
 
 const catchError = (res, err, msg) => {
   return res.status(400).json({ message: msg, errors: err.errors })
 }
+
  
 router.get('/', async (req, res) => {
   try {
@@ -45,15 +49,13 @@ router.get('/users', async (req, res) => {
   }
 });
 
-router.post('/auth/login', async (req, res) => {
-  const { name, password } = req.body;
-  try {
-    const currentUser = await User.findOne({ username: name })
-    if (currentUser && bcrypt.compareSync(password, currentUser.password)) {
-      return res.json({ userId: currentUser._id, accessToken: currentUser.accessToken })
-    } else {
-      return res.status(404).json({ message: "Incorrect username or password" })
-    }
+router.post('/login', async (req, res ) => {
+  const { username, password } = req.body;
+  try{
+    const user = await User.findOne({ username }).exec()
+    if(user && bcrypt.compareSync(password, user.password))
+    { res.json({ userID: user._id, accessToken: user.accessToken})}
+    else { res.json({message: 'Wrong username or password'})}
   } catch (err) {
     catchError(res, err, "Something went wrong")
   }
@@ -62,6 +64,7 @@ router.post('/auth/login', async (req, res) => {
 router.get('/profile/:id', authenticateUser)
 router.get('/profile/:id', async (req, res) => {
   const { id } = req.params;
+  console.log(id)
   const { edit } = req.query;
   const { avatar, name, surname } = req.body;
   try {
@@ -86,10 +89,10 @@ router.get('/user/:id', async (req, res) => {
 })
 
 router.post('/users', async (req, res) => {
-  const { username, pw, name, surname, e_mail} = req.body;
+  const { username, password, name, surname, e_mail} = req.body;
   try {
     const salt = bcrypt.genSaltSync();
-    const newUser = await new User({ username, password: bcrypt.hashSync(pw, salt), name, surname, e_mail }).save()
+    const newUser = await new User({ username, password: bcrypt.hashSync(password, salt), name, surname, e_mail }).save()
     res.json({
       userID: newUser._id,
       username: newUser.username,
