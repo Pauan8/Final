@@ -61,6 +61,11 @@ router.post('/login', async (req, res ) => {
   }
 })
 
+router.get('/status', authenticateUser)
+router.get('/status', (req, res) => {
+  res.json(req.user)
+})
+
 router.get('/profile/:id', authenticateUser)
 router.get('/profile/:id', async (req, res) => {
   const { id } = req.params;

@@ -65,7 +65,11 @@ export const signUp = ({username, password, name, surname, e_mail}) => {
         }) 
       })
       .then((res) => res.json())
-      .then((data) => (dispatch(user.actions.setSignUp(true))))
+      .then((data) => {(console.log(data))
+        localStorage.setItem('userID', data.userID)
+        localStorage.setItem('token', data.acessToken)
+        dispatch(user.actions.setUser(data))
+        dispatch(user.actions.setSignUp(true))})
       .catch(error => dispatch(user.actions.setSignUp(false)))
   }
 }
@@ -73,6 +77,25 @@ export const signUp = ({username, password, name, surname, e_mail}) => {
 export const fetchUser = (username) => {
   
 }
+
+export const status = () => {
+  return (dispatch) => {
+    fetch('https://secure-escarpment-13722.herokuapp.com/status',
+  {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      'Authorization': localStorage.getItem('token'),
+    }, 
+    body: JSON.stringify({
+      userID: localStorage.getItem('userID')
+    })  
+  })
+  .then(res => res.json())
+  .then(json => console.log(json))
+  .catch(error => console.log('error'))
+}}
+
 
 export const auth = (username, password) => {
   return fetch('https://secure-escarpment-13722.herokuapp.com/auth/login',

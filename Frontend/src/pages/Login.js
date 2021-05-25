@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { login } from '../reducers/user'
+import { login, status } from '../reducers/user'
 import { TextInput } from '../components/LoginSignup/TextInput'
 import { PasswordInput } from '../components/LoginSignup/PasswordInput'
 import { SubmitButton } from '../components/LoginSignup/SubmitButton'
@@ -30,6 +30,10 @@ const Login = () => {
   const handleClick = () => {
     dispatch(login(value.username, value.password))
   }
+
+  useEffect(() => {
+    dispatch(status())
+  }, [])
 
   return (
     <Wrapper>

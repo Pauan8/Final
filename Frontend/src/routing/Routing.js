@@ -45,8 +45,9 @@ return(
       <Overlay />
       <Route path="/" exact component={Home} />
       <Route path="/Login" exact component={Login} />
-      <Route path="/Signup" exact />
+      <Route path="/Signup" exact>
       {isSignedUp.success? <Redirect to="/Login" /> : <Signup />}
+      </Route >
       <Route path="/GameList/:type" component={GameList} />
       <Route path="/Game/:Id" component={SingleGame} />
     </Main>
