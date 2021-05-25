@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 
-import test from '../../data/test.json';
 import { DropDown } from './DropDown';
 import { Search } from './Search';
 import { RadioButtons } from './RadioButtons';
+import categories from '../../data/categories.json'
 
 const Wrapper = styled.div`
   display: flex;
@@ -95,8 +95,8 @@ export const SearchMenu = () => {
         <ExpandButton onClick={() => setExpand(!expand)}> Filter </ExpandButton>
         <Expand expand={expand}>
           <SelectContainer>
-            <DropDown arr={test.categories} />
-            <DropDown arr={test.categories} />
+            <DropDown arr={categories} />
+            <DropDown arr={categories} />
           </SelectContainer>
           <RadioContainer>
             <RadioButtons />

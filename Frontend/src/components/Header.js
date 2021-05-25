@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 
+import { UserMenu } from './UserMenu';
+
 const Wrapper = styled.header`
   position: relative;
   height: 207px;
@@ -65,6 +67,7 @@ const SubTitle = styled.h2`
 export const Header = () => {
   return (
     <Wrapper>
+       <UserMenu />
       <TextContainer>
         <Title> All a&apos;Board </Title>
         <SubTitle>- Let the adventure begin!</SubTitle>

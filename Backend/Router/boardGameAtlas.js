@@ -108,7 +108,7 @@ router.post('/users', async (req, res) => {
     })
   } catch (err) {
     if (err.code === 11000) {
-      res.json({ error: 'That username is already taken' })
+      res.status(401).json({ error: 'That username is already taken' })
     } else {
       catchError(res, err, "Something went wrong")
     }

@@ -30,6 +30,17 @@ const Grid = styled.div`
     grid-template-columns: repeat(3, 1fr);
   }
 `;
+
+const PathLink = styled(Link)`
+text-decoration: none;
+color: white;
+
+&:hover{
+  color: darkslategray;
+  font-style: bold;
+}
+`
+
 let arr = [];
 const GameList = () => {
   const { type } = useParams();
@@ -50,11 +61,11 @@ const GameList = () => {
       <Title> {type.replace(/([A-Z])/g, ' $1').trim()} </Title>
       <Grid>
         {arr.map((game) => (
-          <Link
+          <PathLink
             to={`/Game/${game.id}`}
             onClick={() => dispatch(fetchSingleGame(game.id))}>
             <GameCard {...game} />
-          </Link>
+          </PathLink>
         ))}
       </Grid>
     </Wrapper>

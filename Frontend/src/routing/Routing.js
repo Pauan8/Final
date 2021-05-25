@@ -9,6 +9,7 @@ import { Footer } from '../components/Footer'
 import SingleGame from '../pages/SingleGame'
 import Signup from '../pages/Signup'
 import Login from '../pages/Login'
+import Profile from '../pages/Profile'
 
 
 const Wrapper = styled.div`
@@ -36,7 +37,8 @@ min-height: calc(100vh - 100px);
 padding-bottom: 50px;`
 
 const Routing = () => {
-    const login = useSelector(store => store.user.login)
+   
+    const login = useSelector(store => store.user.loggedOut)
 return(
 <Router>
 <Switch>
@@ -44,10 +46,9 @@ return(
     <Main>
       <Overlay />
       <Route path="/" exact component={Home} />
-      <Route path="/Login" exact component={Login}>
-      {login.success? <Redirect to="/" /> : <Login />}
-      </Route>
+      <Route path="/Login" exact component={Login} />
       <Route path="/Signup" exact component={Signup} />
+      <Route path="/Profile/:id" exact component={Profile} />
       <Route path="/GameList/:type" component={GameList} />
       <Route path="/Game/:Id" component={SingleGame} />
     </Main>

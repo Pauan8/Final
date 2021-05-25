@@ -13,6 +13,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 5px;
+  margin: 5px;
 `;
 
 const ContainerInner = styled.div`

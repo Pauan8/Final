@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components/macro'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import { fetchUser } from '../reducers/user'
 import { Sidebar } from '../components/Sidebar'
@@ -12,24 +12,25 @@ import { SearchMenu } from '../components/Filter/SearchMenu'
 const Section = styled.section`
 `
 
+const ListLink = styled(Link)`
+text-decoration-line: none;
+color: darkslategray;
+font-weight: 600;
+font-size: 25px;`
+
 const Title = styled.h2`
 position: relative;
 z-index: 5;
 text-align: center;
-font-family: "Raleway", sans-serif;
 `
-
-const ListLink = styled(Link)``
 
 const Home = () => {
 const dispatch= useDispatch()
 
   useEffect(() => {
+    console.log("fetched")
     dispatch(fetchUser())
   }, [dispatch])
-
-  console.log(localStorage.getItem('token'))
-  console.log(localStorage.getItem('userID'))
 
   return (
     <Section>

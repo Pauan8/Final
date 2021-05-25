@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components/macro'
 import { useDispatch, useSelector } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import { useHistory} from 'react-router-dom'
 
 import { TextInput } from '../components/LoginSignup/TextInput'
 import { PasswordInput } from '../components/LoginSignup/PasswordInput'
 import { SubmitButton } from '../components/LoginSignup/SubmitButton'
+import { Button } from '../components/Reusable/Button'
 
-import { signUp } from '../reducers/user'
+import { signUp, fetchUser } from '../reducers/user'
 
 const Wrapper = styled.div`
 position: relative;
@@ -20,6 +21,7 @@ justify-content: center;
 `
 
 const Title = styled.h1`
+max-width: 600px;
 `
 
 const Signup = () => {
@@ -31,29 +33,35 @@ const Signup = () => {
     e_mail: ''
   })
   const [validate, setValidate] = useState(true)
+  const loggedOut = useSelector(store => store.user.userInfo.loggedOut)
+  const history= useHistory();
   const dispatch = useDispatch()
-  const isSignedUp = useSelector(store => store.user.signup)
 
-  console.log(isSignedUp.success)
   const handleClick = () =>{ 
     let regex = /[%<>\\$'"]/
     if (regex.test(value.username)){
       setValidate(false)
     } else {
       setValidate(true)
-      dispatch(
-        signUp({...value}))
-        if(isSignedUp.success){
-          return <Redirect to="/Login" />
-        } else { 
-          return <Title>Fail</Title>
-        }
-  
-}}
+      dispatch(signUp({...value}))
+      history.push({pathname: "/login", state: {prev: "signup"}})
+    }
+  }
 
-console.log(value.username, value.password)
+  useEffect(() => {
+    dispatch(fetchUser())
+  }, [dispatch])
+
   return (
     <Wrapper>
+      {!loggedOut ? (
+        <>
+      <Title>
+        You're already logged in, log out or delete your user to be able to sign up 
+        </Title>
+        <Button text="Back" handleClick={() => history.goBack()} />
+        </>
+      ) : (<>
       <Title>Sign Up</Title>
       <TextInput
         title="name"
@@ -88,7 +96,7 @@ console.log(value.username, value.password)
         btntext="Submit"
         validate={validate}
         handleClick={handleClick}
-      />
+      /></> )}
     </Wrapper>
   );
 }

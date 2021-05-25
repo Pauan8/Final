@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
-import hexArr from 'data/hexArrayLeft.json'
+import hexArr from 'data/hexArray.json'
+
 
 const Wrapper = styled.div`
   display: flex;
@@ -24,7 +26,6 @@ const Outerclip = styled.div`
   top: ${(props) => `calc(${props.up} * 53px)`};
   margin-left: ${(props) => `calc(${props.left} * 38px)`};
   
- 
   &:nth-child(4) > div,
   &:nth-child(8) > div
   {
@@ -38,6 +39,7 @@ const Outerclip = styled.div`
     background: darkcyan;
   }
 `;
+
 const Innerclip = styled.div`
   height: 100px;
   width: 100px;
@@ -54,11 +56,22 @@ const Innerclip = styled.div`
 `;
 
 const MenuTitles = styled.h2`
-  font-size: 16px;
+  font-size: 20px;
   -webkit-transform: skew(-300deg);
   -ms-transform: skew(-30deg);
   transform: skew(-30deg);
 `;
+
+const PathLink = styled(Link)`
+text-decoration: none;
+color: white;
+
+&:hover{
+  color: darkslategray;
+  font-style: bold;
+}
+`
+
 
 export const Sidebar = () => {
   const setMenuTitles = (index) => {
@@ -71,14 +84,17 @@ export const Sidebar = () => {
         return '';
     }
   };
+
   const onMapArray = (arr) => {
     if (window.innerWidth > 767) {
       return arr.map((hex, i) => (
-        <Outerclip
+         <Outerclip
           left={hex.left}
           up={hex.top}>
           <Innerclip>
+          <PathLink to={setMenuTitles(i).toLowerCase().replace(" ", "")} >
             <MenuTitles>{setMenuTitles(i)}</MenuTitles>
+            </PathLink> 
           </Innerclip>
         </Outerclip>
       ));
@@ -86,6 +102,7 @@ export const Sidebar = () => {
       return <></>;
     }
   };
+
   return (
     <Wrapper>
       {onMapArray(hexArr)}
