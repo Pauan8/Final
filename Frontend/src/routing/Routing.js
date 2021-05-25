@@ -36,7 +36,7 @@ min-height: calc(100vh - 100px);
 padding-bottom: 50px;`
 
 const Routing = () => {
-    const isSignedUp = useSelector(store => store.user.signup)
+    const user = useSelector(store => store.user)
 return(
 <Router>
 <Switch>
@@ -45,8 +45,9 @@ return(
       <Overlay />
       <Route path="/" exact component={Home} />
       <Route path="/Login" exact component={Login} />
+      {user.login.success? <Redirect to="/" /> : <Login />}
       <Route path="/Signup" exact>
-      {isSignedUp.success? <Redirect to="/Login" /> : <Signup />}
+      {user.signup.success? <Redirect to="/Login" /> : <Signup />}
       </Route >
       <Route path="/GameList/:type" component={GameList} />
       <Route path="/Game/:Id" component={SingleGame} />

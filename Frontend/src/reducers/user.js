@@ -6,6 +6,9 @@ const user = createSlice({
     signup: {
       success: false
     },
+    login: {
+      success: false
+    },
     userInfo: {
       avatar: null,
       name: null,
@@ -32,6 +35,10 @@ const user = createSlice({
     setSignUp: (store, action) => {
       const isSucess = action.payload;
       store.signup.success = isSucess;
+    },
+    setLoggedIn: (store, action) => {
+      const isLoggedIn = action.payload;
+      store.login.success = isLoggedIn;
     }
   }
 });
@@ -65,7 +72,7 @@ export const signUp = ({username, password, name, surname, e_mail}) => {
         }) 
       })
       .then((res) => res.json())
-      .then((data) => {(console.log(data))
+      .then((data) => {(console.log(data.userID))
         localStorage.setItem('userID', data.userID)
         localStorage.setItem('token', data.acessToken)
         dispatch(user.actions.setUser(data))
@@ -74,9 +81,17 @@ export const signUp = ({username, password, name, surname, e_mail}) => {
   }
 }
 
-export const fetchUser = (username) => {
-  
-}
+export const fetchUser = () => {
+  return (dispatch) => {
+  fetch(`https://secure-escarpment-13722.herokuapp.com/profile/${localStorage.getItem('userID')}`,
+  {
+  headers: {
+    'content-type': 'application/json',
+    'Authorization' : localStorage.getItem('token'),
+  }})
+  .then(res => res.json())
+  .then(data => dispatch(user.actions.setUser(data)))
+}}
 
 export const status = () => {
   return (dispatch) => {
@@ -98,12 +113,12 @@ export const status = () => {
 
 
 export const auth = (username, password) => {
-  return fetch('https://secure-escarpment-13722.herokuapp.com/auth/login',
+  return fetch('https://secure-escarpment-13722.herokuapp.com/login',
       {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
-          'Authorization': localStorage.getItem('token'),
+          'Authorization' : localStorage.getItem('token'),
         },
         body: JSON.stringify({
           username,
@@ -118,10 +133,10 @@ export const login = (username, password) => {
   return (dispatch) => {
       auth(username, password)
       .then((json) => {
-        console.log( json)
-        if (json.Authorization) {
-          localStorage.setItem('token', json.Authorization)
-          dispatch(user.actions.setUser(json))
+        if (json.accessToken) {
+          localStorage.setItem('token', json.accessToken)
+          localStorage.setItem('userID', json.userID)
+          dispatch(user.actions.setLoggedIn(true))
         } else {
           console.log('error')
         }

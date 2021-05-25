@@ -73,7 +73,7 @@ router.get('/profile/:id', async (req, res) => {
   const { edit } = req.query;
   const { avatar, name, surname } = req.body;
   try {
-    let privateProfile = await User.findById(id).exec()
+    let privateProfile = await User.findById(id, {accessToken:0}, {password:0}).exec()
     if (edit) {
       privateProfile = await User.findByIdAndUpdate(id, { avatar, name, surname }).exec()
     }
