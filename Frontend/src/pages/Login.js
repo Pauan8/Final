@@ -25,7 +25,7 @@ const Title = styled.h1`
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const token = useSelector(store => store.user.token)
+  const token = useSelector(store => store.user.userInfo.accessToken)
   const [value, setValue] = useState({
     username: '',
     password: ''

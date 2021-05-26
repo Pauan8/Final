@@ -3,7 +3,7 @@ import styled from 'styled-components/macro'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
-import user, { fetchUser } from 'reducers/user'
+import user, { fetchUser, logout } from 'reducers/user'
 
 const Wrapper = styled.div`
 position: relative;`
@@ -13,7 +13,7 @@ const Name = styled.h1``
 const PrivateProfile = () => {
 const history = useHistory();
 const dispatch = useDispatch();
-const token = useSelector(store => store.user.token)
+const token = useSelector(store => store.user.userInfo.accessToken)
 
 useEffect(() => {
     dispatch(user.actions.setToken(localStorage.getItem('token') ))
@@ -27,6 +27,7 @@ useEffect(() => {
     return (
     <Wrapper>
         <Name>{profileInfo.username}</Name>
+        <button onClick={() => dispatch(logout())}>Log out</button>
     </Wrapper>)
 }
 

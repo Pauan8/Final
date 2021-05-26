@@ -50,6 +50,7 @@ router.get('/users', async (_req, res) => {
     const allUsers = await User.find().exec();
     return allUsers
       ? res.json({
+        userID: allUsers._id,
         username: allUsers.username,
         name: allUsers.name,
         surname: allUsers.surname,
@@ -100,6 +101,7 @@ router.get('/profile/:id', async (req, res) => {
       }).exec();
     } else {
       res.json({
+        userID: privateProfile._id,
         username: privateProfile.username,
         name: privateProfile.name,
         surname: privateProfile.surname,
@@ -122,6 +124,7 @@ router.get('/user/:username', async (req, res) => {
       { accessToken: 0, password: 0 }
     ).exec();
     res.json({  
+      userID: userProfile._id,
       username: userProfile.username,
       name: userProfile.name,
       surname: userProfile.surname,

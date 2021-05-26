@@ -35,7 +35,7 @@ const Signup = () => {
   const [validate, setValidate] = useState(true)
   const history= useHistory();
   const dispatch = useDispatch()
-  const token = useSelector(store => store.user.token)
+  const token = useSelector(store => store.user.userInfo.accessToken)
 
   const handleClick = () =>{ 
     let regex = /[%<>\\$'"]/

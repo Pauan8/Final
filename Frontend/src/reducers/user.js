@@ -1,12 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
+const RESET_STATE =  {
+  accessToken: undefined,
+  userID: undefined,
+    loggedOut: true,
+    avatar: null,
+    name: null,
+    surname: null,
+    username: null,
+    e_mail: null,
+  }
+
 
 const user = createSlice({
   name: "user",
-  initialState: {
-    token: localStorage.getItem('token') === "undefined" ? undefined : localStorage.getItem('token'),
-    userID: localStorage.getItem('userID'),
+  initialState: { 
     userInfo: {
+      accessToken: localStorage.getItem('token') === "undefined" ? undefined : localStorage.getItem('token'),
       loggedOut: localStorage.getItem('token') === "undefined" ? true : false,
+      userID: null,
       avatar: null,
       name: null,
       surname: null,
@@ -20,11 +31,11 @@ const user = createSlice({
       favourites: [{}],
       wish: [{}],
       ownded: [{}],
-    },
+    }
   },
   reducers: {
     setToken: (store, action) => {
-      store.token = action.payload;
+      store.userInfo.accessToken = action.payload;
     },
     setUser: (store, action) => {
       store.userInfo = action.payload;
@@ -63,7 +74,6 @@ export const signUp = ({ username, password, name, surname, e_mail }) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.sucess) {
-          localStorage.setItem("userID", data.userID);
           localStorage.setItem("token", data.accessToken);
           dispatch(user.actions.setUser(data));
         } else {
@@ -77,11 +87,11 @@ export const signUp = ({ username, password, name, surname, e_mail }) => {
 export const fetchUser = () => {
   return (dispatch, getState) => {
     fetch(
-      `https://secure-escarpment-13722.herokuapp.com/profile/${getState().user.userID}`,
+      `https://secure-escarpment-13722.herokuapp.com/profile/${getState().user.userInfo.userID}`,
       {
         headers: {
           "content-type": "application/json",
-          Authorization: getState().user.token
+          Authorization: getState().user.userInfo.accessToken
         },
       }
     )
@@ -123,7 +133,6 @@ export const login = (username, password) => {
       .then((json) => {
         if (json.accessToken) {
           localStorage.setItem("token", json.accessToken);
-          localStorage.setItem("userID", json.userID);
           dispatch(user.actions.setUser(json));
         } else {
           dispatch(user.actions.setErrors(json))
@@ -132,4 +141,11 @@ export const login = (username, password) => {
       .catch((error) => dispatch(user.actions.setErrors(error)))
   };
 };
+
+export const logout = () => {
+  return (dispatch, getState) => {
+    localStorage.clear()
+    dispatch(user.actions.setUser(RESET_STATE.map(item => item)))
+  }
+}
 export default user;
