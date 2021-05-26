@@ -55,7 +55,7 @@ const Signup = () => {
   
   return (
     <Wrapper>
-      {localStorage.getItem('token') ? (
+      {token ? (
         <>
       <Title>
         You're already logged in, log out or delete your user to be able to sign up 

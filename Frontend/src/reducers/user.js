@@ -4,6 +4,7 @@ const user = createSlice({
   name: "user",
   initialState: {
     token: localStorage.getItem('token'),
+    userID: localStorage.getItem('userID'),
     userInfo: {
       loggedOut: true,
       avatar: null,
@@ -56,26 +57,27 @@ export const signUp = ({ username, password, name, surname, e_mail }) => {
         password,
         name,
         surname,
-        e_mail,
+        e_mail
       }),
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.userID);
-        localStorage.setItem("userID", data.userID);
-        localStorage.setItem("token", data.accessToken);
-        dispatch(user.actions.setUser(data));
+        if (data.sucess) {
+          localStorage.setItem("userID", data.userID);
+          localStorage.setItem("token", data.accessToken);
+          dispatch(user.actions.setUser(data));
+        } else {
+          dispatch(user.actions.setErrors(data));
+        }
       })
-      .catch((error) => dispatch(user.actions.setSignUp(false)));
+      .catch((error) => dispatch(user.actions.setErrors(error)))
   };
 };
 
 export const fetchUser = () => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     fetch(
-      `https://secure-escarpment-13722.herokuapp.com/profile/${localStorage.getItem(
-        "userID"
-      )}`,
+      `https://secure-escarpment-13722.herokuapp.com/profile/${getState().user.userID}`,
       {
         headers: {
           "content-type": "application/json",
@@ -90,16 +92,16 @@ export const fetchUser = () => {
         return response.json();
       })
       .then((data) => {
-        console.log(data)
-        dispatch(user.actions.setUser(data));
+        if(data.success){
+          dispatch(user.actions.setUser(data));
+        } else {
+          dispatch(user.actions.setErrors(data));
+        }
       })
       .catch((error) => {
-        console.log(error)
         dispatch(user.actions.setErrors(error))});
+  };
 };
-};
-
-
 
 export const auth = (username, password) => {
   return fetch("https://secure-escarpment-13722.herokuapp.com/login", {
@@ -122,12 +124,12 @@ export const login = (username, password) => {
         if (json.accessToken) {
           localStorage.setItem("token", json.accessToken);
           localStorage.setItem("userID", json.userID);
-          dispatch(user.actions.setUser(json.loggedOut));
+          dispatch(user.actions.setUser(json));
         } else {
-          console.log("error");
+          dispatch(user.actions.setErrors(json))
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => dispatch(user.actions.setErrors(error)))
   };
 };
 export default user;

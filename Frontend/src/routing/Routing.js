@@ -9,7 +9,7 @@ import { Footer } from '../components/Footer'
 import SingleGame from '../pages/SingleGame'
 import Signup from '../pages/Signup'
 import Login from '../pages/Login'
-import Profile from '../pages/Profile'
+import PrivateProfile from '../pages/PrivateProfile'
 import PublicProfile from '../pages/PublicProfile'
 
 
@@ -49,7 +49,7 @@ return(
       <Route path="/" exact component={Home} />
       <Route path="/Login" exact component={Login} />
       <Route path="/Signup" exact component={Signup} />
-      <Route path="/Profile/:id" exact component={Profile} />
+      <Route path="/Profile/:id" exact component={PrivateProfile} />
       <Route path="/User/:username" exact component={PublicProfile} />
       <Route path="/GameList/:type" component={GameList} />
       <Route path="/Game/:Id" component={SingleGame} />

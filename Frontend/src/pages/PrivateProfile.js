@@ -10,7 +10,7 @@ position: relative;`
 
 const Name = styled.h1``
 
-const Profile = () => {
+const PrivateProfile = () => {
 const history = useHistory();
 const dispatch = useDispatch();
 const token = useSelector(store => store.user.token)
@@ -30,4 +30,4 @@ useEffect(() => {
     </Wrapper>)
 }
 
-export default Profile;
+export default PrivateProfile;

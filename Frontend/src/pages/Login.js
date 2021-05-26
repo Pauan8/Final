@@ -25,6 +25,7 @@ const Title = styled.h1`
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const token = useSelector(store => store.user.token)
   const [value, setValue] = useState({
     username: '',
     password: ''
@@ -44,7 +45,7 @@ const Login = () => {
  
   return (
     <Wrapper>
-      {!localStorage.getItem('token') ? (
+      {!token ? (
         <>
           <Title>Login</Title>
           <TextInput
