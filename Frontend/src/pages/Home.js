@@ -25,6 +25,7 @@ text-align: center;
 `
 
 const Home = () => {
+  console.log(localStorage.getItem('token'))
 const dispatch= useDispatch()
 
   useEffect(() => {

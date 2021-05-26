@@ -52,7 +52,7 @@ const Signup = () => {
     dispatch(fetchUser())
   }, [dispatch])
 
-  
+  console.log(token)
   return (
     <Wrapper>
       {token ? (

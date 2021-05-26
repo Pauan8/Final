@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const user = createSlice({
   name: "user",
   initialState: {
-    token: localStorage.getItem('token'),
+    token: localStorage.getItem('token') === "undefined" ? undefined : localStorage.getItem('token'),
     userID: localStorage.getItem('userID'),
     userInfo: {
       loggedOut: true,
@@ -70,7 +70,7 @@ export const signUp = ({ username, password, name, surname, e_mail }) => {
           dispatch(user.actions.setErrors(data));
         }
       })
-      .catch((error) => dispatch(user.actions.setErrors(error)))
+      .catch((error) => dispatch(user.actions.setErrors('catcherror')))
   };
 };
 
@@ -81,7 +81,7 @@ export const fetchUser = () => {
       {
         headers: {
           "content-type": "application/json",
-          Authorization: localStorage.getItem("token")
+          Authorization: getState().user.token
         },
       }
     )
@@ -99,7 +99,7 @@ export const fetchUser = () => {
         }
       })
       .catch((error) => {
-        dispatch(user.actions.setErrors(error))});
+        dispatch(user.actions.setErrors('catcherror'))});
   };
 };
 

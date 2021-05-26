@@ -19,7 +19,7 @@ const authenticateUser = async (req, res, next) => {
   try {
     const currentUser = await User.findOne({
       accessToken: req.header('Authorization'),
-    }).exec();
+    })
     if (currentUser) {
       req.user = currentUser;
       next();
@@ -49,7 +49,7 @@ router.get('/users', async (_req, res) => {
   try {
     const allUsers = await User.find().exec();
     return allUsers
-      ? res.json({ ...allUsers, success: true })
+      ? res.json(allUsers, {success: true })
       : res.json({ success: false, message: 'No users in the database' });
   } catch (err) {
     catchError(res, err, 'Something went wrong');
@@ -64,7 +64,8 @@ router.post('/login', async (req, res) => {
       res.json({
         userID: user._id,
         accessToken: user.accessToken,
-        success: true
+        success: true,
+        loggedOut: false
       });
     } else {
       res
@@ -90,7 +91,7 @@ router.get('/profile/:id', async (req, res) => {
         surname
       }).exec();
     } else {
-      res.json({ ...privateProfile, success: true });
+      res.json(privateProfile, {success: true, loggedOut: false });
     }
   } catch (err) {
     catchError(res, err, 'Invalid user id');
@@ -104,7 +105,7 @@ router.get('/user/:username', async (req, res) => {
       { username },
       { accessToken: 0, password: 0 }
     ).exec();
-    res.json({ ...userProfile, success: true });
+    res.json(userProfile, {success: true });
   } catch (err) {
     catchError(res, err, 'Invalid user id');
   }
@@ -144,7 +145,7 @@ router.post('/users', async (req, res) => {
 router.delete('/users', async (_req, res) => {
   try {
     const deleteAll = await User.deleteMany();
-    res.json({ ...deleteAll, success: false });
+    res.json(deleteAll, {success: false });
   } catch (err) {
     catchError(res, err, 'Something went wrong');
   }

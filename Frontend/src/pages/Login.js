@@ -37,12 +37,13 @@ const Login = () => {
   }
 
   const onBackClick = () => {
-    return history.location.state !== undefined 
+    return history.location.state !== undefined
     && history.location.state.prev === "signup" 
     ? history.go(-2) 
     : history.goBack()
   }
  
+  console.log(token)
   return (
     <Wrapper>
       {!token ? (
