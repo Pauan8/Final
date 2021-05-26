@@ -49,7 +49,15 @@ router.get('/users', async (_req, res) => {
   try {
     const allUsers = await User.find().exec();
     return allUsers
-      ? res.json(allUsers, {success: true })
+      ? res.json({
+        username: allUsers.username,
+        name: allUsers.name,
+        surname: allUsers.surname,
+        avatar: allUsers.avatar,
+        e_mail: allUsers.e_mail,
+        success: true, 
+        loggedOut: false 
+        })
       : res.json({ success: false, message: 'No users in the database' });
   } catch (err) {
     catchError(res, err, 'Something went wrong');
@@ -83,7 +91,7 @@ router.get('/profile/:id', async (req, res) => {
   const { edit } = req.query;
   const { avatar, name, surname } = req.body;
   try {
-    let privateProfile = await User.findById(id, { password: 0 }).exec();
+    let privateProfile = await User.findById(id).exec();
     if (edit) {
       privateProfile = await User.findByIdAndUpdate(id, {
         avatar,
@@ -91,7 +99,15 @@ router.get('/profile/:id', async (req, res) => {
         surname
       }).exec();
     } else {
-      res.json({privateProfile, success: true, loggedOut: false });
+      res.json({
+        username: privateProfile.username,
+        name: privateProfile.name,
+        surname: privateProfile.surname,
+        avatar: privateProfile.avatar,
+        e_mail: privateProfile.e_mail,
+        success: true, 
+        loggedOut: false 
+      });
     }
   } catch (err) {
     catchError(res, err, 'Invalid user id');
@@ -105,7 +121,14 @@ router.get('/user/:username', async (req, res) => {
       { username },
       { accessToken: 0, password: 0 }
     ).exec();
-    res.json(userProfile, {success: true });
+    res.json({  
+      username: userProfile.username,
+      name: userProfile.name,
+      surname: userProfile.surname,
+      avatar: userProfile.avatar,
+      e_mail: userProfile.e_mail,
+      loggedOut: false, 
+      success: true });
   } catch (err) {
     catchError(res, err, 'Invalid user id');
   }
