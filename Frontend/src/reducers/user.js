@@ -6,7 +6,7 @@ const user = createSlice({
     token: localStorage.getItem('token') === "undefined" ? undefined : localStorage.getItem('token'),
     userID: localStorage.getItem('userID'),
     userInfo: {
-      loggedOut: true,
+      loggedOut: localStorage.getItem('token') === "undefined" ? true : false,
       avatar: null,
       name: null,
       surname: null,

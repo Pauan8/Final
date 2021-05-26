@@ -91,7 +91,7 @@ router.get('/profile/:id', async (req, res) => {
         surname
       }).exec();
     } else {
-      res.json(privateProfile, {success: true, loggedOut: false });
+      res.json({privateProfile, success: true, loggedOut: false });
     }
   } catch (err) {
     catchError(res, err, 'Invalid user id');
