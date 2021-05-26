@@ -86,7 +86,7 @@ router.get('/profile/:id', async (req, res) => {
 router.get('/user/:username', async (req, res) => {
   const { username } = req.params;
   try {
-    const userProfile = await User.findOne(username, {accessToken: 0}).exec()
+    const userProfile = await User.findOne({username}, {accessToken: 0}).exec()
     res.json(userProfile)
   } catch (err) {
     catchError(res, err, "Invalid user id")
