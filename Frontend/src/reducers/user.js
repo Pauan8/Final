@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const user = createSlice({
   name: "user",
   initialState: {
+    token: localStorage.getItem('token'),
     userInfo: {
       loggedOut: true,
       avatar: null,
@@ -11,6 +12,9 @@ const user = createSlice({
       username: null,
       e_mail: null,
     },
+    errors: {
+
+    },
     lists: {
       favourites: [{}],
       wish: [{}],
@@ -18,9 +22,14 @@ const user = createSlice({
     },
   },
   reducers: {
+    setToken: (store, action) => {
+      store.token = action.payload;
+    },
     setUser: (store, action) => {
-      const currentUser = {...action.payload};
-      store.userInfo = currentUser;
+      store.userInfo = action.payload;
+    },
+    setErrors: (store, action) => {
+      store.errors = action.payload;
     },
     setUserInfo: (store, action) => {
       const { name, surname } = action.payload;
@@ -54,7 +63,7 @@ export const signUp = ({ username, password, name, surname, e_mail }) => {
       .then((data) => {
         console.log(data.userID);
         localStorage.setItem("userID", data.userID);
-        localStorage.setItem("token", data.acessToken);
+        localStorage.setItem("token", data.accessToken);
         dispatch(user.actions.setUser(data));
       })
       .catch((error) => dispatch(user.actions.setSignUp(false)));
@@ -70,7 +79,7 @@ export const fetchUser = () => {
       {
         headers: {
           "content-type": "application/json",
-          'Authorization': localStorage.getItem("token")
+          Authorization: localStorage.getItem("token")
         },
       }
     )
@@ -84,34 +93,20 @@ export const fetchUser = () => {
         console.log(data)
         dispatch(user.actions.setUser(data));
       })
-      .catch((error) => console.log("error"));
+      .catch((error) => {
+        console.log(error)
+        dispatch(user.actions.setErrors(error))});
 };
 };
 
-export const status = () => {
-  return (dispatch) => {
-    fetch("https://secure-escarpment-13722.herokuapp.com/status", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        'Authorization': localStorage.getItem("token"),
-      },
-      body: JSON.stringify({
-        userID: localStorage.getItem("userID"),
-      }),
-    })
-      .then((res) => res.json())
-      .then((json) => console.log(json))
-      .catch((error) => console.log("error"));
-  };
-};
+
 
 export const auth = (username, password) => {
   return fetch("https://secure-escarpment-13722.herokuapp.com/login", {
     method: "POST",
     headers: {
       "content-type": "application/json",
-      'Authorization': localStorage.getItem("token"),
+      Authorization: localStorage.getItem("token"),
     },
     body: JSON.stringify({
       username,
@@ -127,7 +122,7 @@ export const login = (username, password) => {
         if (json.accessToken) {
           localStorage.setItem("token", json.accessToken);
           localStorage.setItem("userID", json.userID);
-          dispatch(user.actions.setLoggedOut(false));
+          dispatch(user.actions.setUser(json.loggedOut));
         } else {
           console.log("error");
         }

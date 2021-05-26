@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components/macro'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory} from 'react-router-dom'
+import { useHistory, Link} from 'react-router-dom'
 
 import { TextInput } from '../components/LoginSignup/TextInput'
 import { PasswordInput } from '../components/LoginSignup/PasswordInput'
@@ -33,9 +33,9 @@ const Signup = () => {
     e_mail: ''
   })
   const [validate, setValidate] = useState(true)
-  const loggedOut = useSelector(store => store.user.userInfo.loggedOut)
   const history= useHistory();
   const dispatch = useDispatch()
+  const token = useSelector(store => store.user.token)
 
   const handleClick = () =>{ 
     let regex = /[%<>\\$'"]/
@@ -52,9 +52,10 @@ const Signup = () => {
     dispatch(fetchUser())
   }, [dispatch])
 
+  
   return (
     <Wrapper>
-      {!loggedOut ? (
+      {localStorage.getItem('token') ? (
         <>
       <Title>
         You're already logged in, log out or delete your user to be able to sign up 
@@ -96,7 +97,9 @@ const Signup = () => {
         btntext="Submit"
         validate={validate}
         handleClick={handleClick}
-      /></> )}
+      />
+      
+      <Link to="/login"> Already got a account? Go to login</Link></> )}
     </Wrapper>
   );
 }

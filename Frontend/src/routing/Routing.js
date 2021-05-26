@@ -10,6 +10,7 @@ import SingleGame from '../pages/SingleGame'
 import Signup from '../pages/Signup'
 import Login from '../pages/Login'
 import Profile from '../pages/Profile'
+import PublicProfile from '../pages/PublicProfile'
 
 
 const Wrapper = styled.div`
@@ -49,6 +50,7 @@ return(
       <Route path="/Login" exact component={Login} />
       <Route path="/Signup" exact component={Signup} />
       <Route path="/Profile/:id" exact component={Profile} />
+      <Route path="/User/:username" exact component={PublicProfile} />
       <Route path="/GameList/:type" component={GameList} />
       <Route path="/Game/:Id" component={SingleGame} />
     </Main>

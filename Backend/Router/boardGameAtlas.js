@@ -54,7 +54,7 @@ router.post('/login', async (req, res ) => {
   try{
     const user = await User.findOne({ username }).exec()
     if(user && bcrypt.compareSync(password, user.password))
-    { res.json({ userID: user._id, accessToken: user.accessToken})}
+    { res.json({ userID: user._id, accessToken: user.accessToken, loggedOut: false})}
     else { res.json({message: 'Wrong username or password'})}
   } catch (err) {
     catchError(res, err, "Something went wrong")
@@ -83,10 +83,10 @@ router.get('/profile/:id', async (req, res) => {
   }
 })
 
-router.get('/user/:id', async (req, res) => {
-  const { id } = req.params;
+router.get('/user/:username', async (req, res) => {
+  const { username } = req.params;
   try {
-    const userProfile = await User.findById(id, {accessToken: 0}).exec()
+    const userProfile = await User.findOne(username, {accessToken: 0}).exec()
     res.json(userProfile)
   } catch (err) {
     catchError(res, err, "Invalid user id")

@@ -1,16 +1,32 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components/macro'
-import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 
-const Wrapper = styled.div``
+import user, { fetchUser } from 'reducers/user'
+
+const Wrapper = styled.div`
+position: relative;`
 
 const Name = styled.h1``
 
 const Profile = () => {
- const user = useSelector(store => store.user.userInfo)
+const history = useHistory();
+const dispatch = useDispatch();
+const token = useSelector(store => store.user.token)
+
+useEffect(() => {
+    dispatch(user.actions.setToken(localStorage.getItem('token') ))
+    token ?
+    dispatch(fetchUser()) :
+    history.push("/signup")
+    }, [token, dispatch,history])
+
+
+    const profileInfo = useSelector(store => store.user.userInfo)
     return (
     <Wrapper>
-        <Name>{user.username}</Name>
+        <Name>{profileInfo.username}</Name>
     </Wrapper>)
 }
 
