@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import { fetches } from "./fetches";
+import ui from '../ui'
+
 const boardGames = createSlice({
   name: "boardGames",
   initialState: {
@@ -66,36 +69,28 @@ const boardGames = createSlice({
 });
 
 export const generateGamesList = (type, value) => {
-  return (dispatch, getState) => {
-    fetch(
-      `https://api.boardgameatlas.com/api/search?limit=20&pretty=true&client_id=39WI5Y3mBx&${type}=${value}`
-    )
-      .then((response) => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.json();
-      })
+  return (dispatch) => {
+    dispatch(ui.actions.setLoading(true))
+   fetches.list(type, value)
       .then((data) =>
-        dispatch(
-          boardGames.actions.setGameLists({ arr: data.games, sort: value })
-        )
-      );
+      {
+        dispatch(boardGames.actions.setGameLists({ arr: data.games, sort: value }))
+        dispatch(ui.actions.setLoading(false))
+      })
+      .catch(error => console.log('catch error'))
   };
 };
 
 export const fetchSingleGame = (id) => {
   return (dispatch) => {
-    fetch(
-      `https://api.boardgameatlas.com/api/search?limit=20&pretty=true&client_id=39WI5Y3mBx&ids=${id}`
-    )
-      .then((response) => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.json();
+      dispatch(ui.actions.setLoading(true))
+      fetches.game(id)
+      .then((data) => 
+      { 
+        dispatch(boardGames.actions.setGame(data.games[0]))
+        dispatch(ui.actions.setLoading(false))
       })
-      .then((data) => dispatch(boardGames.actions.setGame(data.games[0])));
+      .catch((error => console.log('catch error')))
   };
 };
 

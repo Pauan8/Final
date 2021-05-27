@@ -3,8 +3,10 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/macro'
 
-import { generateGamesList } from '../../reducers/boardGames'
+import { generateGamesList } from '../../reducers/boardgame/boardGames'
 import { GameCard } from './GameCard'
+import { LottieAnimation } from '../../animation/LottieAnimation'
+import loading from '../../animation/json/loading.json'
 
 const Wrapper = styled.div`
 display: flex;
@@ -17,10 +19,13 @@ z-index: 6;
 `
 
 const ContainerOuter = styled.div`
-display: ${(props) => (props.index === props.slideIndex ? 'flex' : 'none')};
+display: none;
 width: 100%;
 justify-content: center;
 
+&:nth-of-type(${props => props.slideIndex}){
+display: flex;
+}
 @media (min-width: 768px) {
     width: fit-content;
 }
@@ -50,9 +55,10 @@ margin: 3px 0;
 `
 let slideNumber = 0;
 export const Slideshow = ({ type, value }) => {
-  const [slideIndex, setSlideIndex] = useState(0);
+  const [slideIndex, setSlideIndex] = useState(1);
   const resultsRender = [];
   const dispatch = useDispatch()
+  const isLoading = useSelector(store => store.ui.isLoading)
   const data = useSelector((store) => store.boardGames.gameLists)
 
   useEffect(() => {
@@ -61,16 +67,17 @@ export const Slideshow = ({ type, value }) => {
 
   const handleClick = (direction, jump) => {
     if (direction === 'left') {
-      return slideIndex === 0
-        ? setSlideIndex(data.length - jump)
-        : setSlideIndex(slideIndex - jump);
+      return slideIndex === 1
+        ? setSlideIndex(Math.ceil(data[value].length / jump))
+        : setSlideIndex((prev => prev - 1));
     } else {
-      return slideIndex === data.length - jump
-        ? setSlideIndex(0)
-        : setSlideIndex(slideIndex + jump);
+      return slideIndex === Math.ceil(data[value].length / jump) 
+        ? setSlideIndex(1)
+        : setSlideIndex((prev => prev + 1));
     }
   };
 
+  
   const renderLists = () => {
     // used to be able to display 3 slides at a time on bigger screens
     // and 1 at smaller
@@ -82,6 +89,7 @@ export const Slideshow = ({ type, value }) => {
       slideNumber = 1;
     }
     if (data[value]) {
+      console.log(Math.floor(data[value].length / slideNumber))
       for (let i = 0; i < data[value].length; i += slideNumber) {
         resultsRender.push(
           <ContainerOuter index={i} slideIndex={slideIndex}>
@@ -92,7 +100,7 @@ export const Slideshow = ({ type, value }) => {
             {data[value].slice(i, i + slideNumber).map((item) => (
               <GameCard {...item} />
             ))}
-            <Button onClick={() => handleClick('rigth', slideNumber)}>
+            <Button onClick={() => handleClick('right', slideNumber)}>
               {' '}
               ▶{' '}
             </Button>
@@ -108,7 +116,7 @@ export const Slideshow = ({ type, value }) => {
 
   return (
     <Wrapper>
-      {renderLists()}
+      {!isLoading ? renderLists() : <LottieAnimation lotti={loading} height={300} width={300} />}
     </Wrapper>
   );
 };

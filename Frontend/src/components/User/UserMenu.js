@@ -10,5 +10,7 @@ position: absolute;
 justify-content: flex-end;`
 
 export const UserMenu = () => {
-    return <Wrapper><Link to={`/profile/${localStorage.getItem('userID')}`}>CLICK</Link></Wrapper>
+    const userID = useSelector(store => store.user.userInfo.userID)
+    
+    return <Wrapper><Link to={`/profile/${userID}}`}>CLICK</Link></Wrapper>
 }

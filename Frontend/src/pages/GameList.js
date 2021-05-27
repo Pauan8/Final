@@ -4,7 +4,7 @@ import { useParams, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { GameCard } from '../components/Games/GameCard';
-import { fetchSingleGame } from '../reducers/boardGames'
+import { fetchSingleGame } from '../reducers/boardgame/boardGames'
 
 const Wrapper = styled.div`
   display: flex;

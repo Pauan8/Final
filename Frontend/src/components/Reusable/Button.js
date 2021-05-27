@@ -3,7 +3,7 @@ import styled from 'styled-components/macro'
 
 const Btn = styled.button`
 background: white;
-box-shadow: 2px 2px 2px 3px grey;
+box-shadow: 2px 2px 1px 2px grey;
 font-size: 18px;
 border: none;
 border-radius: 10px;
@@ -16,6 +16,8 @@ width: 100px;
 
 &:active{
     box-shadow: none;
+    transform: translateY(4px);
+    transform: translateX(4px);
 }`;
 
 export const Button = ({text, handleClick}) => {

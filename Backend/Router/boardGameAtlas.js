@@ -99,7 +99,7 @@ router.get('/profile/:id', async (req, res) => {
         name,
         surname
       }).exec();
-    } else {
+      
       res.json({
         userID: privateProfile._id,
         username: privateProfile.username,

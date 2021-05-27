@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 
-import { UserMenu } from './UserMenu';
+import { UserMenu } from './User/UserMenu';
 
 const Wrapper = styled.header`
   position: relative;

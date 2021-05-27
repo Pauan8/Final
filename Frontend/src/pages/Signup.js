@@ -8,7 +8,7 @@ import { PasswordInput } from '../components/LoginSignup/PasswordInput'
 import { SubmitButton } from '../components/LoginSignup/SubmitButton'
 import { Button } from '../components/Reusable/Button'
 
-import { signUp, fetchUser } from '../reducers/user'
+import { signUp, fetchUser } from '../reducers/user/user'
 
 const Wrapper = styled.div`
 position: relative;
@@ -35,7 +35,7 @@ const Signup = () => {
   const [validate, setValidate] = useState(true)
   const history= useHistory();
   const dispatch = useDispatch()
-  const token = useSelector(store => store.user.userInfo.accessToken)
+  const token = useSelector(store => store.user.accessToken)
 
   const handleClick = () =>{ 
     let regex = /[%<>\\$'"]/
