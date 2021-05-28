@@ -44,10 +44,9 @@ export const fetches = {
                 }),
               })
                 .then((res) => res.json())
-        }
-      },
+        },
         addGame: ( getState, game, list ) => {
-          return fetch(`https://secure-escarpment-13722.herokuapp.com/profie/${getState().user.userInfo.userID}/addGame?list=${list}`, {
+          return fetch(`https://secure-escarpment-13722.herokuapp.com/profile/${getState().user.userInfo.userID}/addGame?list=${list}`, {
           method: 'POST',
           headers: {
             "content-type": "application/json",
@@ -56,7 +55,8 @@ export const fetches = {
           body: JSON.stringify(game)
         })
         .then((res) => res.json())
-      },
+      }
+    },
         games:
        { list: (type, value) => {
           return  fetch(

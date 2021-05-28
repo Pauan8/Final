@@ -114,6 +114,7 @@ export const GameCard = ({
   max_playtime,
   min_age,
   primary_publisher,
+  id
 }) => {
   const [flip, setFlip] = useState(false);
   const checkValue = (value) => {
@@ -165,7 +166,7 @@ export const GameCard = ({
               </ContainerInner>
             </FlipCardFront>
             <FlipCardBack>
-              <SaveGame name={name} setFlip={setFlip}/>
+              <SaveGame name={name} id={id} setFlip={setFlip}/>
             </FlipCardBack>
           </FlipCardInner>
         </FlipCard>

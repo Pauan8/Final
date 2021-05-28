@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components/macro";
 
-import user from '../../reducers/user'
+import { addGameToList } from '../../reducers/user'
 import { Button } from '../Reusable/Button'
 
 const Title = styled.h1`
@@ -24,13 +24,15 @@ export const SaveGame = ({name, id, setFlip}) => {
         wishlist: false,
         ownedgames: false
     })
+    const [type, setType] = useState('')
 
     const handleChange = (event) => {
         setValues({...values, [event.target.name]: event.target.checked})
+        setType(event.target.name)
     }
 
-    const handleClick = (e) => {
-        dispatch(user.actions.addGameToList(e.target.name, id))
+    const handleClick = () => {
+        dispatch(addGameToList(type, id))
         setFlip(false)
     }
 
