@@ -111,7 +111,7 @@ router.post('/profile/:id/addGame', async (req, res) => {
   const { id } = req.params;
   const { list } = req.query;
   try { 
-    let user = await User.findByIdAndUpdate(id, {'$push': {"lists": {[list]: req.body}}})
+    let user = await User.findByIdAndUpdate(id, {"lists": {$push: {[list]: req.body}}})
     res.json({   
       lists: {[list] : user.lists[list]},
       success: true, 
