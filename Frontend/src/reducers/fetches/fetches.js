@@ -57,7 +57,7 @@ export const fetches = {
             "content-type": "application/json",
             Authorization: getState().user.accessToken
           },
-          body: JSON.stringify(game)
+          body: JSON.stringify({id: game})
         })
         .then((response) => {
           if (!response.ok) {
