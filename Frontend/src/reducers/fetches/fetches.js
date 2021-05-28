@@ -43,7 +43,12 @@ export const fetches = {
                   e_mail
                 }),
               })
-                .then((res) => res.json())
+              .then((response) => {
+                if (!response.ok) {
+                  throw Error(response.statusText);
+                }
+                return response.json();
+              })
         },
         addGame: ( getState, game, list ) => {
           return fetch(`https://secure-escarpment-13722.herokuapp.com/profile/${getState().user.userInfo.userID}/addGame?list=${list}`, {
@@ -54,7 +59,12 @@ export const fetches = {
           },
           body: JSON.stringify(game)
         })
-        .then((res) => res.json())
+        .then((response) => {
+          if (!response.ok) {
+            throw Error(response.statusText);
+          }
+          return response.json();
+        })
       }
     },
         games:
