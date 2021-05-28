@@ -2,8 +2,8 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-import boardGames from './reducers/boardgame/boardGames';
-import user from './reducers/user/user';
+import boardGames from './reducers/boardGames';
+import user from './reducers/user';
 import Routing from 'routing/Routing'
 import ui from 'reducers/ui';
 

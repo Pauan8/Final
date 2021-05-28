@@ -12,5 +12,5 @@ justify-content: flex-end;`
 export const UserMenu = () => {
     const userID = useSelector(store => store.user.userInfo.userID)
     
-    return <Wrapper><Link to={`/profile/${userID}}`}>CLICK</Link></Wrapper>
+    return <Wrapper><Link to={`/profile/${userID}`}>CLICK</Link></Wrapper>
 }

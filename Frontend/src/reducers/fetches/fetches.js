@@ -1,5 +1,6 @@
 export const fetches = {
-    auth: (username, password) => {
+    profile: {
+      auth: (username, password) => {
     return fetch("https://secure-escarpment-13722.herokuapp.com/login", {
       method: "POST",
       headers: {
@@ -44,5 +45,40 @@ export const fetches = {
               })
                 .then((res) => res.json())
         }
-  
-    };
+      },
+        addGame: ( getState, game, list ) => {
+          return fetch(`https://secure-escarpment-13722.herokuapp.com/profie/${getState().user.userInfo.userID}/addGame?list=${list}`, {
+          method: 'POST',
+          headers: {
+            "content-type": "application/json",
+            Authorization: getState().user.accessToken
+          },
+          body: JSON.stringify(game)
+        })
+        .then((res) => res.json())
+      },
+        games:
+       { list: (type, value) => {
+          return  fetch(
+           `https://api.boardgameatlas.com/api/search?limit=20&pretty=true&client_id=39WI5Y3mBx&${type}=${value}`
+         )
+           .then((response) => {
+             if (!response.ok) {
+               throw Error(response.statusText);
+             }
+             return response.json();
+           })
+       },
+       game: (id) => {
+           return    fetch(
+               `https://api.boardgameatlas.com/api/search?limit=20&pretty=true&client_id=39WI5Y3mBx&ids=${id}`
+             )
+               .then((response) => {
+                 if (!response.ok) {
+                   throw Error(response.statusText);
+                 }
+                 return response.json();
+               })
+   
+       }
+    }}

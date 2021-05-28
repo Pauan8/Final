@@ -8,7 +8,7 @@ import { PasswordInput } from '../components/LoginSignup/PasswordInput'
 import { SubmitButton } from '../components/LoginSignup/SubmitButton'
 import { Button } from '../components/Reusable/Button'
 
-import { signUp, fetchUser } from '../reducers/user/user'
+import { signUp, fetchUser } from '../reducers/user'
 
 const Wrapper = styled.div`
 position: relative;

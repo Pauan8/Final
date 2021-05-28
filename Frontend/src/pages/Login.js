@@ -3,7 +3,7 @@ import styled from 'styled-components/macro'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { login } from '../reducers/user/user'
+import { login } from '../reducers/user'
 import { TextInput } from '../components/LoginSignup/TextInput'
 import { PasswordInput } from '../components/LoginSignup/PasswordInput'
 import { SubmitButton } from '../components/LoginSignup/SubmitButton'

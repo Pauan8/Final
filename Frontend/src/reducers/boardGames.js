@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { fetches } from "./fetches";
-import ui from '../ui'
+import { fetches } from "./fetches/fetches";
+import ui from './ui'
+import user from './user'
 
 const boardGames = createSlice({
   name: "boardGames",
@@ -36,12 +37,6 @@ const boardGames = createSlice({
     setGameLists: (store, action) => {
       const { sort, arr } = action.payload;
       const newarr = { ...store.gameLists, [sort]: arr };
-      console.log(
-        arr.map((item) => {
-          Object.keys(item).map((key) => item[key]);
-          return { ...item };
-        })
-      );
 
       store.gameLists = newarr;
     },
@@ -71,7 +66,7 @@ const boardGames = createSlice({
 export const generateGamesList = (type, value) => {
   return (dispatch) => {
     dispatch(ui.actions.setLoading(true))
-   fetches.list(type, value)
+   fetches.games.list(type, value)
       .then((data) =>
       {
         dispatch(boardGames.actions.setGameLists({ arr: data.games, sort: value }))
@@ -84,7 +79,7 @@ export const generateGamesList = (type, value) => {
 export const fetchSingleGame = (id) => {
   return (dispatch) => {
       dispatch(ui.actions.setLoading(true))
-      fetches.game(id)
+      fetches.games.game(id)
       .then((data) => 
       { 
         dispatch(boardGames.actions.setGame(data.games[0]))

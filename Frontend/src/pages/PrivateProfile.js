@@ -3,7 +3,7 @@ import styled from 'styled-components/macro'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { fetchUser, logout } from 'reducers/user/user'
+import { fetchUser, logout } from 'reducers/user'
 import { LottieAnimation } from '../animation/LottieAnimation'
 import loading from 'animation/json/loading.json'
 

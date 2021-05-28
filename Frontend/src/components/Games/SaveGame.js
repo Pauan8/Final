@@ -1,7 +1,9 @@
 import { Checkbox, FormGroup , FormLabel, FormControlLabel } from "@material-ui/core";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components/macro";
 
+import user from '../../reducers/user'
 import { Button } from '../Reusable/Button'
 
 const Title = styled.h1`
@@ -14,7 +16,8 @@ const ButtonContainer = styled.div`
  `
 
 
-export const SaveGame = ({name, id}) => {
+export const SaveGame = ({name, id, setFlip}) => {
+    const dispatch = useDispatch();
 
     const [values, setValues] = useState({
         favourites: false,
@@ -26,8 +29,9 @@ export const SaveGame = ({name, id}) => {
         setValues({...values, [event.target.name]: event.target.checked})
     }
 
-    const handleClick = () => {
-
+    const handleClick = (e) => {
+        dispatch(user.actions.addGameToList(e.target.name, id))
+        setFlip(false)
     }
 
     const renderCheckbox = (title) => {

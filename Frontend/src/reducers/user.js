@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { fetches } from './fetches'
-import ui from '../ui'
+import { fetches } from './fetches/fetches'
+import ui from './ui'
 
 const RESET_STATE =  {
     userID: undefined,
@@ -44,10 +44,9 @@ const user = createSlice({
     setErrors: (store, action) => {
       store.errors = action.payload;
     },
-    setLoggedOut: (store, action) => {
-      const isLoggedOut = action.payload;
-      store.userInfo.loggedOut = isLoggedOut;
-    },
+    setGameLists: (store, action) => {
+
+    }
   },
 });
 
@@ -55,7 +54,7 @@ const user = createSlice({
 export const signUp = ({ username, password, name, surname, e_mail }) => {
   return (dispatch) => {
     dispatch(ui.actions.setLoading(true))
-    fetches.signup(username, password, name, surname, e_mail)
+    fetches.profile.signup(username, password, name, surname, e_mail)
       .then((data) => {
         dispatch(ui.actions.setLoading(false));
         if (data.sucess) {
@@ -74,7 +73,7 @@ export const signUp = ({ username, password, name, surname, e_mail }) => {
 export const fetchUser = (userID) => {
   return (dispatch, getState) => {
     dispatch(ui.actions.setLoading(true))
-    fetches.user(userID, getState, dispatch)
+    fetches.profile.user(userID, getState, dispatch)
       .then((data) => {
         dispatch(ui.actions.setLoading(false))
         if(data.success){
@@ -92,7 +91,7 @@ export const fetchUser = (userID) => {
 
 export const login = (username, password) => {
   return (dispatch) => {
-    fetches.auth(username, password)
+    fetches.profile.auth(username, password)
       .then((json) => {
         if (json.accessToken) {
           localStorage.setItem("token", json.accessToken);
@@ -107,6 +106,13 @@ export const login = (username, password) => {
       .catch((error) => dispatch(user.actions.setErrors("catch error")))
   };
 };
+
+export const addGameToList = (type, id) => {
+  return (getState) =>{
+  fetches.games.game(id)
+  .then(data => fetches.profile.addGame(getState, data, type))
+  }
+}
 
 export const logout = () => {
   return (dispatch) => {

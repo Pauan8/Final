@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/macro'
 
-import { generateGamesList } from '../../reducers/boardgame/boardGames'
+import { generateGamesList } from '../../reducers/boardGames'
 import { GameCard } from './GameCard'
 import { LottieAnimation } from '../../animation/LottieAnimation'
 import loading from '../../animation/json/loading.json'

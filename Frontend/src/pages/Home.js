@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import { useDispatch } from 'react-redux'
 
-import { fetchUser } from '../reducers/user/user'
+import { fetchUser } from '../reducers/user'
 import { Sidebar } from '../components/Sidebar'
 import { Header } from '../components/Header'
 import { Slideshow } from '../components/Games/Slideshow'

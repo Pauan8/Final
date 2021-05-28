@@ -165,7 +165,7 @@ export const GameCard = ({
               </ContainerInner>
             </FlipCardFront>
             <FlipCardBack>
-              <SaveGame name={name} />
+              <SaveGame name={name} setFlip={setFlip}/>
             </FlipCardBack>
           </FlipCardInner>
         </FlipCard>
