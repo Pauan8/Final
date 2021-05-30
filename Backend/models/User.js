@@ -1,7 +1,9 @@
 import mongoose from 'mongoose'
 import crypto from 'crypto'
 
-const List = require('./Lists')
+const Favourites = require('./Lists')
+const wishlist = require('./Lists')
+const ownedgames = require('./Lists')
   
 const UserSchema = mongoose.Schema(
   {
@@ -30,17 +32,10 @@ const UserSchema = mongoose.Schema(
       default: () => new Date()
     },
     lists: {
-      type:[
-        {
-          favourites: {
-            type: mongoose.Schema.Types.ObjectId, ref:'List'
-          }, wishlist: {
-            type: mongoose.Schema.Types.ObjectId, ref:'List'
-          }, ownedgames: {
-            type: mongoose.Schema.Types.ObjectId, ref:'List'
-          } 
-        }
-      ]
+      favourites: [ Favourites.schema ],
+      wishlist: [wishlist.schema],
+      ownedgames: [ownedgames.schema]
+
     }
   }
 )

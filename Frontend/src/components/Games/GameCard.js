@@ -129,7 +129,7 @@ export const GameCard = ({
 
   return (
     <>
-      {name ? (
+      {id ? (
         <FlipCard>
           <FlipCardInner flip={flip}>
             <FlipCardFront>

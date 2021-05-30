@@ -111,7 +111,7 @@ export const addGameToList = (type, id) => {
   return (dispatch, getState) =>{
   fetches.games.game(id)
   .then(data => {
-  fetches.profile.addGame(getState, data.games[0].name, type)})
+  fetches.profile.addGame(getState, data.games[0], type)})
   .then(games => dispatch(user.actions.setGameLists(games)))
   }
 }

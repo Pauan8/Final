@@ -1,20 +1,24 @@
+//const BASE_URL = "https://secure-escarpment-13722.herokuapp.com"
+const BASE_URL = "http://localhost:8080"
+
 export const fetches = {
     profile: {
       auth: (username, password) => {
-    return fetch("https://secure-escarpment-13722.herokuapp.com/login", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        username,
-        password,
-      }),
-    }).then((res) => res.json());
-  },
+        return fetch(`${BASE_URL}/login`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      })
+      .then((res) => res.json());
+    },
     user: (userID, getState) => {
       return  fetch(
-          `https://secure-escarpment-13722.herokuapp.com/profile/${userID}`,
+          `${BASE_URL}/profile/${userID}`,
           {
             headers: {
               "content-type": "application/json",
@@ -30,7 +34,7 @@ export const fetches = {
           })
       },
       signup: ( username, password, name, surname, e_mail ) => {
-            return fetch("https://secure-escarpment-13722.herokuapp.com/users", {
+            return fetch(`${BASE_URL}/users`, {
                 method: "POST",
                 headers: {
                   "content-type": "application/json",
@@ -51,13 +55,15 @@ export const fetches = {
               })
         },
         addGame: ( getState, game, list ) => {
-          return fetch(`https://secure-escarpment-13722.herokuapp.com/profile/${getState().user.userInfo.userID}/addGame?list=${list}`, {
+          return fetch(`${BASE_URL}/profile/${getState().user.userInfo.userID}/addGame?list=${list}`, {
           method: 'POST',
           headers: {
             "content-type": "application/json",
             Authorization: getState().user.accessToken
           },
-          body: JSON.stringify({title: game})
+          body: JSON.stringify({
+            [list]: game
+          })
         })
         .then((response) => {
           if (!response.ok) {

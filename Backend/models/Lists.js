@@ -1,8 +1,7 @@
 import mongoose from 'mongoose'
 
-const ListSchema = mongoose.Schema([
-  {
-    type: Object,
+const ListSchema = mongoose.Schema([{
+    strict: false,
     name: String,
     category: String,
     user_rating: {
@@ -16,8 +15,10 @@ const ListSchema = mongoose.Schema([
     },
     release_year: Number,
     publisher: String
-  }
-])
 
-const List = mongoose.model('List', ListSchema);
-module.exports = List
+  }])
+
+const Favourites = mongoose.model('Favourites', ListSchema);
+const wishlist = mongoose.model('wishlist', ListSchema);
+const Owned = mongoose.model('Owned', ListSchema);
+module.exports = Favourites, wishlist, Owned

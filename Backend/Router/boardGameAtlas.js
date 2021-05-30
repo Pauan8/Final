@@ -11,7 +11,8 @@ const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost/boardGameAtlas';
 mongoose.connect(mongoUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useCreateIndex: true
+  useCreateIndex: true,
+  useFindAndModify: false
 });
 mongoose.Promise = Promise;
 
@@ -110,10 +111,12 @@ router.post('/profile/:id/addGame', authenticateUser);
 router.post('/profile/:id/addGame', async (req, res) => {
   const { id } = req.params;
   const { list } = req.query;
+  const attr = `lists.${list}`
+ 
   try { 
-    const user = await User.findByIdAndUpdate(id, {$push: {name: req.body}})
+    const user = await User.findByIdAndUpdate(id, {$push: {[attr] : req.body[list]}},{safe: true, upsert: true, new: true})
     res.json({   
-      lists: user.lists,
+      user: user,
       success: true, 
       loggedOut: false 
     })
