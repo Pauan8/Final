@@ -17,13 +17,13 @@ const user = createSlice({
   name: "user",
   initialState: { 
     accessToken: localStorage.getItem('token') === "undefined" ? null : localStorage.getItem('token'),
-    userInfo:  {
-      userID: localStorage.getItem('userID'),
-      avatar: null,
-      name: null,
-      surname: null,
-      username: null,
-      e_mail: null
+      userInfo:  {
+        userID: localStorage.getItem('userID'),
+        avatar: null,
+        name: null,
+        surname: null,
+        username: null,
+        e_mail: null
     },
     lists: {
       favourites: [{}],
@@ -39,13 +39,11 @@ const user = createSlice({
       store.accessToken = action.payload;
     },
     setUser: (store, action) => {
-      const { userID, username, name, surname, e_mail, success } = action.payload;
-      const userInfo = {...store.userInfo, userID, username,  name, surname, e_mail, success}
+      const userInfo = action.payload;
       store.userInfo = userInfo
     },
     updateUser: (store, action) => {
-      const {avatar, description, name, surname, e_mail, age } = action.payload;
-      const userInfo = {...store.userInfo, avatar, description, name, surname, e_mail, age  }
+      const userInfo = action.payload
       store.userInfo = userInfo;
     },
     setErrors: (store, action) => {

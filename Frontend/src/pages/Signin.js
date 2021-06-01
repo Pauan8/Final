@@ -4,10 +4,11 @@ import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { login } from '../reducers/user'
-import { TextInput } from '../components/LoginSignup/TextInput'
+import { TextInput } from '../components/Reusable/TextInput'
 import { PasswordInput } from '../components/LoginSignup/PasswordInput'
 import { SubmitButton } from '../components/LoginSignup/SubmitButton'
 import { Button } from '../components/Reusable/Button'
+import { regexArr } from '../data/regExValdate'
 
 const Wrapper = styled.div`
 position: relative;
@@ -54,6 +55,7 @@ const Signin = () => {
             helptext="Enter your Username"
             value={value}
             setValue={setValue}
+            regexp = {regexArr[0].regex}
           />
           <PasswordInput type="Login" value={value} setValue={setValue} />
           <SubmitButton

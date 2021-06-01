@@ -41,10 +41,10 @@ export const fetches = {
                 },
                 body: JSON.stringify({
                   username,
-                  password,
-                  name,
+                   password,
+                 name,
                   surname,
-                  e_mail
+                 e_mail
                 }),
               })
               .then((response) => {

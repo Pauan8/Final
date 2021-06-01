@@ -3,12 +3,12 @@ import styled from 'styled-components/macro'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, Link} from 'react-router-dom'
 
-import { TextInput } from '../components/LoginSignup/TextInput'
+import { TextInput } from '../components/Reusable/TextInput'
 import { PasswordInput } from '../components/LoginSignup/PasswordInput'
 import { SubmitButton } from '../components/LoginSignup/SubmitButton'
 import { Button } from '../components/Reusable/Button'
-
 import { signUp, fetchUser } from '../reducers/user'
+import { regexArr } from '../data/regExValdate'
 
 const Wrapper = styled.div`
 position: relative;
@@ -38,15 +38,16 @@ const Signup = () => {
   const token = useSelector(store => store.user.accessToken)
 
   const handleClick = () =>{ 
-    let regex = /[%<>\\$'"]/
-    if (regex.test(value.username)){
+    regexArr.map(item => {
+    if (!item.regex.test(value[item.value])){
       setValidate(false)
     } else {
       setValidate(true)
       dispatch(signUp({...value}))
       history.push({pathname: "/login", state: {prev: "signup"}})
     }
-  }
+  })
+};
 
   useEffect(() => {
     dispatch(fetchUser())
@@ -69,20 +70,21 @@ const Signup = () => {
         helptext="Your first name"
         value={value}
         setValue={setValue}
+        regexp={regexArr[1].regex}
       />
       <TextInput
         title="surname"
         helptext="Your last name"
         value={value}
         setValue={setValue}
+        regexp={regexArr[2].regex}
       />
       <TextInput
         title="username"
         helptext="Choose a username 5-12 chars"
         value={value}
         setValue={setValue}
-        min="5"
-        max="12"
+        regexp={regexArr[0].regex}
       />
       <PasswordInput type="Singup" value={value} setValue={setValue} />
       <TextInput
@@ -90,8 +92,7 @@ const Signup = () => {
         helptext="Enter your e-mail"
         value={value}
         setValue={setValue}
-        min="5"
-        max=""
+        regexp={regexArr[3].regex}
       />
       <SubmitButton
         btntext="Submit"

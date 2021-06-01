@@ -22,6 +22,10 @@ const UserSchema = mongoose.Schema(
       type: String,
       required: [true, 'A password is required.'],
     },
+    e_mail: {
+      type: String,
+      trim: true
+    },
     accessToken: {
       type: String,
       default: () => crypto.randomBytes(128).toString('hex')
@@ -34,7 +38,6 @@ const UserSchema = mongoose.Schema(
       favourites: [ list.schema ],
       wishlist: [list.schema],
       ownedgames: [list.schema]
-
     }
   }
 )

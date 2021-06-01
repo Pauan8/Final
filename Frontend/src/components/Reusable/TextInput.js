@@ -15,24 +15,26 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export const TextInput = ({ title, setValue, value, min, max }) => {
+export const TextInput = ({ title, setValue, value, regexp }) => {
   const classes = useStyles();
   const [error, setError] = useState(false)
+  const [errorText, setErrorText] = useState("")
 
   const handleChange = (e) => {
-      const newValue = e.target.value;
-      if ((newValue.length < min || newValue.length > max) 
-      && newValue.match(/[%<>\\$'"]/)){
-        setError(`Should be ${min}-${max} chars & not contain %<>$'\"`)
-      } else if(newValue.length < min || newValue.length > max){
-        setError(`Should be ${min}-${max} characters`)
-      } else if (newValue.match(/[%<>\\$'"]/)) {
-        setError("Forbidden: %<>$'\"")
-      } else {
-        setError( "");
-      }
-      setValue({...value, [title]: e.target.value});
+    const newValue = e.target.value
+    if(title="e_mail" && !regexp.test(newValue)){
+      setErrorText("Enter a valid e-mail")
+      setError(true);
+    } else if (!(regexp).test(newValue)) {
+        setErrorText("Should not contain special characters" )
+        setError(true);
+    } else {
+        setErrorText("" )
+        setError(false);
     }
+      setValue({...value, [e.target.id]: e.target.value})
+    }
+
      
   return (
     <FormControl
@@ -44,10 +46,10 @@ export const TextInput = ({ title, setValue, value, min, max }) => {
         value={value.title}
         onChange={handleChange}
         label={title}
-        error={!!error}
+        error={error}
         />
       <FormHelperText id={`${title}-helper-text`}>
-        {error}
+        {errorText}
       </FormHelperText>
     </FormControl>
   )

@@ -129,10 +129,9 @@ router.post('/profile/:id/addGame', async (req, res) => {
 
 router.post('/profile/:id/edit', authenticateUser);
 router.post('/profile/:id/edit', async (req, res) => {
-  const {name, surname, avatar, e_mail, age} = req.body
   const { id } = req.params;
   try {
-    let updateProfile = await User.findByIdAndUpdate(id, {name, surname, avatar, e_mail, age}).exec();   
+    let updateProfile = await User.findByIdAndUpdate(id, {$set: req.body}).exec();   
       res.json({
         name: updateProfile.name,
         surname: updateProfile.surname,
