@@ -18,7 +18,7 @@ useEffect(() => {
     .then(json => setUser(json))
 }, [fetch])
 
-    return (
+return (
     <Wrapper>
         <Name>{user.username}</Name>
     </Wrapper>)

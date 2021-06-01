@@ -18,7 +18,5 @@ const ListSchema = mongoose.Schema([{
 
   }])
 
-const Favourites = mongoose.model('Favourites', ListSchema);
-const wishlist = mongoose.model('wishlist', ListSchema);
-const Owned = mongoose.model('Owned', ListSchema);
-module.exports = Favourites, wishlist, Owned
+const list = mongoose.model('list', ListSchema);
+module.exports = list

@@ -9,6 +9,7 @@ border: none;
 border-radius: 10px;
 padding: 5px;
 width: 100px;
+position: relative;
 
 &:hover{
     background: #B5D5B5

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components/macro'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { fetchUser, logout } from 'reducers/user'
@@ -16,17 +16,16 @@ width: 100%;`
 const Name = styled.h1``
 
 const PrivateProfile = () => {
+const { id } = useParams();
 const history = useHistory();
 const dispatch = useDispatch();
 const token = useSelector(store => store.user.accessToken)
-const userID = useSelector(store => store.user.userInfo.userID)
 const isLoading = useSelector(store => store.ui.isLoading)
-console.log(token)
 
 useEffect(() => {
     if(token)
     {
-        dispatch(fetchUser(userID))
+        dispatch(fetchUser())
     } else {
         history.push("/signup")
     }
@@ -39,8 +38,9 @@ const onLogout = () => {
     const profileInfo = useSelector(store => store.user.userInfo)
     return (
       <Wrapper>
-          {!isLoading ? (
+          {!isLoading ? (<>
            <Name> {profileInfo.username} </Name>
+           <Link to={`/profile/${id}/edit`}> Edit </Link></>
           ) : (
             <LottieAnimation lotti={loading} height={300} width={300} />
           )}

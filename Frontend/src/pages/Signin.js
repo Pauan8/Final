@@ -22,7 +22,7 @@ justify-content: center;
 const Title = styled.h1`
 `
 
-const Login = () => {
+const Signin = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const token = useSelector(store => store.user.accessToken)
@@ -74,4 +74,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signin;

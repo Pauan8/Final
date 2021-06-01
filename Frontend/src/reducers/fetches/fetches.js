@@ -16,9 +16,9 @@ export const fetches = {
       })
       .then((res) => res.json());
     },
-    user: (userID, getState) => {
+    user: (getState) => {
       return  fetch(
-          `${BASE_URL}/profile/${userID}`,
+          `${BASE_URL}/profile/${getState().user.userInfo.userID}`,
           {
             headers: {
               "content-type": "application/json",
@@ -54,6 +54,29 @@ export const fetches = {
                 return response.json();
               })
         },
+        edit: (avatar, name, surname, e_mail, description, age, getState) => {
+          return fetch(`${BASE_URL}/profile/${getState().user.userInfo.userID}/edit`, {
+              method: "POST",
+              headers: {
+                "content-type": "application/json",
+                Authorization: getState().user.accessToken
+              },
+              body: JSON.stringify({
+                avatar,
+                name,
+                surname,
+                e_mail,
+                description,
+                age
+              }),
+            })
+            .then((response) => {
+              if (!response.ok) {
+                throw Error(response.statusText);
+              }
+              return response.json();
+            })
+      },
         addGame: ( getState, game, list ) => {
           return fetch(`${BASE_URL}/profile/${getState().user.userInfo.userID}/addGame?list=${list}`, {
           method: 'POST',

@@ -8,9 +8,10 @@ import GameList from '../pages/GameList'
 import { Footer } from '../components/Footer'
 import SingleGame from '../pages/SingleGame'
 import Signup from '../pages/Signup'
-import Login from '../pages/Login'
+import Signin from '../pages/Signin'
 import PrivateProfile from '../pages/PrivateProfile'
 import PublicProfile from '../pages/PublicProfile'
+import EditProfile from '../pages/EditProfile'
 
 
 const Wrapper = styled.div`
@@ -47,9 +48,10 @@ return(
     <Main>
       <Overlay />
       <Route path="/" exact component={Home} />
-      <Route path="/Login" exact component={Login} />
+      <Route path="/Login" exact component={Signin} />
       <Route path="/Signup" exact component={Signup} />
       <Route path="/Profile/:id" exact component={PrivateProfile} />
+      <Route path="/Profile/:id/edit" exact component={EditProfile} />
       <Route path="/User/:username" exact component={PublicProfile} />
       <Route path="/GameList/:type" component={GameList} />
       <Route path="/Game/:Id" component={SingleGame} />

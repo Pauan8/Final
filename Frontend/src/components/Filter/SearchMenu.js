@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 
-import { DropDown } from './DropDown';
+import { DropDown } from '../Reusable/DropDown';
 import { Search } from './Search';
 import { RadioButtons } from './RadioButtons';
 import categories from '../../data/categories.json'
+import mechanics from '../../data/mechanics.json'
 
 const Wrapper = styled.div`
   display: flex;
@@ -86,6 +87,15 @@ grid-row-gap: 20px;
 
 export const SearchMenu = () => {
   const [expand, setExpand] = useState(false)
+  const [value, setValue] =  useState({
+    category: '',
+    mechanc: ''
+  })
+
+  const handleChange = (props) => (event) => {
+    setValue({...value, [props]: event.target.value});
+  };
+
   return (
     <Wrapper>
       <Form noValidate autoComplete="off">
@@ -95,8 +105,8 @@ export const SearchMenu = () => {
         <ExpandButton onClick={() => setExpand(!expand)}> Filter </ExpandButton>
         <Expand expand={expand}>
           <SelectContainer>
-            <DropDown arr={categories} />
-            <DropDown arr={categories} />
+            <DropDown arr={categories} value={value.category} handleChange={handleChange('category')} title="category"/>
+            <DropDown arr={mechanics} value={value.mechanic} handleChange={handleChange('mechanic')} title="mechanic"/>
           </SelectContainer>
           <RadioContainer>
             <RadioButtons />

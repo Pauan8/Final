@@ -58,7 +58,8 @@ router.get('/users', async (_req, res) => {
         avatar: allUsers.avatar,
         e_mail: allUsers.e_mail,
         success: true, 
-        loggedOut: false 
+        loggedOut: false,
+        lists: allUsers.lists
         })
       : res.json({ success: false, message: 'No users in the database' });
   } catch (err) {
@@ -99,6 +100,7 @@ router.get('/profile/:id', async (req, res) => {
         surname: privateProfile.surname,
         avatar: privateProfile.avatar,
         e_mail: privateProfile.e_mail,
+        lists: privateProfile.lists,
         success: true, 
         loggedOut: false 
       });
@@ -116,7 +118,7 @@ router.post('/profile/:id/addGame', async (req, res) => {
   try { 
     const user = await User.findByIdAndUpdate(id, {$push: {[attr] : req.body[list]}},{safe: true, upsert: true, new: true})
     res.json({   
-      user: user,
+      lists: user.lists,
       success: true, 
       loggedOut: false 
     })
@@ -124,6 +126,25 @@ router.post('/profile/:id/addGame', async (req, res) => {
       catchError(res, err, 'Invalid user id');
 }
 })
+
+router.post('/profile/:id/edit', authenticateUser);
+router.post('/profile/:id/edit', async (req, res) => {
+  const {name, surname, avatar, e_mail, age} = req.body
+  const { id } = req.params;
+  try {
+    let updateProfile = await User.findByIdAndUpdate(id, {name, surname, avatar, e_mail, age}).exec();   
+      res.json({
+        name: updateProfile.name,
+        surname: updateProfile.surname,
+        avatar: updateProfile.avatar,
+        e_mail: updateProfile.e_mail,
+        success: true, 
+        loggedOut: false 
+      });
+  } catch (err) {
+    catchError(res, err, 'Invalid user id');
+  }
+});
 
 router.get('/user/:username', async (req, res) => {
   const { username } = req.params;

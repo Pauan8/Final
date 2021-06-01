@@ -17,35 +17,42 @@ const user = createSlice({
   name: "user",
   initialState: { 
     accessToken: localStorage.getItem('token') === "undefined" ? null : localStorage.getItem('token'),
-    userInfo: {
+    userInfo:  {
       userID: localStorage.getItem('userID'),
       avatar: null,
       name: null,
       surname: null,
       username: null,
-      e_mail: null,
-    },
-    errors: {
-      loggedOut: localStorage.getItem('token') === "undefined" || !localStorage.getItem('token') ? true : false,
+      e_mail: null
     },
     lists: {
       favourites: [{}],
-      wish: [{}],
-      ownded: [{}],
+      wishlist: [{}],
+      owndedgames: [{}],
     }
+  },
+    errors: {
+      loggedOut: localStorage.getItem('token') === "undefined" || !localStorage.getItem('token') ? true : false,
   },
   reducers: {
     setToken: (store, action) => {
       store.accessToken = action.payload;
     },
     setUser: (store, action) => {
-      store.userInfo = action.payload;
+      const { userID, username, name, surname, e_mail, success } = action.payload;
+      const userInfo = {...store.userInfo, userID, username,  name, surname, e_mail, success}
+      store.userInfo = userInfo
+    },
+    updateUser: (store, action) => {
+      const {avatar, description, name, surname, e_mail, age } = action.payload;
+      const userInfo = {...store.userInfo, avatar, description, name, surname, e_mail, age  }
+      store.userInfo = userInfo;
     },
     setErrors: (store, action) => {
       store.errors = action.payload;
     },
     setGameLists: (store, action) => {
-
+      store.lists = action.payload;
     }
   },
 });
@@ -70,14 +77,15 @@ export const signUp = ({ username, password, name, surname, e_mail }) => {
   };
 };
 
-export const fetchUser = (userID) => {
+export const fetchUser = () => {
   return (dispatch, getState) => {
     dispatch(ui.actions.setLoading(true))
-    fetches.profile.user(userID, getState, dispatch)
+    fetches.profile.user(getState, dispatch)
       .then((data) => {
         dispatch(ui.actions.setLoading(false))
         if(data.success){
           dispatch(user.actions.setUser(data));
+          dispatch(user.actions.setGameLists(data.lists))
           dispatch(user.actions.setErrors(null));
         } else {
           dispatch(user.actions.setErrors(data));
@@ -107,12 +115,37 @@ export const login = (username, password) => {
   };
 };
 
+export const editProfile = ({avatar, name, surname, e_mail, description, age}) =>  {
+  return (dispatch, getState) => {
+    dispatch(ui.actions.setLoading(true))
+    fetches.profile.edit(avatar, name, surname, e_mail, description, age, getState)
+    .then((data) => {
+      dispatch(ui.actions.setLoading(false));
+      if (data.success) {
+        dispatch(user.actions.updateUser(data));
+        dispatch(user.actions.setErrors(null));
+      } else {
+        dispatch(user.actions.setErrors(data))
+      }
+    })
+    .catch((error) => dispatch(user.actions.setErrors("catch error")))
+  }
+}
+
 export const addGameToList = (type, id) => {
   return (dispatch, getState) =>{
   fetches.games.game(id)
   .then(data => {
   fetches.profile.addGame(getState, data.games[0], type)})
-  .then(games => dispatch(user.actions.setGameLists(games)))
+  .then(games => {
+    if(games.success) {
+    dispatch(user.actions.setGameLists(games.lists))
+    dispatch(user.actions.setErrors(null))
+  } else {
+    dispatch(user.actions.setErrors(games))
+  }
+}) 
+.catch((error) => dispatch(user.actions.setErrors("catch error")))
   }
 }
 
