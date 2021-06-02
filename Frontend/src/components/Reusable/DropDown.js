@@ -25,7 +25,7 @@ export const DropDown = ({ arr , value, handleChange, title}) => {
         InputProps={{ style: { fontSize: '12px' } }}>
         {arr.map((option) => (
           <MenuItem key={option.name} value={option.name}>
-            {title === 'avatar' ? <img src={require(`../../assets/Avatar/${option.name}`)}/> : option.name }
+            {title === 'avatar' ? <img src={require(`../../assets/avatar/${option.name}`)}/> : option.name }
           </MenuItem>
         ))}
       </TextField>

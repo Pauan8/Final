@@ -19,7 +19,7 @@ const EditProfile = () => {
     }
 
     return  (<>
-        <DropDown arr={picArray} handleChange={handleChange}  value={avatar} title="avatar"/> 
+        <DropDown arr={picArray} handleChange={handleChange} value={avatar} title="avatar"/> 
         <Button handleClick={handleClick} text="Save"/></>)
   
 }

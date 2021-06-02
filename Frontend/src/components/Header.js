@@ -48,6 +48,7 @@ const TextContainer = styled.div`
   }
 `;
 
+const Logo = styled.img``
 const Title = styled.h1`
   margin: 0%;
   font-family: "Rock Salt", cursive;
@@ -61,7 +62,7 @@ const Title = styled.h1`
 
 const SubTitle = styled.h2`
   margin: 0%;
-  color: darkslategrey;
+  color: #011126;
 `;
 
 export const Header = () => {
@@ -69,7 +70,7 @@ export const Header = () => {
     <Wrapper>
        <UserMenu />
       <TextContainer>
-        <Title> All a&apos;Board </Title>
+        <Logo src={require('../assets/logo.svg')} />
         <SubTitle>- Let the adventure begin!</SubTitle>
       </TextContainer>
       <BgImage path="https://images.unsplash.com/photo-1547638369-03b0e69b28d8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" />

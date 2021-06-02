@@ -29,8 +29,7 @@ const Outerclip = styled.div`
   &:nth-child(4) > div,
   &:nth-child(8) > div
   {
-    background: #D7BD8F;
-    color: white;
+    background:#D94A56;
   }
 
   &:nth-child(4):hover > div,
@@ -48,7 +47,7 @@ const Innerclip = styled.div`
   transform: skew(50deg);
   overflow: hidden;
   display: inline-block;
-  background: #B5D5B5;
+  background: #C2D991;
   display: flex;
   align-items: center;
   justify-content: center;

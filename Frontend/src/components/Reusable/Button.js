@@ -12,7 +12,7 @@ width: 100px;
 position: relative;
 
 &:hover{
-    background: #B5D5B5
+    background: #F2D3AC;
 }
 
 &:active{

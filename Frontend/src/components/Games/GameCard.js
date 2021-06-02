@@ -11,7 +11,8 @@ const ContainerInner = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #d7bd8f;
+  background: #F2D3AC;
+  color: #733C3C;
 `;
 
 const Title = styled.h1`
@@ -28,7 +29,7 @@ const ImageContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
-  border: solid #75603e 0.5px;
+  border: solid #733C3C 0.5px;
 `;
 
 const Image = styled.img`
@@ -79,7 +80,7 @@ const FlipCardBack = styled.div`
   height: 100%;
   -webkit-backface-visibility: hidden; /* Safari */
   backface-visibility: hidden;
-  background: #9c8152;
+  background:#A65151;
   color: white;
   transform: rotateY(180deg);
   border-radius: 5px;
@@ -89,8 +90,8 @@ const FlipCardBack = styled.div`
 `;
 
 const FlipCardFront = styled.div`
-  background: #9c8152;
-  border: solid #75603e 0.3px;
+  background: #A65151;
+  border: solid #733C3C 0.3px;
   display: flex;
   flex-direction: column;
   align-items: center;

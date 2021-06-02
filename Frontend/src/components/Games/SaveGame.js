@@ -7,6 +7,7 @@ import { addGameToList } from '../../reducers/user'
 import { Button } from '../Reusable/Button'
 
 const Title = styled.h1`
+color: white;
   font-size: 18px;
   width: 250px;
   text-align: center;
@@ -46,7 +47,7 @@ export const SaveGame = ({name, id, setFlip}) => {
       />
     }
     return <><Title>{name}</Title>
-    <FormLabel component="legend">Add to list/s?</FormLabel>
+    <FormLabel component="legend" InputLabelProps={{style: {color: '#000'}}}>Add to list/s?</FormLabel>
         <FormGroup>
          {renderCheckbox('Favourites')}
          {renderCheckbox('Wish List')}

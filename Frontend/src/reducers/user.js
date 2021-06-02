@@ -23,13 +23,14 @@ const user = createSlice({
         name: null,
         surname: null,
         username: null,
-        e_mail: null
+        e_mail: null,
+        lists: {
+          favourites: [{}],
+          wishlist: [{}],
+          owndedgames: [{}],
+        }
     },
-    lists: {
-      favourites: [{}],
-      wishlist: [{}],
-      owndedgames: [{}],
-    }
+
   },
     errors: {
       loggedOut: localStorage.getItem('token') === "undefined" || !localStorage.getItem('token') ? true : false,
@@ -50,7 +51,7 @@ const user = createSlice({
       store.errors = action.payload;
     },
     setGameLists: (store, action) => {
-      store.lists = action.payload;
+      store.userInfo.lists = action.payload;
     }
   },
 });

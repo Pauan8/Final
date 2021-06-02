@@ -21,6 +21,9 @@ font-size: 25px;`
 const Title = styled.h2`
 position: relative;
 z-index: 5;
+margin-bottom: 0;
+margin-top: 50px;
+color: #011126;
 text-align: center;
 `
 
@@ -39,15 +42,15 @@ const dispatch= useDispatch()
       <SearchMenu />
       <Sidebar />
       <ListLink to="/GameList/TopRated">
-        <Title>Top Rated</Title>
+        <Title>		&#8640;	 Top Rated</Title>
       </ListLink>
       <Slideshow type="order_by" value="popularity" />
       <ListLink to="/GameList/Discounted">
-        <Title>Discounted</Title>
+        <Title>		&#8640;	 Discounted</Title>
       </ListLink>
       <Slideshow type="order_by" value="discount" />
       <ListLink to="/GameList/NewReleases">
-        <Title>New 2021</Title>
+        <Title>		&#8640;	 New 2021</Title>
       </ListLink>
       <Slideshow type="year_published" value="2021" />
     </Section>)

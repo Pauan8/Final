@@ -6,14 +6,15 @@ import { useSelector, useDispatch } from 'react-redux'
 import { fetchUser, logout } from 'reducers/user'
 import { LottieAnimation } from '../animation/LottieAnimation'
 import loading from 'animation/json/loading.json'
+import { ProfileCard } from '../components/User/ProfileCard'
 
 const Wrapper = styled.div`
 position: relative;
 display: flex;
+flex-direction: column;
 min-height: 100vh;
-width: 100%;`
-
-const Name = styled.h1``
+width: 100%;
+align-items: center;`
 
 const PrivateProfile = () => {
 const { id } = useParams();
@@ -35,11 +36,11 @@ const onLogout = () => {
     dispatch(logout())
     history.push("/")
 }
-    const profileInfo = useSelector(store => store.user.userInfo)
+    
     return (
       <Wrapper>
           {!isLoading ? (<>
-           <Name> {profileInfo.username} </Name>
+          <ProfileCard />
            <Link to={`/profile/${id}/edit`}> Edit </Link></>
           ) : (
             <LottieAnimation lotti={loading} height={300} width={300} />
