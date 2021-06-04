@@ -101,6 +101,8 @@ router.get('/profile/:id', async (req, res) => {
         avatar: privateProfile.avatar,
         e_mail: privateProfile.e_mail,
         lists: privateProfile.lists,
+        age: privateProfile.age,
+        description: privateProfile.description,
         success: true, 
         loggedOut: false 
       });
@@ -112,11 +114,11 @@ router.get('/profile/:id', async (req, res) => {
 router.post('/profile/:id/addGame', authenticateUser);
 router.post('/profile/:id/addGame', async (req, res) => {
   const { id } = req.params;
-  const { list } = req.query;
-  const attr = `lists.${list}`
+  const {list} = req.query
+  const attr =  `lists.${list}`
  
   try { 
-    const user = await User.findByIdAndUpdate(id, {$push: {[attr] : req.body[list]}},{safe: true, upsert: true, new: true})
+    const user = await User.findByIdAndUpdate(id, {$push: {[attr]: req.body[list]}}, {new: true})
     res.json({   
       lists: user.lists,
       success: true, 
@@ -124,19 +126,24 @@ router.post('/profile/:id/addGame', async (req, res) => {
     })
     } catch (err) {
       catchError(res, err, 'Invalid user id');
-}
+  }
 })
 
 router.post('/profile/:id/edit', authenticateUser);
 router.post('/profile/:id/edit', async (req, res) => {
   const { id } = req.params;
   try {
-    let updateProfile = await User.findByIdAndUpdate(id, {$set: req.body}).exec();   
+    let params = {};
+    for(let prop in req.body) if(req.body[prop]) params[prop] = req.body[prop];
+
+    let updateProfile = await User.findByIdAndUpdate(id, {$set: params}).exec();   
       res.json({
         name: updateProfile.name,
         surname: updateProfile.surname,
         avatar: updateProfile.avatar,
         e_mail: updateProfile.e_mail,
+        age: updateProfile.age,
+        description: updateProfile.description,
         success: true, 
         loggedOut: false 
       });

@@ -12,6 +12,11 @@ const UserSchema = mongoose.Schema(
     surname: {
       type: String
     },
+    age: {
+      type: Number,
+      min: 0,
+      max: 120
+    },
     username: {
       type: String,
       index: true,
@@ -33,6 +38,10 @@ const UserSchema = mongoose.Schema(
     createdAt: {
       type: Date,
       default: () => new Date()
+    },
+    description: {
+      type: String,
+      maxlength: 140
     },
     lists: {
       favourites: [ list.schema ],

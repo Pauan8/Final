@@ -16,7 +16,7 @@ color: white;
 const ButtonContainer = styled.div`
  `
 
-
+let typeArr = []
 export const SaveGame = ({name, id, setFlip}) => {
     const dispatch = useDispatch();
 
@@ -25,21 +25,29 @@ export const SaveGame = ({name, id, setFlip}) => {
         wishlist: false,
         ownedgames: false
     })
-    const [type, setType] = useState('')
+    const [type, setType] = useState([])
+ 
 
     const handleChange = (event) => {
         setValues({...values, [event.target.name]: event.target.checked})
-        setType(event.target.name)
+        if(event.target.checked && !typeArr.includes(event.target.name)){
+            typeArr.push(event.target.name)
+        } else if(!event.target.checked && typeArr.includes(event.target.name)) {
+            typeArr.filter(item => item!==event.target.name)
+        }
+        setType(typeArr)
     }
 
     const handleClick = () => {
-        dispatch(addGameToList(type, id))
+        type.forEach(item => dispatch(addGameToList(item, id)))
         setFlip(false)
+        typeArr = []
     }
 
     const renderCheckbox = (title) => {
         return <FormControlLabel
-        control={<Checkbox 
+        control={
+        <Checkbox 
             checked={values[title.toLowerCase().replace(' ','')]} 
             onChange={handleChange} 
             name={title.toLowerCase().replace(' ','')} />}

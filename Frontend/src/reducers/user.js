@@ -24,6 +24,8 @@ const user = createSlice({
         surname: null,
         username: null,
         e_mail: null,
+        age: null,
+        description:null,
         lists: {
           favourites: [{}],
           wishlist: [{}],
@@ -114,7 +116,7 @@ export const login = (username, password) => {
   };
 };
 
-export const editProfile = ({avatar, name, surname, e_mail, description, age}) =>  {
+export const editProfile = (avatar, name, surname, e_mail, description, age) =>  {
   return (dispatch, getState) => {
     dispatch(ui.actions.setLoading(true))
     fetches.profile.edit(avatar, name, surname, e_mail, description, age, getState)

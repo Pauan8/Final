@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components/macro'
-import { useHistory, useParams, Link } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { fetchUser, logout } from 'reducers/user'
 import { LottieAnimation } from '../animation/LottieAnimation'
 import loading from 'animation/json/loading.json'
 import { ProfileCard } from '../components/User/ProfileCard'
+import { ProfileGameList } from '../components/User/ProfileGameList'
 
 const Wrapper = styled.div`
 position: relative;
@@ -14,7 +15,13 @@ display: flex;
 flex-direction: column;
 min-height: 100vh;
 width: 100%;
-align-items: center;`
+align-items: center;
+
+@media (min-width: 1024px){
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+}`
 
 const PrivateProfile = () => {
 const { id } = useParams();
@@ -39,9 +46,11 @@ const onLogout = () => {
     
     return (
       <Wrapper>
-          {!isLoading ? (<>
-          <ProfileCard />
-           <Link to={`/profile/${id}/edit`}> Edit </Link></>
+          {!isLoading ? (
+            <>
+              <ProfileCard id={id}/>
+              <ProfileGameList />
+            </>
           ) : (
             <LottieAnimation lotti={loading} height={300} width={300} />
           )}

@@ -18,7 +18,7 @@ const BgImage = styled.div`
   position: absolute;
   height: 207px;
   width: 100%;
-  background-image: url(${(props) => props.path});
+  background-image: url(${require("../assets/background.jpg")});
   background-attachment: fixed;
   background-size: cover;
   background-position-y: top;
@@ -49,16 +49,6 @@ const TextContainer = styled.div`
 `;
 
 const Logo = styled.img``
-const Title = styled.h1`
-  margin: 0%;
-  font-family: "Rock Salt", cursive;
-  color: white;
-  text-shadow: 2px 2px darkslategrey;
-  
-  @media (min-width: 1024px){
-    font-size: 40px;
-  }
-`;
 
 const SubTitle = styled.h2`
   margin: 0%;
@@ -73,7 +63,7 @@ export const Header = () => {
         <Logo src={require('../assets/logo.svg')} />
         <SubTitle>- Let the adventure begin!</SubTitle>
       </TextContainer>
-      <BgImage path="https://images.unsplash.com/photo-1547638369-03b0e69b28d8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" />
+      <BgImage />
     </Wrapper>
   );
 };
