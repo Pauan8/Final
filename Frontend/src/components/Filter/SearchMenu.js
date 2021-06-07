@@ -97,9 +97,10 @@ grid-template-columns: repeat(2, 60%);
 grid-row-gap: 20px;
 
 @media (min-width: 1024px){
-    grid-template-columns: repeat(4, 1fr);}
+    grid-template-columns: repeat(4, 1fr);
     grid-column-gap: 60px;
     padding-right: 60px;
+  }
     `
 
 export const SearchMenu = () => {

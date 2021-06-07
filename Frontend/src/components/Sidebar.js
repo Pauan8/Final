@@ -32,10 +32,10 @@ const Outerclip = styled.div`
     background:#D94A56;
   }
 
-  &:nth-child(4):hover > div,
-  &:nth-child(8):hover > div
+  &:nth-child(4):hover >div,
+  &:nth-child(8):hover >div
   {
-    background: darkcyan;
+    background: #608BA6;
   }
 `;
 
@@ -56,6 +56,9 @@ const Innerclip = styled.div`
 
 const MenuTitles = styled.h2`
   font-size: 20px;
+  height: 50px;
+  display: flex;
+  align-items: center;
   -webkit-transform: skew(-300deg);
   -ms-transform: skew(-30deg);
   transform: skew(-30deg);
@@ -66,11 +69,10 @@ text-decoration: none;
 color: white;
 
 &:hover{
-  color: darkslategray;
+  color: #011C40;
   font-style: bold;
 }
 `
-
 
 export const Sidebar = () => {
   const setMenuTitles = (index) => {
@@ -87,15 +89,15 @@ export const Sidebar = () => {
   const onMapArray = (arr) => {
     if (window.innerWidth > 767) {
       return arr.map((hex, i) => (
-         <Outerclip
-          left={hex.left}
-          up={hex.top}>
-          <Innerclip>
-          <PathLink to={setMenuTitles(i).toLowerCase().replace(" ", "")} >
-            <MenuTitles>{setMenuTitles(i)}</MenuTitles>
-            </PathLink> 
-          </Innerclip>
-        </Outerclip>
+          <Outerclip
+            left={hex.left}
+            up={hex.top}>
+              <Innerclip>
+              <PathLink to={setMenuTitles(i).toLowerCase().replace(" ", "")} >
+                <MenuTitles>{setMenuTitles(i)}</MenuTitles>
+                </PathLink> 
+              </Innerclip>
+          </Outerclip>
       ));
     } else {
       return <></>;
