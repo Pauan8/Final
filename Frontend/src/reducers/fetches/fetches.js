@@ -97,7 +97,8 @@ export const fetches = {
       }
     },
         games:
-       { list: (type, value) => {
+       { 
+         list: (type, value) => {
           return  fetch(
            `https://api.boardgameatlas.com/api/search?limit=20&pretty=true&client_id=39WI5Y3mBx&${type}=${value}`
          )
@@ -107,6 +108,11 @@ export const fetches = {
              }
              return response.json();
            })
+       },
+       filteredlist: (getState) => {
+          return fetch(
+            `https://api.boardgameatlas.com/api/search?limit=20&pretty=true&client_id=39WI5Y3mBx&categories=${getState().boardGames.filter.categories[0]}`
+          )
        },
        game: (id) => {
            return    fetch(
