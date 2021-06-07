@@ -51,22 +51,26 @@ const GameList = () => {
     arr = data.popularity
   } else if (type === 'Discounted') {
     arr = data.discount
-  } else {
+  } else if ( type === 'NewRealeases'){
     // eslint-disable-next-line prefer-destructuring
     arr = data[2021]
   }
+    else {
+    arr = data.filtered
+  }
+  
 
   return (
     <Wrapper>
       <Title> {type.replace(/([A-Z])/g, ' $1').trim()} </Title>
       <Grid>
-        {arr.map((game) => (
+        {arr? arr.map((game) => (
           <PathLink
             to={`/Game/${game.id}`}
             onClick={() => dispatch(fetchSingleGame(game.id))}>
             <GameCard {...game} />
           </PathLink>
-        ))}
+        )): <></>}
       </Grid>
     </Wrapper>
   );

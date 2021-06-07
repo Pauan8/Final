@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { fetches } from "./fetches/fetches";
 import ui from './ui'
-import user from './user'
 
 const boardGames = createSlice({
   name: "boardGames",
@@ -19,8 +18,8 @@ const boardGames = createSlice({
   error: "Error",
   reducers: {
     setGameLists: (store, action) => {
-      const { sort, arr } = action.payload;
-      const newarr = { ...store.gameLists, [sort]: arr };
+      const { listType, arr } = action.payload;
+      const newarr = { ...store.gameLists, [listType]: arr };
 
       store.gameLists = newarr;
     },
@@ -41,7 +40,7 @@ export const generateGamesList = (type, value) => {
    fetches.games.list(type, value)
       .then((data) =>
       {
-        dispatch(boardGames.actions.setGameLists({ arr: data.games, sort: value }))
+        dispatch(boardGames.actions.setGameLists({ arr: data.games, listType: value }))
         dispatch(ui.actions.setLoading(false))
       })
       .catch(error => console.log('catch error'))
@@ -60,5 +59,18 @@ export const fetchSingleGame = (id) => {
       .catch((error => console.log('catch error')))
   };
 };
+
+export const genereateFilteredGamesList = (value) => {
+  return (dispatch, getState) => {
+    dispatch(ui.actions.setLoading(true))
+    fetches.games.filteredList(getState)
+    .then((data) => 
+    { 
+      dispatch(boardGames.actions.setGameLists({ arr: data.games, listType: value }))
+      dispatch(ui.actions.setLoading(false))
+    })
+    .catch((error => console.log('catch error')))
+};
+}
 
 export default boardGames;
