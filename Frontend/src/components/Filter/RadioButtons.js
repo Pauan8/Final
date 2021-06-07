@@ -23,51 +23,25 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-export const RadioButtons = () => {
-  const [value, setValue] = useState('');
+export const RadioButtons = ({type, choices, value, handleChange}) => {
   const classes = useStyles();
-
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
 
   return (
     <FormControl component="fieldset">
-      <FormLabel className={classes.label} component="legend">Gender</FormLabel>
+      <FormLabel className={classes.label} component="legend">{type}</FormLabel>
       <RadioGroup
-        aria-label="gender"
-        name="gender1"
+        aria-label={type}
+        name={type}
         value={value}
         onChange={handleChange}>
+        {choices.map(choice => 
         <FormControlLabel
           classes={{
             label: classes.checkboxLabel
           }}
-          value="female"
+          value={choice.index}
           control={<Radio className={classes.radio} />}
-          label="Female" />
-        <FormControlLabel
-          classes={{
-            label: classes.checkboxLabel
-          }}
-          value="male"
-          control={<Radio className={classes.radio} />}
-          label="Male" />
-        <FormControlLabel
-          classes={{
-            label: classes.checkboxLabel
-          }}
-          value="other"
-          control={<Radio className={classes.radio} />}
-          label="Other" />
-        <FormControlLabel
-          classes={{
-            label: classes.checkboxLabel
-          }}
-          value="disabled"
-          disabled
-          control={<Radio className={classes.radio} />}
-          label="(Disabled option)" />
+          label={choice.label} />)}
       </RadioGroup>
     </FormControl>
   );

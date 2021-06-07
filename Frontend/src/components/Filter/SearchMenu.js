@@ -3,9 +3,11 @@ import styled from 'styled-components/macro';
 
 import { DropDown } from '../Reusable/DropDown';
 import { Search } from './Search';
+import { SearchButton } from './SearchButton'
 import { RadioButtons } from './RadioButtons';
 import categories from '../../data/categories.json'
 import mechanics from '../../data/mechanics.json'
+import {playersArr, playtimeArr, minAgeArr, yearsArr} from '../../data/choicesArrays'
 
 const Wrapper = styled.div`
   display: flex;
@@ -46,7 +48,6 @@ justify-content: center;
 const Expand = styled.div`
   position: relative;
   box-shadow: 3px 3px 2px 2px grey;
-  align-items: center;
   display: flex;
   visibility: hidden;
   flex-direction: column;
@@ -57,43 +58,63 @@ const Expand = styled.div`
   transition: height 2s ease-out;
 
   ${(props) => props.expand && `
-    height: calc(400px);
+    height: 500px;
     overflow-y: auto;
     visibility: visible;
   `};
 
 @media (min-width: 1024px){
-    flex-direction: row;
     
     ${(props) => props.expand && `
-    height:200px;
+    height:250px;
     `};
 }`
 
+const ExpandInner = styled.div`
+display: flex;
+flex-direction: column;
+  align-items: center; 
+  
+  @media (min-width: 1024px){
+    flex-direction: row;
+  }`
+
 const ExpandButton = styled.button`
 position: relative;
+width: 100%;
+border: solid lightgrey 0.1px;
+background: transparent;
+
+&:before {
+  ${(props) => props.expand? `content: "△"`: `content: "▽"`}}
 `
 
 const RadioContainer = styled.div`
 display: grid;
 justify-content: center;
 margin: 20px 0;
-grid-template-columns: repeat(2, 45%);
+grid-template-columns: repeat(2, 60%);
 grid-row-gap: 20px;
 
 @media (min-width: 1024px){
     grid-template-columns: repeat(4, 1fr);}
+    grid-column-gap: 60px;
+    padding-right: 60px;
     `
 
 export const SearchMenu = () => {
   const [expand, setExpand] = useState(false)
   const [value, setValue] =  useState({
-    category: '',
-    mechanc: ''
+    categories: '',
+    mechanics: '',
+    players: '',
+    playtime: '',
+    minage: '',
+    year: ''
   })
 
   const handleChange = (props) => (event) => {
-    setValue({...value, [props]: event.target.value});
+    setValue({...value, [props]: event.target.value });
   };
 
   return (
@@ -102,18 +123,21 @@ export const SearchMenu = () => {
         <Container>
           <Search />
         </Container>
-        <ExpandButton onClick={() => setExpand(!expand)}> Filter </ExpandButton>
-        <Expand expand={expand}>
-          <SelectContainer>
-            <DropDown arr={categories} value={value.category} handleChange={handleChange('category')} title="category"/>
-            <DropDown arr={mechanics} value={value.mechanic} handleChange={handleChange('mechanic')} title="mechanic"/>
-          </SelectContainer>
-          <RadioContainer>
-            <RadioButtons />
-            <RadioButtons />
-            <RadioButtons />
-            <RadioButtons />
-          </RadioContainer>
+        <ExpandButton expand={expand} onClick={() => setExpand(!expand)}> </ExpandButton>
+          <Expand expand={expand}>
+            <ExpandInner>
+            <SelectContainer>
+              <DropDown arr={categories} value={value.category} handleChange={handleChange('category')} title="categories" />
+              <DropDown arr={mechanics} value={value.mechanic} handleChange={handleChange('mechanic')} title="mechanics" />
+            </SelectContainer>
+            <RadioContainer>
+              <RadioButtons type="Players" choices={playersArr} value={value.players} handleChange={handleChange('players')}/>
+              <RadioButtons type="Play-time (mins)" choices={playtimeArr} value={value.playtime}  handleChange={handleChange('playtime')}/>
+              <RadioButtons type="Min age" choices={minAgeArr} value={value.minage} handleChange={handleChange('minage')}/>
+              <RadioButtons type="Release year" choices={yearsArr} value={value.year} handleChange={handleChange('year')}/>
+            </RadioContainer>
+            </ExpandInner>
+          <SearchButton value={value}/>
         </Expand>
       </Form>
     </Wrapper>

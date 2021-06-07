@@ -16,6 +16,7 @@ export const DropDown = ({ arr , value, handleChange, title}) => {
       <TextField
         id={`select-${title}`}
         select
+        name={title}
         label="Select"
         value={value}
         onChange={handleChange}

@@ -14,23 +14,7 @@ const boardGames = createSlice({
     searchList: [{}],
     game: [{}],
     history: [{}],
-    filter: [
-      {
-        categories: null,
-        mechanics: null,
-        name: null,
-        max_players: null,
-        min_players: null,
-        min_playtime: null,
-        max_playtime: null,
-        min_age: null,
-        publisher: null,
-        gt_release_year: null,
-        lt_release_year: null,
-        release_year: null,
-        page: null,
-      },
-    ],
+    filter: [],
   },
   error: "Error",
   reducers: {
@@ -45,20 +29,8 @@ const boardGames = createSlice({
       store.game = newGame;
     },
     setFilter: (store, action) => {
-      const {
-        categories,
-        mechanics,
-        name,
-        max_players,
-        min_players,
-        min_playtime,
-        max_playtime,
-        min_age,
-        publisher,
-        gt_release_year,
-        lt_release_year,
-        release_year,
-      } = action.payload;
+      const updateArr = action.payload;
+      store.filter = updateArr;
     },
   },
 });
