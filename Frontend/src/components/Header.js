@@ -1,7 +1,7 @@
-import React from 'react'
-import styled from 'styled-components/macro'
+import React from "react";
+import styled from "styled-components/macro";
 
-import { UserMenu } from './User/UserMenu';
+import { UserMenu } from "./User/UserMenu";
 
 const Wrapper = styled.header`
   position: relative;
@@ -39,16 +39,16 @@ const TextContainer = styled.div`
   justify-content: center;
   margin-left: 10%;
 
-  @media (min-width: 768px){
+  @media (min-width: 768px) {
     margin-left: 180px;
   }
-  @media (min-width: 1024px){
+  @media (min-width: 1024px) {
     margin-left: 300px;
     height: 260px;
   }
 `;
 
-const Logo = styled.img``
+const Logo = styled.img``;
 
 const SubTitle = styled.h2`
   margin: 0%;
@@ -58,9 +58,9 @@ const SubTitle = styled.h2`
 export const Header = () => {
   return (
     <Wrapper>
-       <UserMenu />
+      <UserMenu />
       <TextContainer>
-        <Logo src={require('../assets/logo.svg')} />
+        <Logo src={require("../assets/logo.svg")} />
         <SubTitle>- Let the adventure begin!</SubTitle>
       </TextContainer>
       <BgImage />

@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import styled from "styled-components/macro";
 
-import { SaveGame } from './SaveGame'
-import { LikeButton } from './LikeButton'
+import { SaveGame } from "./SaveGame";
+import { LikeButton } from "./LikeButton";
 
 const ContainerInner = styled.div`
   height: 390px;
@@ -11,8 +11,8 @@ const ContainerInner = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #F2D3AC;
-  color: #733C3C;
+  background: #f2d3ac;
+  color: #733c3c;
 `;
 
 const Title = styled.h1`
@@ -29,7 +29,7 @@ const ImageContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
-  border: solid #733C3C 0.5px;
+  border: solid #733c3c 0.5px;
 `;
 
 const Image = styled.img`
@@ -80,7 +80,7 @@ const FlipCardBack = styled.div`
   height: 100%;
   -webkit-backface-visibility: hidden; /* Safari */
   backface-visibility: hidden;
-  background:#A65151;
+  background: #a65151;
   color: white;
   transform: rotateY(180deg);
   border-radius: 5px;
@@ -90,8 +90,8 @@ const FlipCardBack = styled.div`
 `;
 
 const FlipCardFront = styled.div`
-  background: #A65151;
-  border: solid #733C3C 0.3px;
+  background: #a65151;
+  border: solid #733c3c 0.3px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -115,9 +115,10 @@ export const GameCard = ({
   max_playtime,
   min_age,
   primary_publisher,
-  id
+  id,
 }) => {
   const [flip, setFlip] = useState(false);
+  const [like, setLike] = useState("none");
   const checkValue = (value) => {
     return value || "unknown";
   };
@@ -131,7 +132,7 @@ export const GameCard = ({
   return (
     <>
       {id ? (
-        <FlipCard>
+        <FlipCard >
           <FlipCardInner flip={flip}>
             <FlipCardFront>
               <ContainerInner>
@@ -162,12 +163,23 @@ export const GameCard = ({
                     <Bold>Players: </Bold>
                     {checkMultiples(min_players, max_players)}
                   </Info>
-                  <LikeButton handleClick={() => setFlip(!flip)} />
+                  <LikeButton
+                    handleClick={() => setFlip(!flip)}
+                    id={id}
+                    like={like}
+                    setLike={setLike}
+                  />
                 </InfoContainer>
               </ContainerInner>
             </FlipCardFront>
             <FlipCardBack>
-              <SaveGame name={name} id={id} setFlip={setFlip}/>
+              <SaveGame
+                name={name}
+                id={id}
+                setFlip={setFlip}
+                like={like}
+                setLike={setLike}
+              />
             </FlipCardBack>
           </FlipCardInner>
         </FlipCard>
