@@ -44,7 +44,7 @@ const UserSchema = mongoose.Schema(
       maxlength: 140
     },
     lists: {
-      favourites: [ list.schema ],
+      favourites: [list.schema],
       wishlist: [list.schema],
       ownedgames: [list.schema]
     }

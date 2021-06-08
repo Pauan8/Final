@@ -114,16 +114,39 @@ router.get('/profile/:id', async (req, res) => {
 router.post('/profile/:id/addGame', authenticateUser);
 router.post('/profile/:id/addGame', async (req, res) => {
   const { id } = req.params;
-  const {list} = req.query
-  const attr =  `lists.${list}`
+  const { list } = req.query
+  const attr = `lists.${list}`
  
   try { 
-    const user = await User.findByIdAndUpdate(id, {$push: {[attr]: req.body[list]}}, {new: true})
-    res.json({   
-      lists: user.lists,
-      success: true, 
-      loggedOut: false 
-    })
+    const exists = await User.find({ [attr]: {
+      $elemMatch: {
+        id: { $in: [req.body[list].id] }}}})
+      if( exists.length === 0){ 
+        const user = await User.findByIdAndUpdate(id, {$push: {[attr]: req.body[list]}}, {new: true})
+        res.json({   
+          lists: user.lists,
+          success: true, 
+          loggedOut: false 
+        })
+      } else {}
+    } catch (err) {
+      catchError(res, err, 'Invalid user id');
+  }
+})
+
+router.post('/profile/:id/removeGame', authenticateUser);
+router.post('/profile/:id/removeGame', async (req, res) => {
+  const { id } = req.params;
+  const {list} = req.query
+  const attr = `lists.${list}`
+ 
+    try { 
+        const user = await User.findByIdAndUpdate(id,  {$pull: {[attr]:  {id: req.body[list].id}}})
+        res.json({   
+          lists: user.lists,
+          success: true, 
+          loggedOut: false 
+        })
     } catch (err) {
       catchError(res, err, 'Invalid user id');
   }

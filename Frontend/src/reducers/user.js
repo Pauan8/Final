@@ -133,11 +133,13 @@ export const editProfile = (avatar, name, surname, e_mail, description, age) => 
   }
 }
 
-export const addGameToList = (type, id) => {
+export const addRemoveGame = (type, id, method) => {
   return (dispatch, getState) =>{
   fetches.games.game(id)
   .then(data => {
-  fetches.profile.addGame(getState, data.games[0], type)})
+  method === 'add' 
+  ? fetches.profile.addGame(getState, data.games[0], type) 
+  : fetches.profile.removeGame(getState, data.games[0], type)}) 
   .then(games => {
     if(games.success) {
     dispatch(user.actions.setGameLists(games.lists))

@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import styled from "styled-components/macro";
 import { Link } from "react-router-dom";
 
+import { RemoveGame } from '../User/RemoveGame'
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -61,7 +63,7 @@ export const ProfileGameList = () => {
     if (profile.lists[type]) {
       return profile.lists[type].map((game) => (
         <Game>
-          <GameLink to={`/game/${game.id}`}>{game.name}</GameLink>
+          <GameLink to={`/game/${game.id}`}>{game.name}</GameLink> <RemoveGame type={type} id={game.id} />
         </Game>
       ));
     }

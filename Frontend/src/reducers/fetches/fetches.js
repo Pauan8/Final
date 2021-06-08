@@ -95,6 +95,28 @@ export const fetches = {
         return response.json();
       });
     },
+    removeGame: (getState, game, list) => {
+      return fetch(
+        `${BASE_URL}/profile/${
+          getState().user.userInfo.userID
+        }/removeGame?list=${list}`,
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            Authorization: getState().user.accessToken,
+          },
+          body: JSON.stringify({
+            [list]: game,
+          }),
+        }
+      ).then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response.json();
+      });
+    },
   },
   games: {
     list: (type, value) => {
