@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components/macro";
-import ExpandMoreSharpIcon from "@material-ui/icons/ExpandMoreSharp";
-import ExpandLessSharpIcon from "@material-ui/icons/ExpandLessSharp";
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 import { DropDown } from "../Reusable/DropDown";
 import { Search } from "./Search";
@@ -15,23 +15,28 @@ import {
   minAgeArr,
   yearsArr,
 } from "../../data/choicesArrays";
+import { RangeSlider } from './RangeSlider'
+import { MultipleSelect } from './MultipleSelect'
 
 const Wrapper = styled.div`
+  position: fixed;
+  float: right;
+  right: 0;
+  top: 0;
+  z-index: 8;
+  width: 300px;
   display: flex;
   align-items: center;
   flex: 1 1 auto;
-  flex-direction: column;
 `;
 
 const Form = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 20px 0;
   flex: 1 1 auto;
-  max-width: 375px;
+  width: 100%;
   height: 100%;
-  justify-content: space-evenly;
-  align-items: center;
+  align-items: flex-end;
 
   @media (min-width: 1024px) {
     max-width: 100%;
@@ -39,87 +44,84 @@ const Form = styled.div`
 `;
 
 const Container = styled.div`
+  position: relative;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
   width: 100%;
 `;
+
+const ShowFilter = styled.button `
+  background: none;
+  border: ${props => props.expand? "none": "solid lightgrey 0.2px"};
+  width: 50px;
+  height: 30px;
+  border-radius: 5px;
+  margin-left:10px;`
+
 const SelectContainer = styled.div`
   margin-top: 10px;
   display: flex;
+  flex-direction: column;
   width: 300px;
-  justify-content: center;
-
-  @media (min-width: 1024px) {
-    flex-direction: column;
-  }
+  align-items: center;
 `;
+
+const ExpandContainer = styled.div`
+  display: flex;
+`
 
 const Expand = styled.div`
   position: relative;
-  box-shadow: 3px 3px 2px 2px grey;
   display: flex;
-  visibility: hidden;
+
+  background: white;
   flex-direction: column;
   align-items: center;
-  height: 0;
+  width: 0;
+  height: 100vh;
   overflow-y: hidden;
   border: solid lightgrey 0.1px;
-  transition: height 2s ease-out;
+  border-left: none;
+  transition: width 2s ease-in-out;
 
   ${(props) =>
     props.expand &&
     `
-    height: 500px;
+    width: 300px;
     overflow-y: auto;
-    visibility: visible;
-  `};
 
-  @media (min-width: 1024px) {
-    ${(props) =>
-      props.expand &&
-      `
-    height:250px;
-    `};
-  }
-`;
+  `};
+  `;
 
 const ExpandInner = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  @media (min-width: 1024px) {
-    flex-direction: row;
-  }
 `;
 
 const ExpandButton = styled.button`
   position: relative;
-  width: 100%;
+  width: 40px;
   border: solid lightgrey 0.1px;
-  background: transparent;
+  border-right: none;
+  background: white;
 `;
 
 const RadioContainer = styled.div`
   display: grid;
   justify-content: center;
   margin: 20px 0;
-  grid-template-columns: repeat(2, 60%);
+  grid-template-columns: repeat(1, 100%);
   grid-row-gap: 20px;
-
-  @media (min-width: 1024px) {
-    grid-template-columns: repeat(4, 1fr);
-    grid-column-gap: 60px;
-    padding-right: 60px;
-  }
 `;
 
 export const SearchMenu = () => {
   const [expand, setExpand] = useState(false);
   const [value, setValue] = useState({
-    categories: "",
-    mechanics: "",
+    categories: [],
+    mechanics: [],
     players: "",
     playtime: "",
     minage: "",
@@ -130,19 +132,24 @@ export const SearchMenu = () => {
     setValue({ ...value, [props]: event.target.value });
   };
 
-  return (
+  return (<>
+    <Container>
+    <Search />
+    <ShowFilter expand={expand} onClick={() => setExpand(!expand)}>{expand?"":"filter"}</ShowFilter>
+  </Container>
     <Wrapper>
+    
       <Form noValidate autoComplete="off">
-        <Container>
-          <Search />
-        </Container>
+        <ExpandContainer> 
         <ExpandButton expand={expand} onClick={() => setExpand(!expand)}>
-          {expand ? <ExpandLessSharpIcon /> : <ExpandMoreSharpIcon />}{" "}
+          {expand ? <ArrowForwardIosIcon /> : <ArrowBackIosIcon />}{" "}
         </ExpandButton>
         <Expand expand={expand}>
           <ExpandInner>
             <SelectContainer>
-              <DropDown
+              <MultipleSelect array={categories} value={value.categories}  handleChange={handleChange('categories')} title="categories"/>
+              <MultipleSelect   array={mechanics} value={value.mechanics} handleChange={handleChange('mechanics')} title="mechanics"/>
+       {/*        <DropDown
                 arr={categories}
                 value={value.category}
                 handleChange={handleChange("category")}
@@ -153,10 +160,10 @@ export const SearchMenu = () => {
                 value={value.mechanic}
                 handleChange={handleChange("mechanic")}
                 title="mechanics"
-              />
+              /> */}
             </SelectContainer>
             <RadioContainer>
-              <RadioButtons
+     {/*          <RadioButtons
                 type="Players"
                 choices={playersArr}
                 value={value.players}
@@ -179,12 +186,19 @@ export const SearchMenu = () => {
                 choices={yearsArr}
                 value={value.year}
                 handleChange={handleChange("year")}
-              />
+              /> */}
+             
+                  <RangeSlider />
+                  <RangeSlider />
+                  <RangeSlider />
             </RadioContainer>
+        
           </ExpandInner>
           <SearchButton value={value} />
         </Expand>
+        </ExpandContainer> 
       </Form>
-    </Wrapper>
+</Wrapper>
+</>
   );
 };
