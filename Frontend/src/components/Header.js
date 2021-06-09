@@ -48,7 +48,8 @@ const TextContainer = styled.div`
   }
 `;
 
-const Logo = styled.img``;
+const Logo = styled.img`
+`;
 
 const SubTitle = styled.h2`
   margin: 0%;

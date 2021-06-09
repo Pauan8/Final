@@ -10,7 +10,7 @@ import Chip from '@material-ui/core/Chip';
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
-    width: 200,
+    width: 300,
     marginRigth: 20
   },
   chips: {

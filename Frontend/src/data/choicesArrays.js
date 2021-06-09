@@ -1,4 +1,4 @@
-export const playersArr = [{index: "1", name: ["max_players"], value: [1], label: "solo"}, 
+export const playersArr = [{index: "1", name: ["gt_min_players"], value: [0], label: "solo"}, 
 {index: "2", name:["gt_min_players", "lt_max_players"], value: [1, 5], label: "2-4"}, 
 {index: "3", name:["gt_min_players", "lt_max_players"], value: [3, 7], label: "4-6"},
 {index: "4", name:["gt_min_players", "lt_max_players"], value: [5, 9], label: "6-8"},

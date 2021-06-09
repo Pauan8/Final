@@ -27,7 +27,12 @@ const PrettoSlider = withStyles({
     },
     active: {},
     valueLabel: {
-      left: 'calc(-50% + 4px)',
+        left: 'calc(-50% + 4px)',
+        top: -22,
+        '& *': {
+          background: 'transparent',
+          color: '#000',
+        },
     },
     track: {
       height: 8,
@@ -50,26 +55,27 @@ const PrettoSlider = withStyles({
   }
 
 
-export const RangeSlider = () => {
+export const RangeSlider = ({ title, text, value, setValue, label, min, max, step}) => {
   const classes = useStyles();
-  const [value, setValue] = useState([20, 37]);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const handleChange = (props) => (event, newValue) => {
+      setValue({... value, [props]: newValue})
+  }
 
   return (
     <div className={classes.root}>
-      <Typography id="range-slider" gutterBottom>
-        Temperature range
+      <Typography id="discrete-slider-always" gutterBottom>
+        {label}
       </Typography>
       <PrettoSlider
-        ThumbComponent={ThumbComponent}
-        value={value}
-        onChange={handleChange}
-        valueLabelDisplay="auto"
+        min={min}
+        step={step}
+        max={max}
+        value={value[title]}
+        onChange={handleChange(title)}
+        valueLabelDisplay="on"
         aria-labelledby="range-slider"
-        getAriaValueText=""
+        getAriaValueText={text}
       />
     </div>
   );

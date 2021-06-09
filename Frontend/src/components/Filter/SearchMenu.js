@@ -24,7 +24,6 @@ const Wrapper = styled.div`
   right: 0;
   top: 0;
   z-index: 8;
-  width: 300px;
   display: flex;
   align-items: center;
   flex: 1 1 auto;
@@ -88,7 +87,7 @@ const Expand = styled.div`
   ${(props) =>
     props.expand &&
     `
-    width: 300px;
+    width: 375px;
     overflow-y: auto;
 
   `};
@@ -122,10 +121,10 @@ export const SearchMenu = () => {
   const [value, setValue] = useState({
     categories: [],
     mechanics: [],
-    players: "",
-    playtime: "",
+    players: [1, 20],
+    playtime: [0, 2],
     minage: "",
-    year: "",
+    year: [1900, 2021],
   });
 
   const handleChange = (props) => (event) => {
@@ -149,18 +148,6 @@ export const SearchMenu = () => {
             <SelectContainer>
               <MultipleSelect array={categories} value={value.categories}  handleChange={handleChange('categories')} title="categories"/>
               <MultipleSelect   array={mechanics} value={value.mechanics} handleChange={handleChange('mechanics')} title="mechanics"/>
-       {/*        <DropDown
-                arr={categories}
-                value={value.category}
-                handleChange={handleChange("category")}
-                title="categories"
-              />
-              <DropDown
-                arr={mechanics}
-                value={value.mechanic}
-                handleChange={handleChange("mechanic")}
-                title="mechanics"
-              /> */}
             </SelectContainer>
             <RadioContainer>
      {/*          <RadioButtons
@@ -174,23 +161,23 @@ export const SearchMenu = () => {
                 choices={playtimeArr}
                 value={value.playtime}
                 handleChange={handleChange("playtime")}
-              />
+              /> */
               <RadioButtons
                 type="Min age"
                 choices={minAgeArr}
                 value={value.minage}
                 handleChange={handleChange("minage")}
-              />
+              /> /*
               <RadioButtons
                 type="Release year"
                 choices={yearsArr}
                 value={value.year}
                 handleChange={handleChange("year")}
               /> */}
-             
-                  <RangeSlider />
-                  <RangeSlider />
-                  <RangeSlider />
+            
+                  <RangeSlider title="players"  label="Players" value={value} setValue={setValue} min={1} max={20} step={1}/>
+                  <RangeSlider title="playtime" label="Play-time" value={value} setValue={setValue} min={0} max={8} step={0.5}/>
+                  <RangeSlider title="year" label="Year published" value={value} setValue={setValue} min={1900} max={2021} step={1}/>
             </RadioContainer>
         
           </ExpandInner>
