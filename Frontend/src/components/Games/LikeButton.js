@@ -21,9 +21,9 @@ export const LikeButton = ({ handleClick, id, like, setLike }) => {
 
   const handleLikes = () => {
     if (
-      lists.favourites.filter((item) => item.id === id).length > 0 ||
-      lists.ownedgames.filter((item) => item.id === id).length > 0 ||
-      lists.wishlist.filter((item) => item.id === id).length > 0
+      lists && lists.favourites.filter((item) => item.id === id).length > 0 ||
+      lists && lists.ownedgames.filter((item) => item.id === id).length > 0 ||
+      lists && lists.wishlist.filter((item) => item.id === id).length > 0
     ) {
       return "includes";
     } else {

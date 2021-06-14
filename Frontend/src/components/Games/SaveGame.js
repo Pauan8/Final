@@ -54,9 +54,11 @@ export const SaveGame = ({ name, id, setFlip, like, setLike }) => {
   };
 
   const handleChecked = (value, title) => {
+    if(lister){
     return lister[value].filter((item) => item.id === id).length > 0
       ? true
       : values[title.toLowerCase().replace(" ", "")];
+    } 
   };
 
   const renderCheckbox = (title) => {

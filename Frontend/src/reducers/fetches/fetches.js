@@ -136,7 +136,7 @@ export const fetches = {
           console.log(`${Object.keys(item).map((k) => `&${k}=${item[k]}`)}`);
           filterArr += `${Object.keys(item).map((k) => `&${k}=${item[k]}`)}`;
         });
-        return filterArr.toString()
+        return filterArr.toString().replaceAll(",&", "&")
       };
 
       return fetch(

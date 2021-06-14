@@ -17,7 +17,7 @@ min-height: 100vh;
 width: 100%;
 align-items: center;
 
-@media (min-width: 1024px){
+@media (min-width: 768px){
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
@@ -54,7 +54,7 @@ const onLogout = () => {
           ) : (
             <LottieAnimation lotti={loading} height={300} width={300} />
           )}
-        <button onClick={onLogout}>Log out</button>
+        <button style={{position: 'absolute'}} onClick={onLogout}>Log out</button>
       </Wrapper>
     );
 }

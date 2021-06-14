@@ -52,21 +52,6 @@ function getStyles(name, option, theme) {
 export const MultipleSelect = ({array, value, handleChange, title}) => {
     const classes = useStyles();
     const theme = useTheme();
-  
- /*    const handleChange = (props) => (event) => {
-      setValue({...value, [props]: event.target.value});
-    }; */
-  
-/*     const handleChangeMultiple = (event) => {
-      const { options } = event.target;
-      const value = [];
-      for (let i = 0, l = options.length; i < l; i += 1) {
-        if (options[i].selected) {
-          value.push(options[i].value);
-        }
-      }
-      setPersonName(value);
-    }; */
 
 return (
 <FormControl className={classes.formControl}>

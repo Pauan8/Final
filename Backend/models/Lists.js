@@ -14,8 +14,7 @@ const ListSchema = mongoose.Schema([{
       required: true
     },
     release_year: Number,
-    publisher: String
-
+    thumb_url: String
   }])
 
 const list = mongoose.model('list', ListSchema);

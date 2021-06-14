@@ -11,8 +11,6 @@ const Wrapper = styled.div`
   margin-top: 50px;
 `;
 
-const Title = styled.h1``;
-
 const ListTitle = styled.h2`
   color: #f2d3ac;
   margin-top: 0;
@@ -22,24 +20,66 @@ const ListTitle = styled.h2`
 const GameList = styled.ul`
   display: ${(props) => (props.active === props.name ? "block" : "none")};
   background: ${(props) =>
-    props.active === props.name ? "#D9756C" : "#F2D3AC"};
+  props.active === props.name ? "#D9756C" : "#F2D3AC"};
   margin: 0;
   margin-bottom: 10px;
-  width: 270px;
+  width: 300px;
   height: 460px;
   border: solid #a65151 0.5px;
   padding: 20px;
   padding-bottom: 24px;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #a65151 transparent;
+
+
+&::-webkit-scrollbar {
+  width: 12px;
+}
+
+&::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+&::-webkit-scrollbar-thumb {
+  background-color: #a65151;
+  border-radius: 20px;
+  border: 3px solid #a65151;
+}
 `;
 
 const Game = styled.li`
   margin-bottom: 20px;
   list-style-type: none;
+  border: solid #a65151;
+  background: #f2d3ac;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
+
+const ImageContainer = styled.div`
+overflow: hidden;
+border-right: solid #a65151;
+background: white;
+width: 100px;
+min-width: 100px;
+height: 100px;
+display: flex;
+align-items: center;
+justify-content: center;
+`
+const GameImg = styled.img`
+height: 100%;
+object-fit: cover;
+`
 
 const GameLink = styled(Link)`
   text-decoration: none;
-  color: white;
+  color: #a65151;
+  display: block;
+  margin-left: 10px;
+  font-size: 14px;
 `;
 
 const ButtonContainer = styled.div`
@@ -60,10 +100,13 @@ export const ProfileGameList = () => {
   const [active, setActive] = useState("favourites");
 
   const displayList = (type) => {
-    if (profile.lists[type]) {
+    if (profile.lists) {
       return profile.lists[type].map((game) => (
         <Game>
-          <GameLink to={`/game/${game.id}`}>{game.name}</GameLink> <RemoveGame type={type} id={game.id} />
+         <ImageContainer >
+           <GameImg src={game.thumb_url} /> 
+           </ImageContainer>
+           <GameLink to={`/game/${game.id}`}>{game.name}</GameLink> <RemoveGame type={type} id={game.id} />
         </Game>
       ));
     }

@@ -33,18 +33,23 @@ const Edit = styled.div`
 `;
 
 const ImgCard = styled.div`
-  width: 250px;
+  width: 300px;
   height: 500px;
   background: #f2d3ac;
   border: solid #a65151 3px;
-  border-right: none;
+ border-radius: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  border-radius: 5px 0 0 5px;
+ 
   margin-top: 50px;
   color: #733c3c;
+
+  @media (min-width: 768px) {
+    border-right: none;
+    border-radius: 5px 0 0 5px;
+  }
 `;
 
 const ImgContainer = styled.div`

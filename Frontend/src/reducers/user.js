@@ -26,11 +26,7 @@ const user = createSlice({
         e_mail: null,
         age: null,
         description:null,
-        lists: {
-          favourites: [{}],
-          wishlist: [{}],
-          owndedgames: [{}],
-        }
+        lists: null
     },
 
   },
@@ -142,6 +138,7 @@ export const addRemoveGame = (type, id, method) => {
   : fetches.profile.removeGame(getState, data.games[0], type)}) 
   .then(games => {
     if(games.success) {
+ 
     dispatch(user.actions.setGameLists(games.lists))
     dispatch(user.actions.setErrors(null))
   } else {

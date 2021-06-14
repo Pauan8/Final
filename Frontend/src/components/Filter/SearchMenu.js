@@ -1,22 +1,16 @@
 import React, { useState } from "react";
 import styled from "styled-components/macro";
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 
-import { DropDown } from "../Reusable/DropDown";
 import { Search } from "./Search";
 import { SearchButton } from "./SearchButton";
 import { RadioButtons } from "./RadioButtons";
 import categories from "../../data/categories.json";
 import mechanics from "../../data/mechanics.json";
-import {
-  playersArr,
-  playtimeArr,
-  minAgeArr,
-  yearsArr,
-} from "../../data/choicesArrays";
-import { RangeSlider } from './RangeSlider'
-import { MultipleSelect } from './MultipleSelect'
+import { minAgeArr } from "../../data/choicesArrays";
+import { RangeSlider } from "./RangeSlider";
+import { MultipleSelect } from "./MultipleSelect";
 
 const Wrapper = styled.div`
   position: fixed;
@@ -50,13 +44,14 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const ShowFilter = styled.button `
+const ShowFilter = styled.button`
   background: none;
-  border: ${props => props.expand? "none": "solid lightgrey 0.2px"};
+  border: ${(props) => (props.expand ? "none" : "solid lightgrey 0.2px")};
   width: 50px;
   height: 30px;
   border-radius: 5px;
-  margin-left:10px;`
+  margin-left: 10px;
+`;
 
 const SelectContainer = styled.div`
   margin-top: 10px;
@@ -68,7 +63,7 @@ const SelectContainer = styled.div`
 
 const ExpandContainer = styled.div`
   display: flex;
-`
+`;
 
 const Expand = styled.div`
   position: relative;
@@ -87,17 +82,17 @@ const Expand = styled.div`
   ${(props) =>
     props.expand &&
     `
+    max-width: calc(100vw - 40px);
     width: 375px;
     overflow-y: auto;
 
   `};
-  `;
+`;
 
 const ExpandInner = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
 `;
 
 const ExpandButton = styled.button`
@@ -105,7 +100,12 @@ const ExpandButton = styled.button`
   width: 40px;
   border: solid lightgrey 0.1px;
   border-right: none;
+  visibility: ${props => props.expand ? "visible" : "hidden"};
   background: white;
+
+ @media (min-width: 768px){
+   visibility: visible;
+ }
 `;
 
 const RadioContainer = styled.div`
@@ -122,8 +122,8 @@ export const SearchMenu = () => {
     categories: [],
     mechanics: [],
     players: [1, 20],
-    playtime: [0, 2],
-    minage: "",
+    playtime: [0, 8],
+    minage: [],
     year: [1900, 2021],
   });
 
@@ -131,61 +131,77 @@ export const SearchMenu = () => {
     setValue({ ...value, [props]: event.target.value });
   };
 
-  return (<>
-    <Container>
-    <Search />
-    <ShowFilter expand={expand} onClick={() => setExpand(!expand)}>{expand?"":"filter"}</ShowFilter>
-  </Container>
-    <Wrapper>
-    
-      <Form noValidate autoComplete="off">
-        <ExpandContainer> 
-        <ExpandButton expand={expand} onClick={() => setExpand(!expand)}>
-          {expand ? <ArrowForwardIosIcon /> : <ArrowBackIosIcon />}{" "}
-        </ExpandButton>
-        <Expand expand={expand}>
-          <ExpandInner>
-            <SelectContainer>
-              <MultipleSelect array={categories} value={value.categories}  handleChange={handleChange('categories')} title="categories"/>
-              <MultipleSelect   array={mechanics} value={value.mechanics} handleChange={handleChange('mechanics')} title="mechanics"/>
-            </SelectContainer>
-            <RadioContainer>
-     {/*          <RadioButtons
-                type="Players"
-                choices={playersArr}
-                value={value.players}
-                handleChange={handleChange("players")}
-              />
-              <RadioButtons
-                type="Play-time (mins)"
-                choices={playtimeArr}
-                value={value.playtime}
-                handleChange={handleChange("playtime")}
-              /> */
-              <RadioButtons
-                type="Min age"
-                choices={minAgeArr}
-                value={value.minage}
-                handleChange={handleChange("minage")}
-              /> /*
-              <RadioButtons
-                type="Release year"
-                choices={yearsArr}
-                value={value.year}
-                handleChange={handleChange("year")}
-              /> */}
-            
-                  <RangeSlider title="players"  label="Players" value={value} setValue={setValue} min={1} max={20} step={1}/>
-                  <RangeSlider title="playtime" label="Play-time" value={value} setValue={setValue} min={0} max={8} step={0.5}/>
-                  <RangeSlider title="year" label="Year published" value={value} setValue={setValue} min={1900} max={2021} step={1}/>
-            </RadioContainer>
-        
-          </ExpandInner>
-          <SearchButton value={value} />
-        </Expand>
-        </ExpandContainer> 
-      </Form>
-</Wrapper>
-</>
+  return (
+    <>
+      <Container>
+        <Search />
+        <ShowFilter expand={expand} onClick={() => setExpand(!expand)}>
+          {expand ? "" : "filter"}
+        </ShowFilter>
+      </Container>
+      <Wrapper>
+        <Form noValidate autoComplete="off">
+          <ExpandContainer>
+            <ExpandButton expand={expand} onClick={() => setExpand(!expand)}>
+              {expand ? <ArrowForwardIosIcon /> : <ArrowBackIosIcon />}{" "}
+            </ExpandButton>
+            <Expand expand={expand}>
+              <ExpandInner>
+                <SelectContainer>
+                  <MultipleSelect
+                    array={categories}
+                    value={value.categories}
+                    handleChange={handleChange("categories")}
+                    title="categories"
+                  />
+                  <MultipleSelect
+                    array={mechanics}
+                    value={value.mechanics}
+                    handleChange={handleChange("mechanics")}
+                    title="mechanics"
+                  />
+                </SelectContainer>
+                <RadioContainer>
+                  <RadioButtons
+                    type="Min age"
+                    choices={minAgeArr}
+                    value={value.minage}
+                    handleChange={handleChange("minage")}
+                  />
+                  <RangeSlider
+                    title="players"
+                    label="Players"
+                    value={value}
+                    setValue={setValue}
+                    min={1}
+                    max={20}
+                    step={1}
+                  />
+                  <RangeSlider
+                    title="playtime"
+                    label="Play-time(h)"
+                    value={value}
+                    setValue={setValue}
+                    min={0}
+                    max={8}
+                    step={0.5}
+                  />
+                  <RangeSlider
+                    title="year"
+                    label="Year published"
+                    value={value}
+                    setValue={setValue}
+                    min={1900}
+                    max={2021}
+                    step={1}
+                  />
+                </RadioContainer>
+              </ExpandInner>
+              <SearchButton value={value} />
+            </Expand>
+          </ExpandContainer>
+        </Form>
+      </Wrapper>
+    </>
   );
 };

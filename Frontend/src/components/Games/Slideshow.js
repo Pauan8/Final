@@ -97,7 +97,7 @@ export const Slideshow = ({ type, value }) => {
               ◀{" "}
             </Button>
             {data[value].slice(i, i + slideNumber).map((item) => (
-              <GameCard key={i} {...item} />
+              <GameCard key={item.id} {...item} />
             ))}
             <Button onClick={() => handleClick("right", slideNumber)}>
               {" "}
