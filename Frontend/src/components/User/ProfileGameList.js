@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components/macro";
 import { Link } from "react-router-dom";
-
+import { LottieAnimation } from '../../animation/LottieAnimation'
+import emptylist from '../../animation/json/emptylist.json'
 import { RemoveGame } from '../User/RemoveGame'
 
 const Wrapper = styled.div`
@@ -10,6 +11,11 @@ const Wrapper = styled.div`
   flex-direction: column;
   margin-top: 50px;
 `;
+
+const EmptyTitle = styled.h3`
+color:#a65151;
+text-align: center;
+margin-top: 40px;`
 
 const ListTitle = styled.h2`
   color: #f2d3ac;
@@ -27,7 +33,7 @@ const GameList = styled.ul`
   height: 460px;
   border: solid #a65151 0.5px;
   padding: 20px;
-  padding-bottom: 24px;
+  padding-bottom: 23px;
   overflow: auto;
   scrollbar-width: thin;
   scrollbar-color: #a65151 transparent;
@@ -46,7 +52,10 @@ const GameList = styled.ul`
   border-radius: 20px;
   border: 3px solid #a65151;
 }
-`;
+
+ @media (min-width: 768px) {
+   border-left: none;
+ }`;
 
 const Game = styled.li`
   margin-bottom: 20px;
@@ -76,11 +85,15 @@ object-fit: cover;
 
 const GameLink = styled(Link)`
   text-decoration: none;
-  color: #a65151;
-  display: block;
-  margin-left: 10px;
-  font-size: 14px;
+  display: flex;
+  
 `;
+
+const GameTitle = styled.p `
+font-size: 14px;
+color: #a65151;
+margin: 0;
+margin-left: 10px;`
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -92,25 +105,34 @@ const Button = styled.button`
   background: ${(props) =>
     props.active === props.name ? "#D9756C" : "#F2D3AC"};
   border: solid #a65151 0.5px;
-  border-bottom: none;
+  margin-bottom:-2px;
 `;
 
 export const ProfileGameList = () => {
   const profile = useSelector((store) => store.user.userInfo);
   const [active, setActive] = useState("favourites");
+  const [clicked, setClicked] = useState(false);
 
   const displayList = (type) => {
     if (profile.lists) {
-      return profile.lists[type].map((game) => (
+      return profile.lists[type].length === 0
+      ?<> <EmptyTitle>List is empty</EmptyTitle>  
+      <LottieAnimation lotti={emptylist} height={200} width={200} /></>
+      : profile.lists[type].map((game) => (
         <Game>
+          <GameLink to={`/game/${game.id}`}>
          <ImageContainer >
            <GameImg src={game.thumb_url} /> 
            </ImageContainer>
-           <GameLink to={`/game/${game.id}`}>{game.name}</GameLink> <RemoveGame type={type} id={game.id} />
+           </GameLink> 
+           <GameTitle>{game.name}</GameTitle>
+           <RemoveGame type={type} id={game.id} clicked={clicked} setClicked={setClicked}/>
         </Game>
       ));
     }
+    return <GameTitle>Empty</GameTitle>
   };
+
 
   const handleClick = (listtype) => {
     setActive(listtype);

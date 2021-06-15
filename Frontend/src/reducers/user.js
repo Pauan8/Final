@@ -129,16 +129,29 @@ export const editProfile = (avatar, name, surname, e_mail, description, age) => 
   }
 }
 
-export const addRemoveGame = (type, id, method) => {
+export const addGame = (type, id) => {
   return (dispatch, getState) =>{
   fetches.games.game(id)
   .then(data => {
-  method === 'add' 
-  ? fetches.profile.addGame(getState, data.games[0], type) 
-  : fetches.profile.removeGame(getState, data.games[0], type)}) 
+   fetches.profile.addGame(getState, data.games[0], type)
+  })
   .then(games => {
     if(games.success) {
- 
+    dispatch(user.actions.setGameLists(games.lists))
+    dispatch(user.actions.setErrors(null))
+  } else {
+    dispatch(user.actions.setErrors(games))
+  }
+}) 
+.catch((error) => dispatch(user.actions.setErrors("catch error")))
+  }
+}
+
+export const removeGame = (type, id) => {
+  return (dispatch, getState) =>{
+  fetches.profile.removeGame(getState, id, type)
+  .then(games => {
+    if(games.success) {
     dispatch(user.actions.setGameLists(games.lists))
     dispatch(user.actions.setErrors(null))
   } else {

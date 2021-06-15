@@ -8,7 +8,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components/macro";
 
-import { addRemoveGame } from "../../reducers/user";
+import { addGame } from "../../reducers/user";
 import { Button } from "../Reusable/Button";
 
 const Title = styled.h1`
@@ -43,7 +43,7 @@ export const SaveGame = ({ name, id, setFlip, like, setLike }) => {
   };
 
   const handleClick = () => {
-    type.forEach((item) => dispatch(addRemoveGame(item, id, 'add')));
+    type.forEach((item) => dispatch(addGame(item, id)));
     setFlip(false);
     if (typeArr.length > 0) {
       setLike("recent");

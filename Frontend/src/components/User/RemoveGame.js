@@ -4,7 +4,7 @@ import styled from "styled-components/macro";
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
-import { addRemoveGame } from "../../reducers/user";
+import { removeGame } from "../../reducers/user";
 
 const Wrapper = styled.div`
 display: flex;
@@ -22,12 +22,13 @@ background: transparent;
 border: none;
 cursor: pointer;`
 
-export const RemoveGame = ({type, id}) => {
+export const RemoveGame = ({type, id, clicked, setClicked}) => {
     const dispatch = useDispatch();
-    const [clicked, setClicked] = useState(false);
+  
+    
 
     const handleClick = () =>{
-        dispatch(addRemoveGame(type, id, 'remove'));
+        dispatch(removeGame(type, id));
         setClicked(true);
     }
 

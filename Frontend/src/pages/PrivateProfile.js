@@ -8,12 +8,13 @@ import { LottieAnimation } from '../animation/LottieAnimation'
 import loading from 'animation/json/loading.json'
 import { ProfileCard } from '../components/User/ProfileCard'
 import { ProfileGameList } from '../components/User/ProfileGameList'
+import { Menu } from '../components/Menu'
 
 const Wrapper = styled.div`
 position: relative;
 display: flex;
 flex-direction: column;
-min-height: 100vh;
+min-height: calc(100vh - 150px);
 width: 100%;
 align-items: center;
 
@@ -45,6 +46,8 @@ const onLogout = () => {
 }
     
     return (
+      <>
+      <Menu />
       <Wrapper>
           {!isLoading ? (
             <>
@@ -56,6 +59,7 @@ const onLogout = () => {
           )}
         <button style={{position: 'absolute'}} onClick={onLogout}>Log out</button>
       </Wrapper>
+      </>
     );
 }
 

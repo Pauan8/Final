@@ -36,7 +36,7 @@ const ImgCard = styled.div`
   width: 300px;
   height: 500px;
   background: #f2d3ac;
-  border: solid #a65151 3px;
+  border: solid #a65151 1px;
  border-radius: 5px;
   display: flex;
   flex-direction: column;
@@ -76,7 +76,7 @@ const TextContainer = styled.div`
 `;
 
 const Name = styled.h1`
-  text-align: right;
+  text-align: ${props => props.age? "right": "center"};
   flex: 1 1 auto;
   color: #d94a56;
 `;
@@ -125,7 +125,7 @@ export const ProfileCard = ({ id }) => {
           )}
         </ImgContainer>
         <TextContainer>
-          <Name> {profile.username} </Name>
+          <Name age={profile.age?true:false}> {profile.username} </Name>
           {profile.age ? <Age>lvl {profile.age}</Age> : <></>}{" "}
         </TextContainer>
         <TextContainer>

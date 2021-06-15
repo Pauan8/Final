@@ -141,7 +141,7 @@ router.post('/profile/:id/removeGame', async (req, res) => {
   const attr = `lists.${list}`
  
     try { 
-        const user = await User.findByIdAndUpdate(id,  {$pull: {[attr]:  {id: req.body[list].id}}})
+        const user = await User.findByIdAndUpdate(id,  {$pull: {[attr]:  {id: req.body[list]}}}, {new: true})
         res.json({   
           lists: user.lists,
           success: true, 
