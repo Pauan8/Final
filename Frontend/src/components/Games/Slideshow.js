@@ -1,12 +1,12 @@
 /* eslint-disable no-loop-func */
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components/macro";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components/macro';
 
-import { generateGamesList } from "../../reducers/boardGames";
-import { GameCard } from "./GameCard";
-import { LottieAnimation } from "../../animation/LottieAnimation";
-import loading from "../../animation/json/loading.json";
+import { generateGamesList } from '../../reducers/boardGames';
+import { GameCard } from './GameCard';
+import { LottieAnimation } from '../../animation/LottieAnimation';
+import loading from '../../animation/json/loading.json';
 
 const Wrapper = styled.div`
   display: flex;
@@ -66,7 +66,7 @@ export const Slideshow = ({ type, value }) => {
   }, [dispatch, type, value]);
 
   const handleClick = (direction, jump) => {
-    if (direction === "left") {
+    if (direction === 'left') {
       return slideIndex === 1
         ? setSlideIndex(Math.ceil(data[value].length / jump))
         : setSlideIndex((prev) => prev - 1);
@@ -92,17 +92,11 @@ export const Slideshow = ({ type, value }) => {
       for (let i = 0; i < data[value].length; i += slideNumber) {
         resultsRender.push(
           <ContainerOuter index={i} slideIndex={slideIndex}>
-            <Button onClick={() => handleClick("left", slideNumber)}>
-              {" "}
-              ◀{" "}
-            </Button>
+            <Button onClick={() => handleClick('left', slideNumber)}>◀</Button>
             {data[value].slice(i, i + slideNumber).map((item) => (
               <GameCard key={item.id} {...item} />
             ))}
-            <Button onClick={() => handleClick("right", slideNumber)}>
-              {" "}
-              ▶{" "}
-            </Button>
+            <Button onClick={() => handleClick('right', slideNumber)}>▶</Button>
           </ContainerOuter>
         );
       }

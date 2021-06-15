@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
+import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 
 const useStyles = makeStyles(() => ({
   checkboxLabel: {
@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
     paddingBottom: 5,
   },
   radio: {
-    "& .MuiSvgIcon-root": {
+    '& .MuiSvgIcon-root': {
       height: 15,
       weight: 15,
     },
@@ -27,8 +27,8 @@ export const RadioButtons = ({ type, choices, value, handleChange }) => {
   const classes = useStyles();
 
   return (
-    <FormControl component="fieldset">
-      <FormLabel className={classes.label} component="legend">
+    <FormControl component='fieldset'>
+      <FormLabel className={classes.label} component='legend'>
         {type}
       </FormLabel>
       <RadioGroup

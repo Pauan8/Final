@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components/macro";
-import Favorite from "@material-ui/icons/Favorite";
-import { red } from "@material-ui/core/colors";
-import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
-import { useSelector } from "react-redux";
+import React, { useEffect } from 'react';
+import styled from 'styled-components/macro';
+import Favorite from '@material-ui/icons/Favorite';
+import { red } from '@material-ui/core/colors';
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+import { useSelector } from 'react-redux';
 
 const Button = styled.button`
   background: transparent;
@@ -21,18 +21,18 @@ export const LikeButton = ({ handleClick, id, like, setLike }) => {
 
   const handleLikes = () => {
     if (
-      lists && lists.favourites.filter((item) => item.id === id).length > 0 ||
-      lists && lists.ownedgames.filter((item) => item.id === id).length > 0 ||
-      lists && lists.wishlist.filter((item) => item.id === id).length > 0
+      (lists && lists.favourites.filter((item) => item.id === id).length > 0) ||
+      (lists && lists.ownedgames.filter((item) => item.id === id).length > 0) ||
+      (lists && lists.wishlist.filter((item) => item.id === id).length > 0)
     ) {
-      return "includes";
+      return 'includes';
     } else {
-      return "none";
+      return 'none';
     }
   };
 
   const render = () => {
-    return like === "includes" || like === "recent" ? (
+    return like === 'includes' || like === 'recent' ? (
       <Favorite style={{ color: red[700] }} />
     ) : (
       <FavoriteBorder />

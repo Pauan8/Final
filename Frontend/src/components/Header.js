@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components/macro";
+import React from 'react';
+import styled from 'styled-components/macro';
 
-import { UserMenu } from "./User/UserMenu";
+import { UserMenu } from './User/UserMenu';
 
 const Wrapper = styled.header`
   position: relative;
@@ -18,7 +18,7 @@ const BgImage = styled.div`
   position: absolute;
   height: 207px;
   width: 100%;
-  background-image: url(${require("../assets/background.jpg")});
+  background-image: url(${require('../assets/background.jpg')});
   background-attachment: fixed;
   background-size: cover;
   background-position-y: top;
@@ -61,7 +61,7 @@ export const Header = () => {
     <Wrapper>
       <UserMenu />
       <TextContainer>
-        <Logo src={require("../assets/logo.svg")} />
+        <Logo src={require('../assets/logo.svg')} />
         <SubTitle>- Let the adventure begin!</SubTitle>
       </TextContainer>
       <BgImage />

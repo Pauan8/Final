@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
-import React, { useState } from "react";
-import styled from "styled-components/macro";
+import React, { useState } from 'react';
+import styled from 'styled-components/macro';
 
-import { SaveGame } from "./SaveGame";
-import { LikeButton } from "./LikeButton";
+import { SaveGame } from './SaveGame';
+import { LikeButton } from './LikeButton';
 
 const ContainerInner = styled.div`
   height: 390px;
@@ -69,7 +69,7 @@ const FlipCardInner = styled.div`
   text-align: center;
   transition: transform 0.8s;
   transform-style: preserve-3d;
-  transform: ${(props) => (props.flip ? "rotateY(180deg)" : "")};
+  transform: ${(props) => (props.flip ? 'rotateY(180deg)' : '')};
 `;
 
 /* Position the front and back side */
@@ -118,9 +118,9 @@ export const GameCard = ({
   id,
 }) => {
   const [flip, setFlip] = useState(false);
-  const [like, setLike] = useState("none");
+  const [like, setLike] = useState('none');
   const checkValue = (value) => {
-    return value || "unknown";
+    return value || 'unknown';
   };
 
   const checkMultiples = (val1, val2) => {
@@ -132,7 +132,7 @@ export const GameCard = ({
   return (
     <>
       {id ? (
-        <FlipCard >
+        <FlipCard>
           <FlipCardInner flip={flip}>
             <FlipCardFront>
               <ContainerInner>

@@ -1,27 +1,28 @@
-import React, { useEffect, useState } from 'react'
-import styled from 'styled-components/macro'
-import { useHistory, useParams  } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components/macro';
+import { useHistory, useParams } from 'react-router-dom';
 
 const Wrapper = styled.div`
-position: relative;`
+  position: relative;
+`;
 
-const Name = styled.h1``
+const Name = styled.h1``;
 
 const PublicProfile = () => {
-    const [user, setUser] = useState([])
-    const { username } = useParams();
+  const [user, setUser] = useState([]);
+  const { username } = useParams();
 
-
-useEffect(() => {
+  useEffect(() => {
     fetch(`https://secure-escarpment-13722.herokuapp.com/user/${username}`)
-    .then(res => res.json())
-    .then(json => setUser(json))
-}, [fetch])
+      .then((res) => res.json())
+      .then((json) => setUser(json));
+  }, [fetch]);
 
-return (
+  return (
     <Wrapper>
-        <Name>{user.username}</Name>
-    </Wrapper>)
-}
+      <Name>{user.username}</Name>
+    </Wrapper>
+  );
+};
 
 export default PublicProfile;

@@ -1,8 +1,8 @@
-import React from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import React from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-import hexArr from "data/hexArray.json";
+import hexArr from 'data/hexArray.json';
 
 const Wrapper = styled.div`
   display: flex;
@@ -75,11 +75,11 @@ export const Sidebar = () => {
   const setMenuTitles = (index) => {
     switch (index) {
       case 3:
-        return "Sign Up";
+        return 'Sign Up';
       case 7:
-        return "Log In";
+        return 'Log In';
       default:
-        return "";
+        return '';
     }
   };
 
@@ -88,7 +88,7 @@ export const Sidebar = () => {
       return arr.map((hex, i) => (
         <Outerclip left={hex.left} up={hex.top}>
           <Innerclip>
-            <PathLink to={setMenuTitles(i).toLowerCase().replace(" ", "")}>
+            <PathLink to={setMenuTitles(i).toLowerCase().replace(' ', '')}>
               <MenuTitles>{setMenuTitles(i)}</MenuTitles>
             </PathLink>
           </Innerclip>

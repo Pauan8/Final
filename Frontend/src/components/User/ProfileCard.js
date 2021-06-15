@@ -1,8 +1,8 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import styled from "styled-components/macro";
-import { Link } from "react-router-dom";
-import EditIcon from "@material-ui/icons/Edit";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import styled from 'styled-components/macro';
+import { Link } from 'react-router-dom';
+import EditIcon from '@material-ui/icons/Edit';
 
 const Container = styled.div`
   display: flex;
@@ -37,12 +37,12 @@ const ImgCard = styled.div`
   height: 500px;
   background: #f2d3ac;
   border: solid #a65151 1px;
- border-radius: 5px;
+  border-radius: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
- 
+
   margin-top: 50px;
   color: #733c3c;
 
@@ -76,7 +76,7 @@ const TextContainer = styled.div`
 `;
 
 const Name = styled.h1`
-  text-align: ${props => props.age? "right": "center"};
+  text-align: ${(props) => (props.age ? 'right' : 'center')};
   flex: 1 1 auto;
   color: #d94a56;
 `;
@@ -112,7 +112,7 @@ export const ProfileCard = ({ id }) => {
     <Container>
       <ImgCard>
         <EditLink to={`/profile/${id}/edit`}>
-          {" "}
+          {' '}
           <Edit>
             <EditIcon />
           </Edit>
@@ -125,8 +125,8 @@ export const ProfileCard = ({ id }) => {
           )}
         </ImgContainer>
         <TextContainer>
-          <Name age={profile.age?true:false}> {profile.username} </Name>
-          {profile.age ? <Age>lvl {profile.age}</Age> : <></>}{" "}
+          <Name age={profile.age ? true : false}> {profile.username} </Name>
+          {profile.age ? <Age>lvl {profile.age}</Age> : <></>}{' '}
         </TextContainer>
         <TextContainer>
           {profile.name ? (
@@ -136,7 +136,7 @@ export const ProfileCard = ({ id }) => {
           ) : (
             <></>
           )}
-          {profile.surname ? <Info>{profile.surname}</Info> : <></>}{" "}
+          {profile.surname ? <Info>{profile.surname}</Info> : <></>}{' '}
         </TextContainer>
         <TextContainer>
           {profile.e_mail ? (
@@ -149,7 +149,7 @@ export const ProfileCard = ({ id }) => {
         </TextContainer>
         {profile.description ? (
           <Cite>
-            <Description>"{profile.description}"</Description>
+            <Description>'{profile.description}'</Description>
           </Cite>
         ) : (
           <></>

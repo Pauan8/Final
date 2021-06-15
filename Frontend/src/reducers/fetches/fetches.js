@@ -1,13 +1,13 @@
-//const BASE_URL = "https://secure-escarpment-13722.herokuapp.com"
-const BASE_URL = "http://localhost:8080"
+//const BASE_URL = 'https://secure-escarpment-13722.herokuapp.com'
+const BASE_URL = 'http://localhost:8080';
 
 export const fetches = {
   profile: {
     auth: (username, password) => {
       return fetch(`${BASE_URL}/login`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "content-type": "application/json",
+          'content-type': 'application/json',
         },
         body: JSON.stringify({
           username,
@@ -18,7 +18,7 @@ export const fetches = {
     user: (getState) => {
       return fetch(`${BASE_URL}/profile/${getState().user.userInfo.userID}`, {
         headers: {
-          "content-type": "application/json",
+          'content-type': 'application/json',
           Authorization: getState().user.accessToken,
         },
       }).then((response) => {
@@ -30,9 +30,9 @@ export const fetches = {
     },
     signup: (username, password, name, surname, e_mail) => {
       return fetch(`${BASE_URL}/users`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "content-type": "application/json",
+          'content-type': 'application/json',
         },
         body: JSON.stringify({
           username,
@@ -52,9 +52,9 @@ export const fetches = {
       return fetch(
         `${BASE_URL}/profile/${getState().user.userInfo.userID}/edit`,
         {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "content-type": "application/json",
+            'content-type': 'application/json',
             Authorization: getState().user.accessToken,
           },
           body: JSON.stringify({
@@ -79,9 +79,9 @@ export const fetches = {
           getState().user.userInfo.userID
         }/addGame?list=${list}`,
         {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "content-type": "application/json",
+            'content-type': 'application/json',
             Authorization: getState().user.accessToken,
           },
           body: JSON.stringify({
@@ -101,9 +101,9 @@ export const fetches = {
           getState().user.userInfo.userID
         }/removeGame?list=${list}`,
         {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "content-type": "application/json",
+            'content-type': 'application/json',
             Authorization: getState().user.accessToken,
           },
           body: JSON.stringify({
@@ -130,13 +130,13 @@ export const fetches = {
       });
     },
     filteredList: (getState) => {
-      let filterArr = "";
+      let filterArr = '';
       const getFiltering = () => {
         getState().boardGames.filter.map((item) => {
           console.log(`${Object.keys(item).map((k) => `&${k}=${item[k]}`)}`);
           filterArr += `${Object.keys(item).map((k) => `&${k}=${item[k]}`)}`;
         });
-        return filterArr.toString().replaceAll(",&", "&")
+        return filterArr.toString().replaceAll(',&', '&');
       };
 
       return fetch(

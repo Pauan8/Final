@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import styled from "styled-components/macro";
-import { Link } from "react-router-dom";
-import { LottieAnimation } from '../../animation/LottieAnimation'
-import emptylist from '../../animation/json/emptylist.json'
-import { RemoveGame } from '../User/RemoveGame'
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import styled from 'styled-components/macro';
+import { Link } from 'react-router-dom';
+import { LottieAnimation } from '../../animation/LottieAnimation';
+import emptylist from '../../animation/json/emptylist.json';
+import { RemoveGame } from '../User/RemoveGame';
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,9 +13,10 @@ const Wrapper = styled.div`
 `;
 
 const EmptyTitle = styled.h3`
-color:#a65151;
-text-align: center;
-margin-top: 40px;`
+  color: #a65151;
+  text-align: center;
+  margin-top: 40px;
+`;
 
 const ListTitle = styled.h2`
   color: #f2d3ac;
@@ -24,9 +25,9 @@ const ListTitle = styled.h2`
 `;
 
 const GameList = styled.ul`
-  display: ${(props) => (props.active === props.name ? "block" : "none")};
+  display: ${(props) => (props.active === props.name ? 'block' : 'none')};
   background: ${(props) =>
-  props.active === props.name ? "#D9756C" : "#F2D3AC"};
+    props.active === props.name ? '#D9756C' : '#F2D3AC'};
   margin: 0;
   margin-bottom: 10px;
   width: 300px;
@@ -38,24 +39,24 @@ const GameList = styled.ul`
   scrollbar-width: thin;
   scrollbar-color: #a65151 transparent;
 
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
 
-&::-webkit-scrollbar {
-  width: 12px;
-}
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
 
-&::-webkit-scrollbar-track {
-  background: transparent;
-}
+  &::-webkit-scrollbar-thumb {
+    background-color: #a65151;
+    border-radius: 20px;
+    border: 3px solid #a65151;
+  }
 
-&::-webkit-scrollbar-thumb {
-  background-color: #a65151;
-  border-radius: 20px;
-  border: 3px solid #a65151;
-}
-
- @media (min-width: 768px) {
-   border-left: none;
- }`;
+  @media (min-width: 768px) {
+    border-left: none;
+  }
+`;
 
 const Game = styled.li`
   margin-bottom: 20px;
@@ -68,32 +69,32 @@ const Game = styled.li`
 `;
 
 const ImageContainer = styled.div`
-overflow: hidden;
-border-right: solid #a65151;
-background: white;
-width: 100px;
-min-width: 100px;
-height: 100px;
-display: flex;
-align-items: center;
-justify-content: center;
-`
+  overflow: hidden;
+  border-right: solid #a65151;
+  background: white;
+  width: 100px;
+  min-width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 const GameImg = styled.img`
-height: 100%;
-object-fit: cover;
-`
+  height: 100%;
+  object-fit: cover;
+`;
 
 const GameLink = styled(Link)`
   text-decoration: none;
   display: flex;
-  
 `;
 
-const GameTitle = styled.p `
-font-size: 14px;
-color: #a65151;
-margin: 0;
-margin-left: 10px;`
+const GameTitle = styled.p`
+  font-size: 14px;
+  color: #a65151;
+  margin: 0;
+  margin-left: 10px;
+`;
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -103,36 +104,45 @@ const Button = styled.button`
   height: 40px;
   width: 40px;
   background: ${(props) =>
-    props.active === props.name ? "#D9756C" : "#F2D3AC"};
+    props.active === props.name ? '#D9756C' : '#F2D3AC'};
   border: solid #a65151 0.5px;
-  margin-bottom:-2px;
+  margin-bottom: -2px;
 `;
 
 export const ProfileGameList = () => {
   const profile = useSelector((store) => store.user.userInfo);
-  const [active, setActive] = useState("favourites");
+  const [active, setActive] = useState('favourites');
   const [clicked, setClicked] = useState(false);
 
   const displayList = (type) => {
     if (profile.lists) {
-      return profile.lists[type].length === 0
-      ?<> <EmptyTitle>List is empty</EmptyTitle>  
-      <LottieAnimation lotti={emptylist} height={200} width={200} /></>
-      : profile.lists[type].map((game) => (
-        <Game>
-          <GameLink to={`/game/${game.id}`}>
-         <ImageContainer >
-           <GameImg src={game.thumb_url} /> 
-           </ImageContainer>
-           </GameLink> 
-           <GameTitle>{game.name}</GameTitle>
-           <RemoveGame type={type} id={game.id} clicked={clicked} setClicked={setClicked}/>
-        </Game>
-      ));
+      return profile.lists[type].length === 0 ? (
+        <>
+          {' '}
+          <EmptyTitle>List is empty</EmptyTitle>
+          <LottieAnimation lotti={emptylist} height={200} width={200} />
+        </>
+      ) : (
+        profile.lists[type].map((game) => (
+          <Game>
+            <GameLink to={`/game/${game.id}`}>
+              <ImageContainer>
+                <GameImg src={game.thumb_url} />
+              </ImageContainer>
+            </GameLink>
+            <GameTitle>{game.name}</GameTitle>
+            <RemoveGame
+              type={type}
+              id={game.id}
+              clicked={clicked}
+              setClicked={setClicked}
+            />
+          </Game>
+        ))
+      );
     }
-    return <GameTitle>Empty</GameTitle>
+    return <GameTitle>Empty</GameTitle>;
   };
-
 
   const handleClick = (listtype) => {
     setActive(listtype);
@@ -143,37 +153,37 @@ export const ProfileGameList = () => {
       <ButtonContainer>
         <Button
           active={active}
-          name="favourites"
-          onClick={() => handleClick("favourites")}
+          name='favourites'
+          onClick={() => handleClick('favourites')}
         >
           💗
         </Button>
         <Button
           active={active}
-          name="wishlist"
-          onClick={() => handleClick("wishlist")}
+          name='wishlist'
+          onClick={() => handleClick('wishlist')}
         >
           💎
         </Button>
         <Button
           active={active}
-          name="ownedgames"
-          onClick={() => handleClick("ownedgames")}
+          name='ownedgames'
+          onClick={() => handleClick('ownedgames')}
         >
           ✅
         </Button>
       </ButtonContainer>
-      <GameList active={active} name="favourites">
+      <GameList active={active} name='favourites'>
         <ListTitle>Favourites</ListTitle>
-        {displayList("favourites")}
+        {displayList('favourites')}
       </GameList>
-      <GameList active={active} name="wishlist">
+      <GameList active={active} name='wishlist'>
         <ListTitle>Wish-list</ListTitle>
-        {displayList("wishlist")}
+        {displayList('wishlist')}
       </GameList>
-      <GameList active={active} name="ownedgames">
+      <GameList active={active} name='ownedgames'>
         <ListTitle>Owned games</ListTitle>
-        {displayList("ownedgames")}
+        {displayList('ownedgames')}
       </GameList>
     </Wrapper>
   );

@@ -12,7 +12,7 @@ mongoose.connect(mongoUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
-  useFindAndModify: false
+  useFindAndModify: false,
 });
 mongoose.Promise = Promise;
 
@@ -20,7 +20,7 @@ const authenticateUser = async (req, res, next) => {
   try {
     const currentUser = await User.findOne({
       accessToken: req.header('Authorization'),
-    })
+    });
     if (currentUser) {
       req.user = currentUser;
       next();
@@ -51,15 +51,15 @@ router.get('/users', async (_req, res) => {
     const allUsers = await User.find().exec();
     return allUsers
       ? res.json({
-        userID: allUsers._id,
-        username: allUsers.username,
-        name: allUsers.name,
-        surname: allUsers.surname,
-        avatar: allUsers.avatar,
-        e_mail: allUsers.e_mail,
-        success: true, 
-        loggedOut: false,
-        lists: allUsers.lists
+          userID: allUsers._id,
+          username: allUsers.username,
+          name: allUsers.name,
+          surname: allUsers.surname,
+          avatar: allUsers.avatar,
+          e_mail: allUsers.e_mail,
+          success: true,
+          loggedOut: false,
+          lists: allUsers.lists,
         })
       : res.json({ success: false, message: 'No users in the database' });
   } catch (err) {
@@ -76,7 +76,7 @@ router.post('/login', async (req, res) => {
         userID: user._id,
         accessToken: user.accessToken,
         success: true,
-        loggedOut: false
+        loggedOut: false,
       });
     } else {
       res
@@ -92,20 +92,20 @@ router.get('/profile/:id', authenticateUser);
 router.get('/profile/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    let privateProfile = await User.findById(id).exec();   
-      res.json({
-        userID: privateProfile._id,
-        username: privateProfile.username,
-        name: privateProfile.name,
-        surname: privateProfile.surname,
-        avatar: privateProfile.avatar,
-        e_mail: privateProfile.e_mail,
-        lists: privateProfile.lists,
-        age: privateProfile.age,
-        description: privateProfile.description,
-        success: true, 
-        loggedOut: false 
-      });
+    let privateProfile = await User.findById(id).exec();
+    res.json({
+      userID: privateProfile._id,
+      username: privateProfile.username,
+      name: privateProfile.name,
+      surname: privateProfile.surname,
+      avatar: privateProfile.avatar,
+      e_mail: privateProfile.e_mail,
+      lists: privateProfile.lists,
+      age: privateProfile.age,
+      description: privateProfile.description,
+      success: true,
+      loggedOut: false,
+    });
   } catch (err) {
     catchError(res, err, 'Invalid user id');
   }
@@ -114,62 +114,78 @@ router.get('/profile/:id', async (req, res) => {
 router.post('/profile/:id/addGame', authenticateUser);
 router.post('/profile/:id/addGame', async (req, res) => {
   const { id } = req.params;
-  const { list } = req.query
-  const attr = `lists.${list}`
- 
-  try { 
-    const exists = await User.find({ [attr]: {
-      $elemMatch: {
-        id: { $in: [req.body[list].id] }}}})
-      if( exists.length === 0){ 
-        const user = await User.findByIdAndUpdate(id, {$push: {[attr]: req.body[list]}}, {new: true})
-        res.json({   
-          lists: user.lists,
-          success: true, 
-          loggedOut: false 
-        })
-      } else {}
-    } catch (err) {
-      catchError(res, err, 'Invalid user id');
+  const { list } = req.query;
+  const attr = `lists.${list}`;
+
+  try {
+    const exists = await User.find({
+      [attr]: {
+        $elemMatch: {
+          id: { $in: [req.body[list].id] },
+        },
+      },
+    });
+    if (exists.length === 0) {
+      const user = await User.findByIdAndUpdate(
+        id,
+        { $push: { [attr]: req.body[list] } },
+        { new: true }
+      );
+      res.json({
+        lists: user.lists,
+        success: true,
+        loggedOut: false,
+      });
+    } else {
+    }
+  } catch (err) {
+    catchError(res, err, 'Invalid user id');
   }
-})
+});
 
 router.post('/profile/:id/removeGame', authenticateUser);
 router.post('/profile/:id/removeGame', async (req, res) => {
   const { id } = req.params;
-  const {list} = req.query
-  const attr = `lists.${list}`
- 
-    try { 
-        const user = await User.findByIdAndUpdate(id,  {$pull: {[attr]:  {id: req.body[list]}}}, {new: true})
-        res.json({   
-          lists: user.lists,
-          success: true, 
-          loggedOut: false 
-        })
-    } catch (err) {
-      catchError(res, err, 'Invalid user id');
+  const { list } = req.query;
+  const attr = `lists.${list}`;
+
+  try {
+    const user = await User.findByIdAndUpdate(
+      id,
+      { $pull: { [attr]: { id: req.body[list] } } },
+      { new: true }
+    );
+    res.json({
+      lists: user.lists,
+      success: true,
+      loggedOut: false,
+    });
+  } catch (err) {
+    catchError(res, err, 'Invalid user id');
   }
-})
+});
 
 router.post('/profile/:id/edit', authenticateUser);
 router.post('/profile/:id/edit', async (req, res) => {
   const { id } = req.params;
   try {
     let params = {};
-    for(let prop in req.body) if(req.body[prop]) params[prop] = req.body[prop];
+    for (let prop in req.body)
+      if (req.body[prop]) params[prop] = req.body[prop];
 
-    let updateProfile = await User.findByIdAndUpdate(id, {$set: params}).exec();   
-      res.json({
-        name: updateProfile.name,
-        surname: updateProfile.surname,
-        avatar: updateProfile.avatar,
-        e_mail: updateProfile.e_mail,
-        age: updateProfile.age,
-        description: updateProfile.description,
-        success: true, 
-        loggedOut: false 
-      });
+    let updateProfile = await User.findByIdAndUpdate(id, {
+      $set: params,
+    }).exec();
+    res.json({
+      name: updateProfile.name,
+      surname: updateProfile.surname,
+      avatar: updateProfile.avatar,
+      e_mail: updateProfile.e_mail,
+      age: updateProfile.age,
+      description: updateProfile.description,
+      success: true,
+      loggedOut: false,
+    });
   } catch (err) {
     catchError(res, err, 'Invalid user id');
   }
@@ -182,15 +198,16 @@ router.get('/user/:username', async (req, res) => {
       { username },
       { accessToken: 0, password: 0 }
     ).exec();
-    res.json({  
+    res.json({
       userID: userProfile._id,
       username: userProfile.username,
       name: userProfile.name,
       surname: userProfile.surname,
       avatar: userProfile.avatar,
       e_mail: userProfile.e_mail,
-      loggedOut: false, 
-      success: true });
+      loggedOut: false,
+      success: true,
+    });
   } catch (err) {
     catchError(res, err, 'Invalid user id');
   }
@@ -205,7 +222,7 @@ router.post('/users', async (req, res) => {
       password: bcrypt.hashSync(password, salt),
       name,
       surname,
-      e_mail
+      e_mail,
     }).save();
     res.json({
       userID: newUser._id,
@@ -214,7 +231,7 @@ router.post('/users', async (req, res) => {
       name: newUser.name,
       surname: newUser.surname,
       e_mail: newUser.e_mail,
-      success: true
+      success: true,
     });
   } catch (err) {
     if (err.code === 11000) {
@@ -230,7 +247,7 @@ router.post('/users', async (req, res) => {
 router.delete('/users', async (_req, res) => {
   try {
     const deleteAll = await User.deleteMany();
-    res.json(deleteAll, {success: false });
+    res.json(deleteAll, { success: false });
   } catch (err) {
     catchError(res, err, 'Something went wrong');
   }

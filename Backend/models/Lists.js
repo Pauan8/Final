@@ -1,21 +1,23 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
-const ListSchema = mongoose.Schema([{
+const ListSchema = mongoose.Schema([
+  {
     strict: false,
     name: String,
     category: String,
     user_rating: {
       type: Number,
       min: 0,
-      max: 5
+      max: 5,
     },
     id: {
       type: String,
-      required: true
+      required: true,
     },
     release_year: Number,
-    thumb_url: String
-  }])
+    thumb_url: String,
+  },
+]);
 
 const list = mongoose.model('list', ListSchema);
-module.exports = list
+module.exports = list;

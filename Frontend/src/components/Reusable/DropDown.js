@@ -4,29 +4,33 @@ import MenuItem from '@material-ui/core/MenuItem';
 import styled from 'styled-components/macro';
 
 const FormInner = styled.div`
-display: flex;
-justify-content: center;
-margin: 10px;
+  display: flex;
+  justify-content: center;
+  margin: 10px;
 `;
 
-export const DropDown = ({ arr , value, handleChange, title}) => {
-
+export const DropDown = ({ arr, value, handleChange, title }) => {
   return (
     <FormInner>
       <TextField
         id={`select-${title}`}
         select
         name={title}
-        label="Select"
+        label='Select'
         value={value}
         onChange={handleChange}
         helperText={`Choose ${title}`}
-        size="small"
+        size='small'
         InputLabelProps={{ style: { fontSize: '12px' } }}
-        InputProps={{ style: { fontSize: '12px' } }}>
+        InputProps={{ style: { fontSize: '12px' } }}
+      >
         {arr.map((option) => (
           <MenuItem key={option.name} value={option.name}>
-            {title === 'avatar' ? <img src={require(`../../assets/avatar/${option.name}`)}/> : option.name }
+            {title === 'avatar' ? (
+              <img src={require(`../../assets/avatar/${option.name}`)} />
+            ) : (
+              option.name
+            )}
           </MenuItem>
         ))}
       </TextField>

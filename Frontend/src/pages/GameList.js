@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { useParams, Link } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { useParams, Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { GameCard } from '../components/Games/GameCard';
-import { fetchSingleGame } from '../reducers/boardGames'
+import { fetchSingleGame } from '../reducers/boardGames';
 
 const Wrapper = styled.div`
   display: flex;
@@ -32,45 +32,48 @@ const Grid = styled.div`
 `;
 
 const PathLink = styled(Link)`
-text-decoration: none;
-color: white;
+  text-decoration: none;
+  color: white;
 
-&:hover{
-  color: darkslategray;
-  font-style: bold;
-}
-`
+  &:hover {
+    color: darkslategray;
+    font-style: bold;
+  }
+`;
 
 let arr = [];
 const GameList = () => {
   const { type } = useParams();
   const dispatch = useDispatch();
-  const data = useSelector((store) => store.boardGames.gameLists)
+  const data = useSelector((store) => store.boardGames.gameLists);
 
   if (type === 'TopRated') {
-    arr = data.popularity
+    arr = data.popularity;
   } else if (type === 'Discounted') {
-    arr = data.discount
-  } else if ( type === 'NewRealeases'){
+    arr = data.discount;
+  } else if (type === 'NewRealeases') {
     // eslint-disable-next-line prefer-destructuring
-    arr = data[2021]
+    arr = data[2021];
+  } else {
+    arr = data.filtered;
   }
-    else {
-    arr = data.filtered
-  }
-  
 
   return (
     <Wrapper>
       <Title> {type.replace(/([A-Z])/g, ' $1').trim()} </Title>
       <Grid>
-        {arr? arr.map((game) => (
-          <PathLink
-            to={`/Game/${game.id}`}
-            onClick={() => dispatch(fetchSingleGame(game.id))}>
-            <GameCard {...game} />
-          </PathLink>
-        )): <></>}
+        {arr ? (
+          arr.map((game) => (
+            <PathLink
+              to={`/Game/${game.id}`}
+              onClick={() => dispatch(fetchSingleGame(game.id))}
+            >
+              <GameCard {...game} />
+            </PathLink>
+          ))
+        ) : (
+          <></>
+        )}
       </Grid>
     </Wrapper>
   );

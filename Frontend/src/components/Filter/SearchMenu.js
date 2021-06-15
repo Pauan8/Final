@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import styled from "styled-components/macro";
-import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
-import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+import React, { useState } from 'react';
+import styled from 'styled-components/macro';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
-import { Search } from "./Search";
-import { SearchButton } from "./SearchButton";
-import { RadioButtons } from "./RadioButtons";
-import categories from "../../data/categories.json";
-import mechanics from "../../data/mechanics.json";
-import { minAgeArr } from "../../data/choicesArrays";
-import { RangeSlider } from "./RangeSlider";
-import { MultipleSelect } from "./MultipleSelect";
+import { Search } from './Search';
+import { SearchButton } from './SearchButton';
+import { RadioButtons } from './RadioButtons';
+import categories from '../../data/categories.json';
+import mechanics from '../../data/mechanics.json';
+import { minAgeArr } from '../../data/choicesArrays';
+import { RangeSlider } from './RangeSlider';
+import { MultipleSelect } from './MultipleSelect';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -46,7 +46,7 @@ const Container = styled.div`
 
 const ShowFilter = styled.button`
   background: none;
-  border: ${(props) => (props.expand ? "none" : "solid lightgrey 0.2px")};
+  border: ${(props) => (props.expand ? 'none' : 'solid lightgrey 0.2px')};
   width: 50px;
   height: 30px;
   border-radius: 5px;
@@ -100,12 +100,12 @@ const ExpandButton = styled.button`
   width: 40px;
   border: solid lightgrey 0.1px;
   border-right: none;
-  visibility: ${props => props.expand ? "visible" : "hidden"};
+  visibility: ${(props) => (props.expand ? 'visible' : 'hidden')};
   background: white;
 
- @media (min-width: 768px){
-   visibility: visible;
- }
+  @media (min-width: 768px) {
+    visibility: visible;
+  }
 `;
 
 const RadioContainer = styled.div`
@@ -136,14 +136,14 @@ export const SearchMenu = () => {
       <Container>
         <Search />
         <ShowFilter expand={expand} onClick={() => setExpand(!expand)}>
-          {expand ? "" : "filter"}
+          {expand ? '' : 'filter'}
         </ShowFilter>
       </Container>
       <Wrapper>
-        <Form noValidate autoComplete="off">
+        <Form noValidate autoComplete='off'>
           <ExpandContainer>
             <ExpandButton expand={expand} onClick={() => setExpand(!expand)}>
-              {expand ? <ArrowForwardIosIcon /> : <ArrowBackIosIcon />}{" "}
+              {expand ? <ArrowForwardIosIcon /> : <ArrowBackIosIcon />}{' '}
             </ExpandButton>
             <Expand expand={expand}>
               <ExpandInner>
@@ -151,26 +151,26 @@ export const SearchMenu = () => {
                   <MultipleSelect
                     array={categories}
                     value={value.categories}
-                    handleChange={handleChange("categories")}
-                    title="categories"
+                    handleChange={handleChange('categories')}
+                    title='categories'
                   />
                   <MultipleSelect
                     array={mechanics}
                     value={value.mechanics}
-                    handleChange={handleChange("mechanics")}
-                    title="mechanics"
+                    handleChange={handleChange('mechanics')}
+                    title='mechanics'
                   />
                 </SelectContainer>
                 <RadioContainer>
                   <RadioButtons
-                    type="Min age"
+                    type='Min age'
                     choices={minAgeArr}
                     value={value.minage}
-                    handleChange={handleChange("minage")}
+                    handleChange={handleChange('minage')}
                   />
                   <RangeSlider
-                    title="players"
-                    label="Players"
+                    title='players'
+                    label='Players'
                     value={value}
                     setValue={setValue}
                     min={1}
@@ -178,8 +178,8 @@ export const SearchMenu = () => {
                     step={1}
                   />
                   <RangeSlider
-                    title="playtime"
-                    label="Play-time(h)"
+                    title='playtime'
+                    label='Play-time(h)'
                     value={value}
                     setValue={setValue}
                     min={0}
@@ -187,8 +187,8 @@ export const SearchMenu = () => {
                     step={0.5}
                   />
                   <RangeSlider
-                    title="year"
-                    label="Year published"
+                    title='year'
+                    label='Year published'
                     value={value}
                     setValue={setValue}
                     min={1900}

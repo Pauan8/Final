@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components/macro";
+import React from 'react';
+import styled from 'styled-components/macro';
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -7,14 +7,14 @@ const ButtonContainer = styled.div`
   flex-direction: column;
 
   &:after {
-    color: ${(props) => (props.validate ? "black" : "red")};
-    content: "${(props) => (props.validate ? "" : "Invalid username")}";
+    color: ${(props) => (props.validate ? 'black' : 'red')};
+    content: '${(props) => (props.validate ? '' : 'Invalid username')}';
   }
 `;
 
 const Button = styled.button`
   background: #b5d5b5;
-  font-family: "Raleway", sans-serif;
+  font-family: 'Raleway', sans-serif;
   width: 100px;
   padding: 5px;
   font-size: 16px;

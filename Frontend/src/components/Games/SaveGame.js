@@ -3,13 +3,13 @@ import {
   FormGroup,
   FormLabel,
   FormControlLabel,
-} from "@material-ui/core";
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components/macro";
+} from '@material-ui/core';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components/macro';
 
-import { addGame } from "../../reducers/user";
-import { Button } from "../Reusable/Button";
+import { addGame } from '../../reducers/user';
+import { Button } from '../Reusable/Button';
 
 const Title = styled.h1`
   color: white;
@@ -46,19 +46,19 @@ export const SaveGame = ({ name, id, setFlip, like, setLike }) => {
     type.forEach((item) => dispatch(addGame(item, id)));
     setFlip(false);
     if (typeArr.length > 0) {
-      setLike("recent");
-    } else if (typeArr.length === 0 && like != "includes") {
-      setLike("none");
+      setLike('recent');
+    } else if (typeArr.length === 0 && like !== 'includes') {
+      setLike('none');
     }
     typeArr = [];
   };
 
   const handleChecked = (value, title) => {
-    if(lister){
-    return lister[value].filter((item) => item.id === id).length > 0
-      ? true
-      : values[title.toLowerCase().replace(" ", "")];
-    } 
+    if (lister) {
+      return lister[value].filter((item) => item.id === id).length > 0
+        ? true
+        : values[title.toLowerCase().replace(' ', '')];
+    }
   };
 
   const renderCheckbox = (title) => {
@@ -66,9 +66,9 @@ export const SaveGame = ({ name, id, setFlip, like, setLike }) => {
       <FormControlLabel
         control={
           <Checkbox
-            checked={handleChecked(title.toLowerCase().replace(" ", ""), title)}
+            checked={handleChecked(title.toLowerCase().replace(' ', ''), title)}
             onChange={handleChange}
-            name={title.toLowerCase().replace(" ", "")}
+            name={title.toLowerCase().replace(' ', '')}
           />
         }
         label={title}
@@ -79,18 +79,18 @@ export const SaveGame = ({ name, id, setFlip, like, setLike }) => {
     <>
       <Title>{name}</Title>
       <FormLabel
-        component="legend"
-        InputLabelProps={{ style: { color: "#000" } }}
+        component='legend'
+        InputLabelProps={{ style: { color: '#000' } }}
       >
         Add to list/s?
       </FormLabel>
       <FormGroup>
-        {renderCheckbox("Favourites")}
-        {renderCheckbox("Wish List")}
-        {renderCheckbox("Owned Games")}
+        {renderCheckbox('Favourites')}
+        {renderCheckbox('Wish List')}
+        {renderCheckbox('Owned Games')}
       </FormGroup>
       <ButtonContainer>
-        <Button text="Done" handleClick={handleClick} />
+        <Button text='Done' handleClick={handleClick} />
       </ButtonContainer>
     </>
   );
