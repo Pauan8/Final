@@ -100,20 +100,27 @@ const ExpandButton = styled.button`
   width: 40px;
   border: solid lightgrey 0.1px;
   border-right: none;
-  visibility: ${(props) => (props.expand ? 'visible' : 'hidden')};
+  display: ${(props) => (props.expand ? 'block' : 'none')};
   background: white;
 
   @media (min-width: 768px) {
-    visibility: visible;
+    display: block;
   }
 `;
 
 const RadioContainer = styled.div`
-  display: grid;
+  display: flex;
+  width: 300px;
+  flex-direction: column;
+  margin: 20px 0;
+`
+const RangeContainer = styled.div`
+  display: flex;
+  width: 300px;
+  flex-direction: column;
   justify-content: center;
   margin: 20px 0;
-  grid-template-columns: repeat(1, 100%);
-  grid-row-gap: 20px;
+
 `;
 
 export const SearchMenu = () => {
@@ -121,15 +128,16 @@ export const SearchMenu = () => {
   const [value, setValue] = useState({
     categories: [],
     mechanics: [],
-    players: [1, 20],
-    playtime: [0, 8],
+    players: [null, null],
+    playtime: [null, null],
     minage: [],
-    year: [1900, 2021],
+    year: [null, null],
   });
 
   const handleChange = (props) => (event) => {
     setValue({ ...value, [props]: event.target.value });
   };
+  
 
   return (
     <>
@@ -168,6 +176,8 @@ export const SearchMenu = () => {
                     value={value.minage}
                     handleChange={handleChange('minage')}
                   />
+                </RadioContainer>
+                <RangeContainer>
                   <RangeSlider
                     title='players'
                     label='Players'
@@ -195,7 +205,7 @@ export const SearchMenu = () => {
                     max={2021}
                     step={1}
                   />
-                </RadioContainer>
+                </RangeContainer>
               </ExpandInner>
               <SearchButton value={value} />
             </Expand>

@@ -8,8 +8,11 @@ const Wrapper = styled.div`
   width: 100%;
   display: flex;
   position: absolute;
-  right: 50px;
   justify-content: flex-end;
+
+  @media (min-width: 768px) {
+    right: 50px;
+  }
 `;
 
 const ProfileLink = styled(Link)`

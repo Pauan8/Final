@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
 import React, { useState } from 'react';
 import styled from 'styled-components/macro';
+import { Link } from 'react-router-dom'
+import LaunchIcon from '@material-ui/icons/Launch';
 
 import { SaveGame } from './SaveGame';
 import { LikeButton } from './LikeButton';
@@ -15,11 +17,29 @@ const ContainerInner = styled.div`
   color: #733c3c;
 `;
 
-const Title = styled.h1`
-  font-size: 18px;
+const TitleContainer = styled.div`
   width: 250px;
+  display: flex;
+  justify-content: space-between;
+  height: 70px;`
+
+const Title = styled.h1`
+  font-size: 16px;
   text-align: center;
+  flex: 1 1 auto;
+  padding-left: 20px;
 `;
+
+const GameLink = styled(Link)`
+  text-decoration: none;
+  margin-top: 15px;
+  margin-left: 5px;
+  display: inline-block;
+  color: #F29A2E;
+  
+  &:hover {
+    color: #D94A56;
+  }`
 
 const ImageContainer = styled.div`
   width: 250px;
@@ -40,6 +60,7 @@ const Image = styled.img`
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   width: 250px;
 `;
 
@@ -93,6 +114,7 @@ const FlipCardFront = styled.div`
   background: #a65151;
   border: solid #733c3c 0.3px;
   display: flex;
+  font-size: 14px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -136,7 +158,12 @@ export const GameCard = ({
           <FlipCardInner flip={flip}>
             <FlipCardFront>
               <ContainerInner>
-                <Title>{name}</Title>
+                <TitleContainer>
+                  <Title>{name}</Title>
+                  <GameLink to={`game/${id}`}>
+                    <LaunchIcon />
+                  </GameLink>
+                </TitleContainer>
                 <ImageContainer>
                   <Image src={image_url} />
                 </ImageContainer>

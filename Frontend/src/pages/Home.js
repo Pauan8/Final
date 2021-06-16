@@ -9,7 +9,13 @@ import { Header } from '../components/Header';
 import { Slideshow } from '../components/Games/Slideshow';
 import { SearchMenu } from '../components/Filter/SearchMenu';
 
-const Section = styled.section``;
+const Section = styled.section`
+`
+
+const Wrapper = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;`
 
 const ListLink = styled(Link)`
   text-decoration-line: none;
@@ -21,6 +27,8 @@ const ListLink = styled(Link)`
 const Title = styled.h2`
   position: relative;
   z-index: 5;
+  width: 500px;
+  max-width: 100vw;
   margin-bottom: 0;
   margin-top: 50px;
   color: #011126;
@@ -38,9 +46,10 @@ const Home = () => {
 
   return (
     <Section>
-      <Header />
+         <Header />
       <SearchMenu />
       <Sidebar />
+      <Wrapper>
       <ListLink to='/GameList/TopRated'>
         <Title> &#8640; Top Rated</Title>
       </ListLink>
@@ -53,6 +62,7 @@ const Home = () => {
         <Title> &#8640; New 2021</Title>
       </ListLink>
       <Slideshow type='year_published' value='2021' />
+      </Wrapper>
     </Section>
   );
 };

@@ -46,6 +46,7 @@ const Innerclip = styled.div`
   display: inline-block;
   background: #c2d991;
   display: flex;
+  position: relative;
   align-items: center;
   justify-content: center;
   border-right: solid beige;

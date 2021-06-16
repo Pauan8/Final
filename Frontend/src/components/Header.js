@@ -49,6 +49,13 @@ const TextContainer = styled.div`
 `;
 
 const Logo = styled.img`
+  width: 100px;
+  height: 100px;
+
+  @media (min-width: 768px){
+    width: auto;
+  height: auto;
+  }
 `;
 
 const SubTitle = styled.h2`
@@ -61,7 +68,7 @@ export const Header = () => {
     <Wrapper>
       <UserMenu />
       <TextContainer>
-        <Logo src={require('../assets/logo.svg')} />
+        <Logo src={window.innerWidth < 768? require('../assets/logo-xs.svg') : require('../assets/logo.svg')} />
         <SubTitle>- Let the adventure begin!</SubTitle>
       </TextContainer>
       <BgImage />

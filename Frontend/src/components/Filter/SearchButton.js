@@ -25,16 +25,18 @@ export const SearchButton = ({ value }) => {
     ) {
       updateArr.push({ [type1]: [value] });
     }
-    if (type1 === 'gt_min_playtime' && value.length !== 0) {
+    if (type1 === 'gt_min_playtime' && value[0] !== null) {
+      console.log(value)
       updateArr.push({
-        [type1]: (value[0] !== 0 ? -1 : '') * 60,
-        [type2]: (value[1] + 1) * 60,
+        [type1]: ((value[0]) * 60) -1,
+        [type2]: ((value[1]) * 60) +1,
       });
     }
     if (
-      type1 === 'gt_min_players' ||
-      (type1 === 'gt_year_published' && value.length !== 0)
+      (type1 === 'gt_min_players' ||
+      type1 === 'gt_year_published') && value[0] !== null
     ) {
+      console.log(value)
       updateArr.push({ [type1]: value[0] - 1, [type2]: value[1] + 1 });
     }
     return updateArr;

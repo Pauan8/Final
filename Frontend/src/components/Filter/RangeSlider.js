@@ -1,18 +1,37 @@
-import React from 'react';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Slider from '@material-ui/core/Slider';
+import React, { useState } from 'react';
+import {
+  Checkbox,
+  FormControlLabel,
+  Typography,
+  withStyles, 
+  makeStyles,
+  Slider
+} from '@material-ui/core';
+
 
 const useStyles = makeStyles({
   root: {
-    width: 200,
+    width: 300,
   },
+  container: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  label: {
+    fontSize: 12
+  },
+  checkbox: {
+    paddingRight: 2
+  }
 });
 
 const PrettoSlider = withStyles({
   root: {
     color: '#52af77',
     height: 8,
+    marginTop: 10,
+    marginBottom: 20
   },
   thumb: {
     height: 24,
@@ -44,16 +63,6 @@ const PrettoSlider = withStyles({
   },
 })(Slider);
 
-function ThumbComponent(props) {
-  return (
-    <span {...props}>
-      <span className='bar' />
-      <span className='bar' />
-      <span className='bar' />
-    </span>
-  );
-}
-
 export const RangeSlider = ({
   title,
   text,
@@ -62,19 +71,41 @@ export const RangeSlider = ({
   label,
   min,
   max,
-  step,
+  step
 }) => {
   const classes = useStyles();
+  const [disabled, setDisabled] = useState(true)
 
   const handleChange = (props) => (event, newValue) => {
     setValue({ ...value, [props]: newValue });
   };
 
+  const handleChecked = () => {
+    disabled?setValue({...value, [title]: [min, max]}):setValue({...value, [title]: [null, null]})
+    setDisabled(!disabled)
+    
+  }
+
   return (
     <div className={classes.root}>
+      <div className={classes.container}>
       <Typography id='discrete-slider-always' gutterBottom>
         {label}
       </Typography>
+      <FormControlLabel
+        control={
+          <Checkbox
+            className={classes.checkbox}
+            size="small"
+            checked={!disabled}
+            onChange={handleChecked}
+            name="use-rangeslider"
+          />
+        }
+        classes={{ label: classes.label}}
+        label="Enable"
+      />
+      </div>
       <PrettoSlider
         min={min}
         step={step}
@@ -84,6 +115,7 @@ export const RangeSlider = ({
         valueLabelDisplay='on'
         aria-labelledby='range-slider'
         getAriaValueText={text}
+        disabled={disabled}
       />
     </div>
   );
