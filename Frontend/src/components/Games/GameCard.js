@@ -1,11 +1,13 @@
 /* eslint-disable camelcase */
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom'
 import LaunchIcon from '@material-ui/icons/Launch';
 
 import { SaveGame } from './SaveGame';
 import { LikeButton } from './LikeButton';
+import { fetchSingleGame } from 'reducers/boardGames';
 
 const ContainerInner = styled.div`
   height: 390px;
@@ -144,6 +146,7 @@ export const GameCard = ({
   const checkValue = (value) => {
     return value || 'unknown';
   };
+  const dispatch = useDispatch();
 
   const checkMultiples = (val1, val2) => {
     return checkValue(val1) !== checkValue(val2)
@@ -160,7 +163,7 @@ export const GameCard = ({
               <ContainerInner>
                 <TitleContainer>
                   <Title>{name}</Title>
-                  <GameLink to={`game/${id}`}>
+                  <GameLink to={`/Game/${id}`} onClick={() => dispatch(fetchSingleGame(id))}>
                     <LaunchIcon />
                   </GameLink>
                 </TitleContainer>

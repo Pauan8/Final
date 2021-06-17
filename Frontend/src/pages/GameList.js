@@ -4,7 +4,6 @@ import { useParams, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { GameCard } from '../components/Games/GameCard';
-import { fetchSingleGame } from '../reducers/boardGames';
 
 const Wrapper = styled.div`
   display: flex;
@@ -31,20 +30,9 @@ const Grid = styled.div`
   }
 `;
 
-const PathLink = styled(Link)`
-  text-decoration: none;
-  color: white;
-
-  &:hover {
-    color: darkslategray;
-    font-style: bold;
-  }
-`;
-
 let arr = [];
 const GameList = () => {
   const { type } = useParams();
-  const dispatch = useDispatch();
   const data = useSelector((store) => store.boardGames.gameLists);
 
   if (type === 'TopRated') {
@@ -64,12 +52,7 @@ const GameList = () => {
       <Grid>
         {arr ? (
           arr.map((game) => (
-            <PathLink
-              to={`/Game/${game.id}`}
-              onClick={() => dispatch(fetchSingleGame(game.id))}
-            >
               <GameCard {...game} />
-            </PathLink>
           ))
         ) : (
           <></>
