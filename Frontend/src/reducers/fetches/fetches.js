@@ -130,17 +130,8 @@ export const fetches = {
       });
     },
     filteredList: (getState) => {
-      let filterArr = '';
-      const getFiltering = () => {
-        getState().boardGames.filter.map((item) => {
-          console.log(`${Object.keys(item).map((k) => `&${k}=${item[k]}`)}`);
-          filterArr += `${Object.keys(item).map((k) => `&${k}=${item[k]}`)}`;
-        });
-        return filterArr.toString().replaceAll(',&', '&');
-      };
-
       return fetch(
-        `https://api.boardgameatlas.com/api/search?limit=20&pretty=true&client_id=39WI5Y3mBx${getFiltering()}`
+        `https://api.boardgameatlas.com/api/search?limit=20&pretty=true&client_id=39WI5Y3mBx&${getState().boardGames.filter}`
       ).then((response) => {
         if (!response.ok) {
           throw Error(response.statusText);

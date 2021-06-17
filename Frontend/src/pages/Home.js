@@ -36,11 +36,9 @@ const Title = styled.h2`
 `;
 
 const Home = () => {
-  console.log(localStorage.getItem('token'));
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('fetched');
     dispatch(fetchUser());
   }, [dispatch]);
 
@@ -50,15 +48,15 @@ const Home = () => {
       <SearchMenu />
       <Sidebar />
       <Wrapper>
-      <ListLink to='/GameList/TopRated'>
+      <ListLink to='/GameList/order_by/popularity'>
         <Title> &#8640; Top Rated</Title>
       </ListLink>
-      <Slideshow type='order_by' value='popularity' />
-      <ListLink to='/GameList/Discounted'>
+      <Slideshow type='order_by' value='popularity'  />
+      <ListLink to='/GameList/order_by/discount'>
         <Title> &#8640; Discounted</Title>
       </ListLink>
       <Slideshow type='order_by' value='discount' />
-      <ListLink to='/GameList/NewReleases'>
+      <ListLink to='/GameList/year_published/2021'>
         <Title> &#8640; New 2021</Title>
       </ListLink>
       <Slideshow type='year_published' value='2021' />

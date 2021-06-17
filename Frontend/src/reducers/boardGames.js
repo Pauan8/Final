@@ -10,7 +10,7 @@ const boardGames = createSlice({
     searchList: [{}],
     game: [{}],
     history: [{}],
-    filter: [],
+    filter: null,
   },
   error: 'Error',
   reducers: {
@@ -25,8 +25,8 @@ const boardGames = createSlice({
       store.game = newGame;
     },
     setFilter: (store, action) => {
-      const updateArr = action.payload;
-      store.filter = updateArr;
+      const updateString = action.payload;
+      store.filter = updateString;
     },
   },
 });

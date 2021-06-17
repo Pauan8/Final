@@ -17,6 +17,7 @@ import Signin from '../pages/Signin';
 import PrivateProfile from '../pages/PrivateProfile';
 import PublicProfile from '../pages/PublicProfile';
 import EditProfile from '../pages/EditProfile';
+import FilteredGameList from '../pages/FilteredGameList'
 
 const Wrapper = styled.div`
   min-height: 100vh;
@@ -57,7 +58,8 @@ const Routing = () => {
             <Route path='/Profile/:id' exact component={PrivateProfile} />
             <Route path='/Profile/:id/edit' exact component={EditProfile} />
             <Route path='/User/:username' exact component={PublicProfile} />
-            <Route path='/GameList/:type' component={GameList} />
+            <Route path='/GameList/:type/:value' component={GameList} />
+            <Route path='/SearchGames/:searchstring' component={FilteredGameList} />
             <Route path='/Game/:Id' component={SingleGame} />
           </Main>
           <Footer />

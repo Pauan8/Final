@@ -1,9 +1,11 @@
-import React from 'react';
+import React , {useEffect, useState} from 'react';
 import styled from 'styled-components/macro';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
+import { Menu } from '../components/Menu'
 import { GameCard } from '../components/Games/GameCard';
+import { generateGamesList } from 'reducers/boardGames';
 
 const Wrapper = styled.div`
   display: flex;
@@ -30,25 +32,31 @@ const Grid = styled.div`
   }
 `;
 
-let arr = [];
 const GameList = () => {
-  const { type } = useParams();
+  const dispatch = useDispatch();
+  const {type, value} = useParams();
   const data = useSelector((store) => store.boardGames.gameLists);
+  const arr = data[value]
 
-  if (type === 'TopRated') {
-    arr = data.popularity;
-  } else if (type === 'Discounted') {
-    arr = data.discount;
-  } else if (type === 'NewRealeases') {
-    // eslint-disable-next-line prefer-destructuring
-    arr = data[2021];
-  } else {
-    arr = data.filtered;
+  const setTitle = () => {
+    switch(value) {
+      case 'popularity':
+        return 'Top Rated';
+      case 'discount':
+        return 'Discounted';
+      case '2021':
+        return 'New Releases';
+    }
   }
 
+  useEffect(() => {
+    dispatch(generateGamesList(type, value));
+  }, []);
+ 
   return (
     <Wrapper>
-      <Title> {type.replace(/([A-Z])/g, ' $1').trim()} </Title>
+      <Menu />
+      <Title> {setTitle()} </Title>
       <Grid>
         {arr ? (
           arr.map((game) => (
