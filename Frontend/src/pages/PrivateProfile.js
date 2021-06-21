@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { fetchUser, logout } from 'reducers/user';
+import { fetchUser } from 'reducers/user';
 import { LottieAnimation } from '../animation/LottieAnimation';
 import loading from 'animation/json/loading.json';
 import { ProfileCard } from '../components/User/ProfileCard';
@@ -33,10 +33,12 @@ const PrivateProfile = () => {
   const isLoading = useSelector((store) => store.ui.isLoading);
 
   useEffect(() => {
-    if (!token) {
+    if (token) {
+      dispatch(fetchUser())
+    } else {
       history.push('/signup');
     }
-  }, [token, dispatch, history]);
+  }, []);
 
   return (
     <>

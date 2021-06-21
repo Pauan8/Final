@@ -31,11 +31,11 @@ const boardGames = createSlice({
   },
 });
 
-export const generateGamesList = (type, value) => {
+export const generateGamesList = (type, value, page) => {
   return (dispatch) => {
     dispatch(ui.actions.setLoading(true));
     fetches.games
-      .list(type, value)
+      .list(type, value, page)
       .then((data) => {
         dispatch(
           boardGames.actions.setGameLists({ arr: data.games, listType: value })
@@ -59,11 +59,11 @@ export const fetchSingleGame = (id) => {
   };
 };
 
-export const genereateFilteredGamesList = (value) => {
+export const genereateFilteredGamesList = (value, page) => {
   return (dispatch, getState) => {
     dispatch(ui.actions.setLoading(true));
     fetches.games
-      .filteredList(getState)
+      .filteredList(getState, page)
       .then((data) => {
         dispatch(
           boardGames.actions.setGameLists({ arr: data.games, listType: value })

@@ -17,7 +17,9 @@ const user = createSlice({
   name: 'user',
   initialState: {
     accessToken:
-    localStorage.getItem('token'),
+    localStorage.getItem('token') === 'undefined'
+      ? null
+      : localStorage.getItem('token'),
   userInfo: {
       userID: localStorage.getItem('userID'),
       avatar: null,
@@ -32,6 +34,7 @@ const user = createSlice({
   },
   errors: {
     loggedOut:
+      localStorage.getItem('token') === 'undefined' ||
       !localStorage.getItem('token')
         ? true
         : false,
@@ -106,7 +109,7 @@ export const login = (username, password) => {
         if (json.accessToken) {
           localStorage.setItem('token', json.accessToken);
           localStorage.setItem('userID', json.userID);
-          dispatch(user.actions.setUser({ userID: json.userID }));
+          dispatch(user.actions.setUser(json));
           dispatch(user.actions.setToken(json.accessToken));
           dispatch(user.actions.setErrors(null));
         } else {

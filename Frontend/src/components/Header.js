@@ -66,7 +66,11 @@ const SubTitle = styled.h2`
 const UserMenuContainer = styled.div`
 position: absolute;
 z-index: 6;
-right: 0;`
+right: 0;
+
+@media (min-width: 768px){
+  right: 50px;
+}`
 
 export const Header = () => {
   return (

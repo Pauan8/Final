@@ -140,9 +140,8 @@ export const ProfileGameList = () => {
           </Game>
         ))
       );
-    }
-    return <GameTitle>Empty</GameTitle>;
-  };
+  }
+};
 
   const handleClick = (listtype) => {
     setActive(listtype);

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/macro';
+import { useHistory,  useParams } from 'react-router';
 import { useDispatch } from 'react-redux';
 
 import picArray from '../data/picArray.json';
@@ -9,8 +10,22 @@ import { Button } from '../components/Reusable/Button';
 import { TextInput } from '../components/Reusable/TextInput';
 import { regexArr } from '../data/regExValdate';
 
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  `
+const ButtonContainer = styled.div`
+  margin-top: 50px;`
+
+const SelectContainer = styled.div`
+  margin: 50px 0;` 
+
 const EditProfile = () => {
   const dispatch = useDispatch();
+  const { id } = useParams();
+  const history = useHistory();
   const [value, setValue] = useState({
     avatar: '',
     name: '',
@@ -34,6 +49,7 @@ const EditProfile = () => {
         testContent(value.age)
       )
     );
+    history.push(`/Profile/${id}`)
   };
 
   const testContent = (props) => {
@@ -41,13 +57,15 @@ const EditProfile = () => {
   };
 
   return (
-    <>
-      <Select
-        arr={picArray}
-        handleChange={handleChange}
-        value={value.avatar}
-        title='avatar'
-      />
+    <Wrapper>
+      <SelectContainer>
+        <Select
+          arr={picArray}
+          handleChange={handleChange}
+          value={value.avatar}
+          title='avatar'
+        />
+      </SelectContainer>
       <TextInput
         title='name'
         setValue={setValue}
@@ -78,8 +96,10 @@ const EditProfile = () => {
         value={value}
         regexp={new RegExp(/[a-z]/)}
       />
-      <Button handleClick={handleClick} text='Save' />
-    </>
+      <ButtonContainer>
+        <Button handleClick={handleClick} text='Save' />
+      </ButtonContainer>
+    </Wrapper>
   );
 };
 

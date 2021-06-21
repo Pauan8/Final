@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchUser } from '../reducers/user';
 import { Sidebar } from '../components/Sidebar';
@@ -36,10 +36,13 @@ const Title = styled.h2`
 
 const Home = () => {
   const dispatch = useDispatch();
+  const token = useSelector(store => store.user.accessToken)
 
   useEffect(() => {
-    dispatch(fetchUser());
-  }, [dispatch]);
+    if(token){
+     dispatch(fetchUser());
+    }
+  }, []);
 
   return (
     <Section>
@@ -47,18 +50,18 @@ const Home = () => {
       <SearchMenu />
       <Sidebar />
       <Wrapper>
-      <ListLink to='/GameList/order_by/popularity'>
-        <Title> &#8640; Top Rated</Title>
-      </ListLink>
-      <Slideshow type='order_by' value='popularity'  />
-      <ListLink to='/GameList/order_by/discount'>
-        <Title> &#8640; Discounted</Title>
-      </ListLink>
-      <Slideshow type='order_by' value='discount' />
-      <ListLink to='/GameList/year_published/2021'>
-        <Title> &#8640; New 2021</Title>
-      </ListLink>
-      <Slideshow type='year_published' value='2021' />
+        <ListLink to='/GameList/order_by/popularity'>
+          <Title> &#8640; Top Rated</Title>
+        </ListLink>
+        <Slideshow type='order_by' value='popularity'  />
+        <ListLink to='/GameList/order_by/discount'>
+          <Title> &#8640; Discounted</Title>
+        </ListLink>
+        <Slideshow type='order_by' value='discount' />
+        <ListLink to='/GameList/year_published/2021'>
+          <Title> &#8640; New 2021</Title>
+        </ListLink>
+        <Slideshow type='year_published' value='2021' />
       </Wrapper>
     </Section>
   );

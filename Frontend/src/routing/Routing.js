@@ -1,6 +1,5 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
 import {
   BrowserRouter as Router,
   Route,
@@ -8,7 +7,6 @@ import {
 } from 'react-router-dom';
 
 
-import { fetchUser } from '../reducers/user';
 import Home from '../pages/Home';
 import GameList from '../pages/GameList';
 import { Footer } from '../components/Footer';
@@ -18,7 +16,6 @@ import Signin from '../pages/Signin';
 import PrivateProfile from '../pages/PrivateProfile';
 import PublicProfile from '../pages/PublicProfile';
 import EditProfile from '../pages/EditProfile';
-import { useSelector } from 'react-redux';
 
 const Wrapper = styled.div`
   min-height: 100vh;
@@ -46,13 +43,6 @@ const Main = styled.div`
 `;
 
 const Routing = () => {
-  const dispatch = useDispatch();
-  const loggedOut = useSelector(store => store.user.errors? store.user.errors.loggedOut: false)
-  useEffect(() => {
-    dispatch(fetchUser())
-    if(loggedOut){
-        localStorage.clear()}
-      }, []);
 
   return (
     <Router>
