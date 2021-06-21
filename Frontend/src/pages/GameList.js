@@ -2,8 +2,9 @@ import React , {useEffect, useState} from 'react';
 import styled from 'styled-components/macro';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowLeftIcon  from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import FirstPageIcon from '@material-ui/icons/FirstPage';
 
 import { LottieAnimation } from '../animation/LottieAnimation';
 import loading from 'animation/json/loading.json';
@@ -24,8 +25,10 @@ const Title = styled.h1``;
 const Page = styled.div`
  display: flex;
  width: 100%;
+ max-width: 300px;
  justify-content: space-evenly;
- align-items: center;`
+ align-items: center;
+ padding-right: 40px;`
 
 const Paging = styled.button`
   cursor: pointer;
@@ -57,7 +60,7 @@ const GameList = () => {
   const isLoading = useSelector((store) => store.ui.isLoading);
 
   const arr = type === 'by_filter' ? data.Filtered: data[value]
-  const [page, setPage] = useState(0)
+  const [page, setPage] = useState(1)
 
   const setTitle = () => {
     switch(value) {
@@ -84,8 +87,10 @@ const GameList = () => {
   const handleClick = (direction) => {
     if(direction === 'forward'){
       setPage(page + 1)
-    } else {
+    } else if(direction === 'back'){
       setPage(page - 1)
+    } else {
+      setPage(1)
     }
   }
 
@@ -101,7 +106,10 @@ const GameList = () => {
       :
       (<><Title> {setTitle()} </Title>
       <Page>
-        <Paging onClick={() => handleClick('back')} disabled={page === 0}> 
+      <Paging onClick={() => handleClick('start')} disabled={page === 1}> 
+        <FirstPageIcon />
+      </Paging> 
+      <Paging onClick={() => handleClick('back')} disabled={page === 1}> 
           <KeyboardArrowLeftIcon />
         </Paging> 
         <PageNumber>Page: {page}</PageNumber>

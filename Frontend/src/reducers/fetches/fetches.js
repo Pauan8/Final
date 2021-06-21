@@ -121,7 +121,7 @@ export const fetches = {
   games: {
     list: (type, value, page) => {
       return fetch(
-        `https://api.boardgameatlas.com/api/search?limit=21&pretty=true&client_id=39WI5Y3mBx&${type}=${value}&skip=${(page)*21}`
+        `https://api.boardgameatlas.com/api/search?limit=21&pretty=true&client_id=39WI5Y3mBx&${type}=${value}&skip=${(page-1)*21}`
       ).then((response) => {
         if (!response.ok) {
           throw Error(response.statusText);
@@ -131,7 +131,7 @@ export const fetches = {
     },
     filteredList: (getState, page) => {
       return fetch(
-        `https://api.boardgameatlas.com/api/search?limit=21&pretty=true&client_id=39WI5Y3mBx${getState().boardGames.filter}&skip=${(page)*21}`
+        `https://api.boardgameatlas.com/api/search?limit=21&pretty=true&client_id=39WI5Y3mBx${getState().boardGames.filter}&skip=${(page-1)*21}`
       ).then((response) => {
         if (!response.ok) {
           throw Error(response.statusText);

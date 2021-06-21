@@ -14,6 +14,8 @@ const Wrapper = styled.div`
   right: 5px;
   justify-content: flex-end;
   z-index: 6;
+
+
 `;
 
 const MenuLink = styled(Link)`
@@ -45,6 +47,10 @@ const Expanded = styled.div`
   overflow-y: ${props => props.expand? "auto" : "hidden"};
   height: ${props => props.expand? '100vh' : '0'};
   transition: height 2s ease-in-out;
+
+  @media (min-width: 1024px){
+    width: 300px;
+  }
   `
 
 export const UserMenu = ({font}) => {

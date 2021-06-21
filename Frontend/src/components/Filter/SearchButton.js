@@ -42,6 +42,7 @@ export const SearchButton = ({ value }) => {
     handleFilters('categories', '', value.categories)
 
     history.push(`/GameList/by_filter/${filteredString}`);
+    filteredString = [];
   };
 
   return <Button onClick={handleClick}>Filter</Button>;
