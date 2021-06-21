@@ -17,10 +17,8 @@ const user = createSlice({
   name: 'user',
   initialState: {
     accessToken:
-      localStorage.getItem('token') === 'undefined'
-        ? null
-        : localStorage.getItem('token'),
-    userInfo: {
+    localStorage.getItem('token'),
+  userInfo: {
       userID: localStorage.getItem('userID'),
       avatar: null,
       name: null,
@@ -34,7 +32,6 @@ const user = createSlice({
   },
   errors: {
     loggedOut:
-      localStorage.getItem('token') === 'undefined' ||
       !localStorage.getItem('token')
         ? true
         : false,

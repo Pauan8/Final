@@ -1,9 +1,13 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, {useState}from 'react';
+import { 
+  makeStyles,
+  InputBase,
+  Paper,
+  IconButton
+} from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import InputBase from '@material-ui/core/InputBase';
-import Paper from '@material-ui/core/Paper';
-import IconButton from '@material-ui/core/IconButton';
+import { Link } from 'react-router-dom';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,21 +30,26 @@ const useStyles = makeStyles((theme) => ({
 
 export const Search = () => {
   const classes = useStyles();
+  const [userInput, setUserInput] = useState("");
 
   return (
     <Paper className={classes.root}>
       <InputBase
         className={classes.input}
+        value={userInput}
+        onChange={(e) => setUserInput(e.target.value)}
         placeholder='Search Boardgame'
         inputProps={{ 'aria-label': 'search boardgame' }}
       />
+      <Link to={`/GameList/name/${userInput}`}>
       <IconButton
         type='submit'
         className={classes.iconButton}
         aria-label='search'
-      >
+      > 
         <SearchIcon />
       </IconButton>
+      </Link>
     </Paper>
   );
 };

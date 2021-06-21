@@ -101,7 +101,7 @@ export const fetches = {
           getState().user.userInfo.userID
         }/removeGame?list=${list}`,
         {
-          method: 'POST',
+          method: 'DELETE',
           headers: {
             'content-type': 'application/json',
             Authorization: getState().user.accessToken,
@@ -131,7 +131,7 @@ export const fetches = {
     },
     filteredList: (getState) => {
       return fetch(
-        `https://api.boardgameatlas.com/api/search?limit=20&pretty=true&client_id=39WI5Y3mBx&${getState().boardGames.filter}`
+        `https://api.boardgameatlas.com/api/search?limit=20&pretty=true&client_id=39WI5Y3mBx${getState().boardGames.filter}`
       ).then((response) => {
         if (!response.ok) {
           throw Error(response.statusText);

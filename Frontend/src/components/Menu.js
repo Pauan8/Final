@@ -1,12 +1,16 @@
 import React from 'react';
 import styled from 'styled-components/macro';
+import { Link } from 'react-router-dom';
 import HomeIcon from '@material-ui/icons/Home';
+
+import { UserMenu } from '../components/User/UserMenu'
 
 const Wrapper = styled.div`
   height: 50px;
-  width: 100%;
+  width: calc(100% - 40px);
   display: flex;
-  justify-content: space-evenly;
+  padding: 0 20px ;
+  justify-content: space-between;
   position: relative;
 `;
 
@@ -19,22 +23,38 @@ const Bg = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 6;
+  z-index: 5;
   height: 50px;
   width: 100%;
 `;
 
-const MenuItem = styled.h3``;
+const MenuLink = styled(Link)`
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;`
+
+const MenuItem = styled.h3`
+  cursor: pointer;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;`
+
+
 export const Menu = () => {
   return (
     <Wrapper>
       <Bg></Bg>
+      <MenuLink to="/">
+        <MenuItem>
+          <HomeIcon style={{ fontSize: '40'}}></HomeIcon>
+        </MenuItem>
+      </MenuLink>
       <MenuItem>
-        <HomeIcon></HomeIcon>
+        <UserMenu font='40'/>
       </MenuItem>
-      <MenuItem>About</MenuItem>
-      <MenuItem>Something</MenuItem>
-      <MenuItem>Some</MenuItem>
     </Wrapper>
   );
 };

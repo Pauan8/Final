@@ -17,16 +17,16 @@ export const SearchButton = ({ value }) => {
         type1 === 'gt_min_age') &&
       value.length !== 0
     ) {
-      filteredString += `${type1}=${value}`;
+      filteredString += `&${type1}=${value}`;
     }
     if (type1 === 'gt_min_playtime' && value[0] !== null) {
-      filteredString += `${type1}=${(value[0]*60) - 1}&${type2}=${(value[1]*60) + 1}`;
+      filteredString += `&${type1}=${(value[0]*60) - 1}&${type2}=${(value[1]*60) + 1}`;
     }
     if (
       (type1 === 'gt_min_players' ||
       type1 === 'gt_year_published') && value[0] !== null
     ) {
-      filteredString += `${type1}=${value[0] - 1}&${type2}=${value[1] + 1}`;
+      filteredString += `&${type1}=${value[0] - 1}&${type2}=${value[1] + 1}`;
     }
     return filteredString;
   };
@@ -41,7 +41,7 @@ export const SearchButton = ({ value }) => {
     handleFilters('mechanics', '', value.mechanics);
     handleFilters('categories', '', value.categories)
 
-    history.push(`/SearchGames/gt_min_players=${filteredString}`);
+    history.push(`/GameList/by_filter/${filteredString}`);
   };
 
   return <Button onClick={handleClick}>Filter</Button>;

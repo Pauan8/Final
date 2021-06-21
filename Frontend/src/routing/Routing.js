@@ -1,13 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
 import {
   BrowserRouter as Router,
   Route,
-  Switch,
-  Redirect,
+  Switch
 } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
+
+import { fetchUser } from '../reducers/user';
 import Home from '../pages/Home';
 import GameList from '../pages/GameList';
 import { Footer } from '../components/Footer';
@@ -17,7 +18,7 @@ import Signin from '../pages/Signin';
 import PrivateProfile from '../pages/PrivateProfile';
 import PublicProfile from '../pages/PublicProfile';
 import EditProfile from '../pages/EditProfile';
-import FilteredGameList from '../pages/FilteredGameList'
+import { useSelector } from 'react-redux';
 
 const Wrapper = styled.div`
   min-height: 100vh;
@@ -45,7 +46,14 @@ const Main = styled.div`
 `;
 
 const Routing = () => {
-  const login = useSelector((store) => store.user.loggedOut);
+  const dispatch = useDispatch();
+  const loggedOut = useSelector(store => store.user.errors? store.user.errors.loggedOut: false)
+  useEffect(() => {
+    dispatch(fetchUser())
+    if(loggedOut){
+        localStorage.clear()}
+      }, []);
+
   return (
     <Router>
       <Switch>
@@ -59,8 +67,7 @@ const Routing = () => {
             <Route path='/Profile/:id/edit' exact component={EditProfile} />
             <Route path='/User/:username' exact component={PublicProfile} />
             <Route path='/GameList/:type/:value' component={GameList} />
-            <Route path='/SearchGames/:searchstring' component={FilteredGameList} />
-            <Route path='/Game/:Id' component={SingleGame} />
+            <Route path='/Game/:Id' component={SingleGame}/>
           </Main>
           <Footer />
         </Wrapper>

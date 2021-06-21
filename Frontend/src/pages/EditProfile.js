@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import { useDispatch } from 'react-redux';
 
 import picArray from '../data/picArray.json';
 import { editProfile } from '../reducers/user';
-import { DropDown } from '../components/Reusable/DropDown';
+import { Select } from '../components/Reusable/Select';
 import { Button } from '../components/Reusable/Button';
 import { TextInput } from '../components/Reusable/TextInput';
 import { regexArr } from '../data/regExValdate';
@@ -42,7 +42,7 @@ const EditProfile = () => {
 
   return (
     <>
-      <DropDown
+      <Select
         arr={picArray}
         handleChange={handleChange}
         value={value.avatar}

@@ -11,11 +11,9 @@ import loading from '../../animation/json/loading.json';
 const Wrapper = styled.div`
   display: flex;
   width: 100%;
-  z-index: 5;
   padding: 10px 0;
   justify-content: center;
   position: relative;
-  z-index: 6;
 `;
 
 const ContainerOuter = styled.div`
@@ -36,7 +34,6 @@ const ContainerOuter = styled.div`
 `;
 
 const Button = styled.button`
-  z-index: 5;
   background: transparent;
   border: none;
   border-radius: 10px;

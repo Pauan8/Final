@@ -63,10 +63,17 @@ const SubTitle = styled.h2`
   color: #011126;
 `;
 
+const UserMenuContainer = styled.div`
+position: absolute;
+z-index: 6;
+right: 0;`
+
 export const Header = () => {
   return (
     <Wrapper>
-      <UserMenu />
+      <UserMenuContainer>
+        <UserMenu font='50'/>
+      </UserMenuContainer>
       <TextContainer>
         <Logo src={window.innerWidth < 768? require('../assets/logo-xs.svg') : require('../assets/logo.svg')} />
         <SubTitle>- Let the adventure begin!</SubTitle>

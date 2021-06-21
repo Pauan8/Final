@@ -9,7 +9,7 @@ const FormInner = styled.div`
   margin: 10px;
 `;
 
-export const DropDown = ({ arr, value, handleChange, title }) => {
+export const Select = ({ arr, value, handleChange, title }) => {
   return (
     <FormInner>
       <TextField

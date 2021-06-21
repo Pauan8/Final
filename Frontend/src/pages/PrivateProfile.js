@@ -33,17 +33,10 @@ const PrivateProfile = () => {
   const isLoading = useSelector((store) => store.ui.isLoading);
 
   useEffect(() => {
-    if (token) {
-      dispatch(fetchUser());
-    } else {
+    if (!token) {
       history.push('/signup');
     }
   }, [token, dispatch, history]);
-
-  const onLogout = () => {
-    dispatch(logout());
-    history.push('/');
-  };
 
   return (
     <>
@@ -57,9 +50,7 @@ const PrivateProfile = () => {
         ) : (
           <LottieAnimation lotti={loading} height={300} width={300} />
         )}
-        <button style={{ position: 'absolute' }} onClick={onLogout}>
-          Log out
-        </button>
+
       </Wrapper>
     </>
   );

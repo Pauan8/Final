@@ -143,8 +143,8 @@ router.post('/profile/:id/addGame', async (req, res) => {
   }
 });
 
-router.post('/profile/:id/removeGame', authenticateUser);
-router.post('/profile/:id/removeGame', async (req, res) => {
+router.delete('/profile/:id/removeGame', authenticateUser);
+router.delete('/profile/:id/removeGame', async (req, res) => {
   const { id } = req.params;
   const { list } = req.query;
   const attr = `lists.${list}`;

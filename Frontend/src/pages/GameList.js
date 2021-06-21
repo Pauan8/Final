@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { Menu } from '../components/Menu'
 import { GameCard } from '../components/Games/GameCard';
-import { generateGamesList } from 'reducers/boardGames';
+import boardGames, { generateGamesList, genereateFilteredGamesList } from 'reducers/boardGames';
 
 const Wrapper = styled.div`
   display: flex;
@@ -36,7 +36,7 @@ const GameList = () => {
   const dispatch = useDispatch();
   const {type, value} = useParams();
   const data = useSelector((store) => store.boardGames.gameLists);
-  const arr = data[value]
+  const arr = type === 'by_filter' ? data.Filtered: data[value]
 
   const setTitle = () => {
     switch(value) {
@@ -46,11 +46,18 @@ const GameList = () => {
         return 'Discounted';
       case '2021':
         return 'New Releases';
+      default:
+        return 'Search results';
     }
   }
 
   useEffect(() => {
-    dispatch(generateGamesList(type, value));
+    if(type === 'by_filter'){
+      dispatch(boardGames.actions.setFilter(value));
+      dispatch(genereateFilteredGamesList('Filtered'));
+    } else{
+      dispatch(generateGamesList(type, value));
+    }
   }, []);
  
   return (

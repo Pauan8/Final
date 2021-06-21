@@ -42,7 +42,7 @@ const SingleGame = () => {
   const game= useSelector((store) => store.boardGames.game)
 
   useEffect(() => {
-    dispatch(fetchSingleGame(Id));
+      dispatch(fetchSingleGame(Id))
   }, [])
 
   const renderGameInfo = (name, value1, value2) => {

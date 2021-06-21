@@ -26,7 +26,6 @@ const ListLink = styled(Link)`
 
 const Title = styled.h2`
   position: relative;
-  z-index: 5;
   width: 500px;
   max-width: 100vw;
   margin-bottom: 0;

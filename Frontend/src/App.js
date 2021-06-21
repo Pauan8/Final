@@ -3,7 +3,7 @@ import { Provider } from 'react-redux'
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import boardGames from './reducers/boardGames';
-import user from './reducers/user';
+import user  from './reducers/user';
 import Routing from 'routing/Routing'
 import ui from 'reducers/ui';
 
@@ -15,6 +15,7 @@ const reducer = combineReducers({
 
 const store = configureStore({ reducer });
 export const App = () => {
+
   return (
     <Provider store={store}>
       <Routing />
