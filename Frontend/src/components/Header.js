@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components/macro';
 
 import { UserMenu } from './User/UserMenu';
+import { SearchUser } from '../components/SearchUser'
 
 const Wrapper = styled.header`
   position: relative;
@@ -75,6 +76,7 @@ right: 0;
 export const Header = () => {
   return (
     <Wrapper>
+      <SearchUser />
       <UserMenuContainer>
         <UserMenu font='50'/>
       </UserMenuContainer>

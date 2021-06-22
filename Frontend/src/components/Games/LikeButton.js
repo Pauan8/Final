@@ -14,6 +14,7 @@ const Button = styled.button`
   position: absolute;
   bottom: 10px;
   right: 10px;
+  cursor: pointer;
 `;
 
 export const LikeButton = ({ handleClick, id, like, setLike }) => {

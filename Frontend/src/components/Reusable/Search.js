@@ -28,7 +28,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Search = () => {
+export const Search = ({mode}) => {
+  
   const classes = useStyles();
   const [userInput, setUserInput] = useState("");
 
@@ -38,10 +39,12 @@ export const Search = () => {
         className={classes.input}
         value={userInput}
         onChange={(e) => setUserInput(e.target.value)}
-        placeholder='Search Boardgame'
-        inputProps={{ 'aria-label': 'search boardgame' }}
+        placeholder={mode === 'games' ? 'Search Boardgame' : 'Search user'}
+        inputProps={{ 'aria-label': mode === 'games' ? 'Search Boardgame' : 'Search user'}}
       />
-      <Link to={`/GameList/name/${userInput}`}>
+      <Link to={mode === 'games' 
+        ? `/GameList/name/${userInput}`
+        :`/User/${userInput}`}>
       <IconButton
         type='submit'
         className={classes.iconButton}

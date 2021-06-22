@@ -105,18 +105,21 @@ const Description = styled.p`
   font-style: italic;
 `;
 
-export const ProfileCard = ({ id }) => {
-  const profile = useSelector((store) => store.user.userInfo);
+export const ProfileCard = ({ id, mode }) => {
+  const user = useSelector((store) => store.user.userInfo);
+
+  const profile = mode === 'private' ? user : mode;
 
   return (
     <Container>
       <ImgCard>
-        <EditLink to={`/profile/${id}/edit`}>
-          {' '}
+      {mode === 'private' ?
+       ( <EditLink to={`/profile/${id}/edit`}>
           <Edit>
             <EditIcon />
           </Edit>
-        </EditLink>
+        </EditLink>)
+        : <></>}
         <ImgContainer>
           {profile.avatar ? (
             <Img src={require(`../../assets/avatar/${profile.avatar}`)} />

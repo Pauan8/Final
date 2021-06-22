@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
-import { Search } from './Search';
+import { Search } from '../Reusable/Search';
 import { SearchButton } from './SearchButton';
 import { RadioButtons } from './RadioButtons';
 import categories from '../../data/categories.json';
@@ -142,7 +142,7 @@ export const SearchMenu = () => {
   return (
     <>
       <Container>
-        <Search />
+        <Search mode='games' />
         <ShowFilter expand={expand} onClick={() => setExpand(!expand)}>
           {expand ? '' : 'filter'}
         </ShowFilter>

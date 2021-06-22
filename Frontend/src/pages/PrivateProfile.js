@@ -46,7 +46,7 @@ const PrivateProfile = () => {
       <Wrapper>
         {!isLoading ? (
           <>
-            <ProfileCard id={id} />
+            <ProfileCard id={id} mode="private" />
             <ProfileGameList />
           </>
         ) : (

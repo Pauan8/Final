@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import { useParams } from 'react-router-dom';
 
+import { ProfileCard } from '../components/User/ProfileCard'
+
 const Wrapper = styled.div`
   position: relative;
 `;
@@ -21,6 +23,7 @@ const PublicProfile = () => {
   return (
     <Wrapper>
       <Name>{user.username}</Name>
+      <ProfileCard id="" mode={user} />
     </Wrapper>
   );
 };
