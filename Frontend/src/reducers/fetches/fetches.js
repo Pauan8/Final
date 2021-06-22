@@ -77,7 +77,7 @@ export const fetches = {
       return fetch(
         `${BASE_URL}/profile/${
           getState().user.userInfo.userID
-        }/addGame?list=${list}`,
+        }/addGame/${game.id}?list=${list}`,
         {
           method: 'POST',
           headers: {
@@ -99,7 +99,7 @@ export const fetches = {
       return fetch(
         `${BASE_URL}/profile/${
           getState().user.userInfo.userID
-        }/removeGame?list=${list}`,
+        }/removeGame/${game.id}?list=${list}`,
         {
           method: 'DELETE',
           headers: {

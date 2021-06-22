@@ -119,9 +119,27 @@ router.get('/profile/:id', async (req, res) => {
   }
 });
 
-router.post('/profile/:id/addGame', authenticateUser);
-router.post('/profile/:id/addGame', async (req, res) => {
-  const { id } = req.params;
+router.post('/profile/:id/addFriend/:username', authenticateUser)
+router.post('/profile/:id/addFriend/:username', async (req, res) => {
+  const { id, username } = req.params;
+    try {
+      const user = await User.findByIdAndUpdate(id, {$push: {friends: username, status: 0}});
+      res.json({
+        friends: user.friends
+      })
+    } catch (err) {
+      catchError(res, err, 'Invalid user id');
+    }
+  });
+
+router.post('/profile/:id/acceptFriend/:username', authenticateUser)
+router.post('/profile/:id/addFriend/:username', async (req, res) => {
+
+})
+
+router.post('/profile/:id/addGame/:gameId', authenticateUser);
+router.post('/profile/:id/addGame/:gameId', async (req, res) => {
+  const { id, gameId } = req.params;
   const { list } = req.query;
   const attr = `lists.${list}`;
 
@@ -129,7 +147,7 @@ router.post('/profile/:id/addGame', async (req, res) => {
     const exists = await User.find({
       [attr]: {
         $elemMatch: {
-          id: { $in: [req.body[list].id] },
+          id: { $in: gameId },
         },
       },
     });
@@ -144,23 +162,22 @@ router.post('/profile/:id/addGame', async (req, res) => {
         success: true,
         loggedOut: false,
       });
-    } else {
-    }
+    } 
   } catch (err) {
     catchError(res, err, 'Invalid user id');
   }
 });
 
-router.delete('/profile/:id/removeGame', authenticateUser);
-router.delete('/profile/:id/removeGame', async (req, res) => {
-  const { id } = req.params;
+router.delete('/profile/:id/removeGame/:gameId', authenticateUser);
+router.delete('/profile/:id/removeGame/:gameId', async (req, res) => {
+  const { id, gameId } = req.params;
   const { list } = req.query;
   const attr = `lists.${list}`;
 
   try {
     const user = await User.findByIdAndUpdate(
       id,
-      { $pull: { [attr]: { id: req.body[list] } } },
+      { $pull: { [attr]: { id: gameId } } },
       { new: true }
     );
     res.json({

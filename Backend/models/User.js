@@ -47,6 +47,10 @@ const UserSchema = mongoose.Schema({
     wishlist: [list.schema],
     ownedgames: [list.schema],
   },
+  friends: {
+    status: Number,
+    username: String
+  }
 });
 
 const User = mongoose.model('User', UserSchema);
