@@ -47,7 +47,7 @@ const PrivateProfile = () => {
         {!isLoading ? (
           <>
             <ProfileCard id={id} mode="private" />
-            <ProfileGameList />
+            <ProfileGameList mode='private' />
           </>
         ) : (
           <LottieAnimation lotti={loading} height={300} width={300} />

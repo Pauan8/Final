@@ -109,16 +109,16 @@ const Button = styled.button`
   margin-bottom: -2px;
 `;
 
-export const ProfileGameList = () => {
-  const profile = useSelector((store) => store.user.userInfo);
+export const ProfileGameList = ({mode}) => {
+  const user = useSelector((store) => store.user.userInfo);
   const [active, setActive] = useState('favourites');
   const [clicked, setClicked] = useState(false);
+  const profile = mode === 'private' ? user : mode;
 
   const displayList = (type) => {
     if (profile.lists) {
       return profile.lists[type].length === 0 ? (
         <>
-          {' '}
           <EmptyTitle>List is empty</EmptyTitle>
           <LottieAnimation lotti={emptylist} height={200} width={200} />
         </>
@@ -141,6 +141,11 @@ export const ProfileGameList = () => {
         ))
       );
   }
+
+  return      <>
+  <EmptyTitle>List is empty</EmptyTitle>
+  <LottieAnimation lotti={emptylist} height={200} width={200} />
+</>
 };
 
   const handleClick = (listtype) => {

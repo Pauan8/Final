@@ -3,12 +3,15 @@ import styled from 'styled-components/macro';
 import { useParams } from 'react-router-dom';
 
 import { ProfileCard } from '../components/User/ProfileCard'
+import { ProfileGameList } from 'components/User/ProfileGameList';
+import { Menu } from '../components/Menu'
 
 const Wrapper = styled.div`
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
-
-const Name = styled.h1``;
 
 const PublicProfile = () => {
   const [user, setUser] = useState([]);
@@ -22,8 +25,10 @@ const PublicProfile = () => {
 
   return (
     <Wrapper>
-      <Name>{user.username}</Name>
+      <Menu />
       <ProfileCard id="" mode={user} />
+      <button> add friend</button>
+      <ProfileGameList mode={user} />
     </Wrapper>
   );
 };
