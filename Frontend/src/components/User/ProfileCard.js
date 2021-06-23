@@ -1,15 +1,36 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
+import PeopleIcon from '@material-ui/icons/People';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { useDispatch } from 'react-redux';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 import { FriendsList } from '../User/FriendsList'
+import { addFriend } from '../../reducers/user'
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
+
+const TabContainer = styled.div`
+  display: flex;
+  width: 340px;
+  justify-content: flex-end;
+  position: absolute;
+  top: 50px;
+`
+
+const Tab = styled.button`
+  height: 40px;
+  width: 40px;
+  background: ${props  => props.visible === props.name? '#F2D3AC' : 'transparent'};
+  border: solid #a65151 0.5px;
+  margin-bottom: -2px;`
 
 const EditLink = styled(Link)`
   width: 100%;
@@ -40,12 +61,13 @@ const ImgCard = styled.div`
   background: #f2d3ac;
   border: solid #a65151 1px;
   border-radius: 5px;
-  display: flex;
+  display: ${props => props.visible === 'profile' ? 'flex' : 'none'};
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  position: relative;
 
-  margin-top: 50px;
+  margin-top: 89px;
   color: #733c3c;
 
   @media (min-width: 768px) {
@@ -107,21 +129,34 @@ const Description = styled.p`
   font-style: italic;
 `;
 
+const Button = styled.button `
+    background: transparent;
+    align-self: flex-start;`
+
+
 export const ProfileCard = ({ id, mode }) => {
+  const [visibleLayer, setVisibleLayer] = useState('profile');
   const user = useSelector((store) => store.user.userInfo);
   const profile = mode === 'private' ? user : mode;
+  const dispatch = useDispatch();
 
   return (
     <Container>
-      <FriendsList friends={profile.friends} />
-      <ImgCard>
+      <TabContainer>
+        <Tab onClick = {() => setVisibleLayer('profile')} name='profile' visible={visibleLayer}><AccountCircleIcon /></Tab>
+        <Tab onClick = {() => setVisibleLayer('friends')} name='friends' visible={visibleLayer}><PeopleIcon /></Tab>
+      </TabContainer>
+      <FriendsList friends={profile.friends} visibleLayer={visibleLayer} mode={mode}/>
+      <ImgCard visible={visibleLayer}>
       {mode === 'private' ?
        ( <EditLink to={`/profile/${id}/edit`}>
           <Edit>
             <EditIcon />
           </Edit>
         </EditLink>)
-        : <></>}
+        : <Button onClick={() => dispatch(addFriend(profile.username))}> 
+            <PersonAddIcon /> 
+          </Button>}
         <ImgContainer>
           {profile.avatar ? (
             <Img src={require(`../../assets/avatar/${profile.avatar}`)} />

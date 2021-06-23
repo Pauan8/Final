@@ -148,12 +148,8 @@ router.post('/profile/:id/friendRequest/:username', async (req, res) => {
   const { status } = req.query;
 
   try {
-    const user = findById(id);
-    await user.findOne({'friends.username': username/* }, {$set: {'friends.$.status': status}}, {new: true */})
-/*     const user = await User.findAndUpdate({_id:id, 'friends.username': username},
-      {$set: {'friends.$': {status: status}}}, {new: true}); */
- /*     await findOneAndUpdate({username: username, 'friends.username': user.username},
-      {$set: {'friends.$.status': status}}, {new: true});  */
+    const user = await User.findOneAndUpdate({_id: id, 'friends.username': username},  {$set: {'friends.$.status': status}}, {new:true, upsert: true}).exec();
+   /*  await findOneAndUpdate({username: username, 'friends.username': user.username}, {$set: {'friends.$.status': status}}, {new: true}); */
       res.json({
         friends: user.friends,
         success: true,

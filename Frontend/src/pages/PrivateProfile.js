@@ -32,7 +32,7 @@ const PrivateProfile = () => {
   const isLoading = useSelector((store) => store.ui.isLoading);
 
   useEffect(() => {
-    if (sessionStorage.getItem('token')) {
+    if (localStorage.getItem('token')) {
       dispatch(fetchUser())
     } else {
       history.push('/signup');

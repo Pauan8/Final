@@ -35,7 +35,7 @@ const user = createSlice({
     },
   },
   errors: {
-    loggedOut: !sessionStorage.getItem('token')
+    loggedOut: !localStorage.getItem('token')
         ? true
         : false,
   },
@@ -72,8 +72,8 @@ export const signUp = ({ username, password, name, surname, e_mail }) => {
       .then((data) => {
         dispatch(ui.actions.setLoading(false));
         if (data.sucess) {
-          sessionStorage.setItem('userID', data.userID);
-          sessionStorage.setItem('token', data.accessToken);
+          localStorage.setItem('userID', data.userID);
+          localStorage.setItem('token', data.accessToken);
           dispatch(user.actions.setUser(data));
           dispatch(user.actions.setErrors(null));
         } else {
@@ -111,8 +111,8 @@ export const login = (username, password) => {
       .auth(username, password)
       .then((json) => {
         if (json.accessToken) {
-          sessionStorage.setItem('token', json.accessToken);
-          sessionStorage.setItem('userID', json.userID);
+          localStorage.setItem('token', json.accessToken);
+          localStorage.setItem('userID', json.userID);
           dispatch(user.actions.setUser(json));
           dispatch(user.actions.setToken(json.accessToken));
           dispatch(user.actions.setErrors(null));
@@ -199,9 +199,9 @@ export const addGame = (type, id) => {
 };
 
 export const removeGame = (type, id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     fetches.profile
-      .removeGame(getState, id, type)
+      .removeGame(id, type)
       .then((games) => {
         if (games.success) {
           dispatch(user.actions.setGameLists(games.lists));
@@ -216,7 +216,7 @@ export const removeGame = (type, id) => {
 
 export const logout = () => {
   return (dispatch) => {
-    sessionStorage.clear();
+    localStorage.clear();
     dispatch(user.actions.setUser(RESET_STATE));
     dispatch(user.actions.setToken(null));
   };

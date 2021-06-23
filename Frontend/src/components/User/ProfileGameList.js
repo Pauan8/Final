@@ -31,10 +31,10 @@ const GameList = styled.ul`
   margin: 0;
   margin-bottom: 10px;
   width: 300px;
-  height: 460px;
+  height: 500px;
   border: solid #a65151 0.5px;
   padding: 20px;
-  padding-bottom: 23px;
+  padding-bottom: 21px;
   overflow: auto;
   scrollbar-width: thin;
   scrollbar-color: #a65151 transparent;
