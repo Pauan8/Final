@@ -16,12 +16,9 @@ const RESET_STATE = {
 const user = createSlice({
   name: 'user',
   initialState: {
-    accessToken:
-    localStorage.getItem('token') === 'undefined'
-      ? null
-      : localStorage.getItem('token'),
+    accessToken: null,
   userInfo: {
-      userID: localStorage.getItem('userID'),
+      userID: null,
       avatar: null,
       name: null,
       surname: null,
@@ -30,12 +27,15 @@ const user = createSlice({
       age: null,
       description: null,
       lists: null,
+      friends: {
+        username: null,
+        status: null,
+        state: null
+      }
     },
   },
   errors: {
-    loggedOut:
-      localStorage.getItem('token') === 'undefined' ||
-      !localStorage.getItem('token')
+    loggedOut: !sessionStorage.getItem('token')
         ? true
         : false,
   },
@@ -44,12 +44,16 @@ const user = createSlice({
       store.accessToken = action.payload;
     },
     setUser: (store, action) => {
-      const userInfo = action.payload;
+      const userInfo= action.payload;
       store.userInfo = userInfo;
     },
     updateUser: (store, action) => {
       const userInfo = action.payload;
       store.userInfo = userInfo;
+    },
+    setFriends: (store, action) => {
+      const friends = action.payload;
+      store.userInfo.friends = friends;
     },
     setErrors: (store, action) => {
       store.errors = action.payload;
@@ -68,8 +72,8 @@ export const signUp = ({ username, password, name, surname, e_mail }) => {
       .then((data) => {
         dispatch(ui.actions.setLoading(false));
         if (data.sucess) {
-          localStorage.setItem('userID', data.userID);
-          localStorage.setItem('token', data.accessToken);
+          sessionStorage.setItem('userID', data.userID);
+          sessionStorage.setItem('token', data.accessToken);
           dispatch(user.actions.setUser(data));
           dispatch(user.actions.setErrors(null));
         } else {
@@ -81,10 +85,10 @@ export const signUp = ({ username, password, name, surname, e_mail }) => {
 };
 
 export const fetchUser = () => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(ui.actions.setLoading(true));
     fetches.profile
-      .user(getState, dispatch)
+      .user(dispatch)
       .then((data) => {
         dispatch(ui.actions.setLoading(false));
         if (data.success) {
@@ -107,8 +111,8 @@ export const login = (username, password) => {
       .auth(username, password)
       .then((json) => {
         if (json.accessToken) {
-          localStorage.setItem('token', json.accessToken);
-          localStorage.setItem('userID', json.userID);
+          sessionStorage.setItem('token', json.accessToken);
+          sessionStorage.setItem('userID', json.userID);
           dispatch(user.actions.setUser(json));
           dispatch(user.actions.setToken(json.accessToken));
           dispatch(user.actions.setErrors(null));
@@ -128,10 +132,10 @@ export const editProfile = (
   description,
   age
 ) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(ui.actions.setLoading(true));
     fetches.profile
-      .edit(avatar, name, surname, e_mail, description, age, getState)
+      .edit(avatar, name, surname, e_mail, description, age)
       .then((data) => {
         dispatch(ui.actions.setLoading(false));
         if (data.success) {
@@ -143,6 +147,36 @@ export const editProfile = (
       })
       .catch((error) => dispatch(user.actions.setErrors('catch error')));
   };
+};
+
+export const addFriend = (username) => {
+  return (dispatch) => {
+    fetches.profile
+    .addFriend(username)
+    .then((data) => {
+      if(data.success){
+        dispatch(user.actions.setFriends(data.friends))
+      } else {
+        dispatch(user.actions.setErrors(data));
+      }
+    })
+    .catch((error) => dispatch(user.actions.setErrors('catch error')));
+  }
+};
+
+export const answerFriendRequest = (username, status) => {
+  return (dispatch) => {
+    fetches.profile
+    .answerFriendRequest( username, status)
+    .then((data) => {
+      if(data.success){
+        dispatch(user.actions.setFriends(data.friends))
+      } else {
+        dispatch(user.actions.setErrors(data));
+      }
+    })
+    .catch((error) => dispatch(user.actions.setErrors('catch error')));
+  }
 };
 
 export const addGame = (type, id) => {
@@ -182,7 +216,7 @@ export const removeGame = (type, id) => {
 
 export const logout = () => {
   return (dispatch) => {
-    localStorage.clear();
+    sessionStorage.clear();
     dispatch(user.actions.setUser(RESET_STATE));
     dispatch(user.actions.setToken(null));
   };

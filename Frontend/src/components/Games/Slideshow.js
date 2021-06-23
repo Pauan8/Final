@@ -88,7 +88,7 @@ export const Slideshow = ({ type, value }) => {
       console.log(Math.floor(data[value].length / slideNumber));
       for (let i = 0; i < data[value].length; i += slideNumber) {
         resultsRender.push(
-          <ContainerOuter index={i} slideIndex={slideIndex}>
+          <ContainerOuter index={i} slideIndex={slideIndex} key={`${i}A`}>
             <Button onClick={() => handleClick('left', slideNumber)}>◀</Button>
             {data[value].slice(i, i + slideNumber).map((item) => (
               <GameCard key={item.id} {...item} />

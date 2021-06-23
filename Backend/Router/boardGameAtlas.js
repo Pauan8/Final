@@ -83,6 +83,7 @@ router.post('/login', async (req, res) => {
         lists: user.lists,
         age: user.age,
         description: user.description,
+        friends: user.friends,
         success: true,
         loggedOut: false,
       });
@@ -111,6 +112,7 @@ router.get('/profile/:id', async (req, res) => {
       lists: privateProfile.lists,
       age: privateProfile.age,
       description: privateProfile.description,
+      friends: privateProfile.friends,
       success: true,
       loggedOut: false,
     });
@@ -122,20 +124,43 @@ router.get('/profile/:id', async (req, res) => {
 router.post('/profile/:id/addFriend/:username', authenticateUser)
 router.post('/profile/:id/addFriend/:username', async (req, res) => {
   const { id, username } = req.params;
-    try {
-      const user = await User.findByIdAndUpdate(id, {$push: {friends: username, status: 0}});
+  try {
+    const exists = await User.find({
+    _id: id, 'friends.username': username
+  })
+  if (exists.length === 0) {
+     const user = await User.findByIdAndUpdate(id, {$push: {friends: {username: username, status: 0, state: 'sender'}}}, {new: true})
+     await User.findOneAndUpdate({username: username}, {$push: {friends: {username: user.username, status: 0, state: 'reciever'}}})
       res.json({
-        friends: user.friends
+        friends: user.friends,
+        success: true,
+        loggedOut: false,
       })
-    } catch (err) {
+    }
+  } catch (err) {
       catchError(res, err, 'Invalid user id');
     }
   });
 
-router.post('/profile/:id/acceptFriend/:username', authenticateUser)
-router.post('/profile/:id/addFriend/:username', async (req, res) => {
+router.post('/profile/:id/friendRequest/:username', authenticateUser)
+router.post('/profile/:id/friendRequest/:username', async (req, res) => {
+  const { id, username } = req.params;
+  const { status } = req.query;
 
-})
+  try {
+    const user = await User.findOneAndUpdate({_id:id, 'friends.username': username},
+      {friends: {status: status}}, {new: true});
+      await findOneAndUpdate({username: username, 'friends.username': user.username},
+      {'friends.$.status': status}, {new: true});
+      res.json({
+        friends: user.friends,
+        success: true,
+        loggedOut: false,
+      })
+    } catch (err) {
+      catchError(res, err, 'Invalid user id');
+    }
+});
 
 router.post('/profile/:id/addGame/:gameId', authenticateUser);
 router.post('/profile/:id/addGame/:gameId', async (req, res) => {
@@ -145,11 +170,13 @@ router.post('/profile/:id/addGame/:gameId', async (req, res) => {
 
   try {
     const exists = await User.find({
+      _id: id,
+      $and: [{
       [attr]: {
         $elemMatch: {
           id: { $in: gameId },
         },
-      },
+      }}],
     });
     if (exists.length === 0) {
       const user = await User.findByIdAndUpdate(
@@ -230,6 +257,7 @@ router.get('/user/:username', async (req, res) => {
       surname: userProfile.surname,
       avatar: userProfile.avatar,
       e_mail: userProfile.e_mail,
+      friends: userProfile.friends,
       loggedOut: false,
       success: true,
     });

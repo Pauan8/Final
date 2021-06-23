@@ -4,6 +4,8 @@ import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
 
+import { FriendsList } from '../User/FriendsList'
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -107,11 +109,11 @@ const Description = styled.p`
 
 export const ProfileCard = ({ id, mode }) => {
   const user = useSelector((store) => store.user.userInfo);
-
   const profile = mode === 'private' ? user : mode;
 
   return (
     <Container>
+      <FriendsList friends={profile.friends} />
       <ImgCard>
       {mode === 'private' ?
        ( <EditLink to={`/profile/${id}/edit`}>

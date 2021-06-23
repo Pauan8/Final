@@ -29,11 +29,10 @@ const PrivateProfile = () => {
   const { id } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const token = useSelector((store) => store.user.accessToken);
   const isLoading = useSelector((store) => store.ui.isLoading);
 
   useEffect(() => {
-    if (token) {
+    if (sessionStorage.getItem('token')) {
       dispatch(fetchUser())
     } else {
       history.push('/signup');

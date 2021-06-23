@@ -80,7 +80,6 @@ export const SaveGame = ({ name, id, setFlip, like, setLike }) => {
       <Title>{name}</Title>
       <FormLabel
         component='legend'
-        InputLabelProps={{ style: { color: '#000' } }}
       >
         Add to list/s?
       </FormLabel>

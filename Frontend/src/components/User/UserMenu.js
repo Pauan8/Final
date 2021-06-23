@@ -14,8 +14,6 @@ const Wrapper = styled.div`
   right: 5px;
   justify-content: flex-end;
   z-index: 6;
-
-
 `;
 
 const MenuLink = styled(Link)`
@@ -61,8 +59,7 @@ export const UserMenu = ({font}) => {
   const dispatch = useDispatch();
 
   const loggedInArr = [{name: 'Profile', path: `/profile/${userID}`}, 
-  {name: 'Edit', path: `/profile/${userID}/edit`},
-  {name:'Settings'}, 
+  {name: 'Edit', path: `/profile/${userID}/edit`}, 
   {name:'Logout'}]
   const loggedOutArr = [{name: 'Sign Up', path:'/Signup'}, {name: 'Log In', path:'/Login'}]
 
@@ -74,11 +71,11 @@ export const UserMenu = ({font}) => {
   const renderMenu = (arr) => {
     return <>{arr.map((item) =>
       item.name !== "Logout" ? (
-        <MenuLink to={item.path}>
+        <MenuLink to={item.path} key={item.name}>
           <MenuItem>{item.name}</MenuItem>
         </MenuLink>
       ) : (
-        <MenuItem onClick={onLogout}>
+        <MenuItem onClick={onLogout} key={item.name}>
             Log out
         </MenuItem>
       )

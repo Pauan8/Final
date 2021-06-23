@@ -1,5 +1,4 @@
-//const BASE_URL = 'https://secure-escarpment-13722.herokuapp.com'
-const BASE_URL = 'http://localhost:8080';
+const BASE_URL = 'https://secure-escarpment-13722.herokuapp.com'
 
 export const fetches = {
   profile: {
@@ -15,11 +14,11 @@ export const fetches = {
         }),
       }).then((res) => res.json());
     },
-    user: (getState) => {
-      return fetch(`${BASE_URL}/profile/${getState().user.userInfo.userID}`, {
+    user: () => {
+      return fetch(`${BASE_URL}/profile/${sessionStorage.getItem('userID')}`, {
         headers: {
           'content-type': 'application/json',
-          Authorization: getState().user.accessToken,
+          Authorization: sessionStorage.getItem('token'),
         },
       }).then((response) => {
         if (!response.ok) {
@@ -48,14 +47,14 @@ export const fetches = {
         return response.json();
       });
     },
-    edit: (avatar, name, surname, e_mail, description, age, getState) => {
+    edit: (avatar, name, surname, e_mail, description, age) => {
       return fetch(
-        `${BASE_URL}/profile/${getState().user.userInfo.userID}/edit`,
+        `${BASE_URL}/profile/${sessionStorage.getItem('userID')}/edit`,
         {
           method: 'POST',
           headers: {
             'content-type': 'application/json',
-            Authorization: getState().user.accessToken,
+            Authorization: sessionStorage.getItem('token'),
           },
           body: JSON.stringify({
             avatar,
@@ -73,16 +72,52 @@ export const fetches = {
         return response.json();
       });
     },
-    addGame: (getState, game, list) => {
+    addFriend: (username) => {
+      return fetch(
+        `${BASE_URL}/profile/${sessionStorage.getItem('userID')}/addFriend/${username}`,
+        {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+            Authorization: sessionStorage.getItem('token')
+          },
+        })
+        .then((response) => {
+          if (!response.ok) {
+            throw Error(response.statusText);
+          }
+          return response.json();
+        });
+      },
+    answerFriendRequest: (username, status) =>{
       return fetch(
         `${BASE_URL}/profile/${
-          getState().user.userInfo.userID
+          sessionStorage.getItem('userID')
+        }/friendRequest/${username}?status=${status}`,
+        {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+            Authorization: sessionStorage.getItem('token')
+          },
+        })
+        .then((response) => {
+          if (!response.ok) {
+            throw Error(response.statusText);
+          }
+          return response.json();
+        });
+      },
+    addGame: ( game, list) => {
+      return fetch(
+        `${BASE_URL}/profile/${
+          sessionStorage.getItem('userID')
         }/addGame/${game.id}?list=${list}`,
         {
           method: 'POST',
           headers: {
             'content-type': 'application/json',
-            Authorization: getState().user.accessToken,
+            Authorization: sessionStorage.getItem('token'),
           },
           body: JSON.stringify({
             [list]: game,
@@ -95,16 +130,16 @@ export const fetches = {
         return response.json();
       });
     },
-    removeGame: (getState, game, list) => {
+    removeGame: ( game, list) => {
       return fetch(
         `${BASE_URL}/profile/${
-          getState().user.userInfo.userID
+          sessionStorage.getItem('userID')
         }/removeGame/${game.id}?list=${list}`,
         {
           method: 'DELETE',
           headers: {
             'content-type': 'application/json',
-            Authorization: getState().user.accessToken,
+            Authorization: sessionStorage.getItem('token'),
           },
           body: JSON.stringify({
             [list]: game,

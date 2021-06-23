@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom';
@@ -124,7 +124,7 @@ export const ProfileGameList = ({mode}) => {
         </>
       ) : (
         profile.lists[type].map((game) => (
-          <Game>
+          <Game key={game.id}>
             <GameLink to={`/game/${game.id}`}>
               <ImageContainer>
                 <GameImg src={game.thumb_url} />
