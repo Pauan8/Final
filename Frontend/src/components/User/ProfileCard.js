@@ -7,6 +7,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { useDispatch } from 'react-redux';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 
 import { FriendsList } from '../User/FriendsList'
 import { addFriend } from '../../reducers/user'
@@ -161,12 +162,12 @@ export const ProfileCard = ({ id, mode }) => {
           {profile.avatar ? (
             <Img src={require(`../../assets/avatar/${profile.avatar}`)} />
           ) : (
-            <></>
+            <AccountCircleIcon style={{fontSize: 150}}/>
           )}
         </ImgContainer>
         <TextContainer>
           <Name age={profile.age ? true : false}> {profile.username} </Name>
-          {profile.age ? <Age>lvl {profile.age}</Age> : <></>}{' '}
+          {profile.age ? <Age>lvl {profile.age}</Age> : <></>}
         </TextContainer>
         <TextContainer>
           {profile.name ? (
@@ -176,7 +177,7 @@ export const ProfileCard = ({ id, mode }) => {
           ) : (
             <></>
           )}
-          {profile.surname ? <Info>{profile.surname}</Info> : <></>}{' '}
+          {profile.surname ? <Info>{profile.surname}</Info> : <></>}
         </TextContainer>
         <TextContainer>
           {profile.e_mail ? (

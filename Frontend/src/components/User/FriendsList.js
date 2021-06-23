@@ -57,7 +57,7 @@ export const FriendsList = ({ friends, visibleLayer, mode }) => {
               <p>{friend.username} - requested</p>
               <button
                 onClick={() =>
-                  dispatch(answerFriendRequest(friend.username, 1))
+                  dispatch(answerFriendRequest(friend._id, 1))
                 }
               >
                 accept

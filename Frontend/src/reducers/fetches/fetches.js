@@ -90,11 +90,11 @@ export const fetches = {
           return response.json();
         });
       },
-    answerFriendRequest: (username, status) =>{
+    answerFriendRequest: (userId, status) =>{
       return fetch(
         `${BASE_URL}/profile/${
           localStorage.getItem('userID')
-        }/friendRequest/${username}?status=${status}`,
+        }/friendRequest/${userId}?status=${status}`,
         {
           method: 'POST',
           headers: {

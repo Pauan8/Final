@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import crypto from 'crypto';
 
 const list = require('./Lists');
+const friend = require('./Friend')
 
 const UserSchema = mongoose.Schema({
   avatar: String,
@@ -47,11 +48,8 @@ const UserSchema = mongoose.Schema({
     wishlist: [list.schema],
     ownedgames: [list.schema],
   },
-  friends: {
-    status: Number,
-    username: String,
-    state: String
-  }
+  friends:[friend.schema]
+  
 });
 
 const User = mongoose.model('User', UserSchema);

@@ -16,7 +16,7 @@ const RESET_STATE = {
 const user = createSlice({
   name: 'user',
   initialState: {
-    accessToken: null,
+    accessToken: localStorage.getItem('token'),
   userInfo: {
       userID: null,
       avatar: null,
@@ -164,10 +164,10 @@ export const addFriend = (username) => {
   }
 };
 
-export const answerFriendRequest = (username, status) => {
+export const answerFriendRequest = (userId, status) => {
   return (dispatch) => {
     fetches.profile
-    .answerFriendRequest( username, status)
+    .answerFriendRequest( userId, status)
     .then((data) => {
       if(data.success){
         dispatch(user.actions.setFriends(data.friends))
