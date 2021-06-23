@@ -9,6 +9,7 @@ import { SubmitButton } from '../components/LoginSignup/SubmitButton';
 import { Button } from '../components/Reusable/Button';
 import { signUp, fetchUser } from '../reducers/user';
 import { regexArr } from '../data/regExValdate';
+import { ExitButton } from '../components/Reusable/ExitButton'
 
 const Wrapper = styled.div`
   position: relative;
@@ -44,7 +45,7 @@ const Signup = () => {
       } else {
         setValidate(true);
         dispatch(signUp({ ...value }));
-        history.push({ pathname: '/login', state: { prev: 'signup' } });
+        history.push({ pathname: '/' });
       }
     });
   };
@@ -53,8 +54,9 @@ const Signup = () => {
     dispatch(fetchUser());
   }, [dispatch]);
 
-  console.log(token);
   return (
+    <>
+    <ExitButton />
     <Wrapper>
       {token ? (
         <>
@@ -106,6 +108,7 @@ const Signup = () => {
         </>
       )}
     </Wrapper>
+    </>
   );
 };
 

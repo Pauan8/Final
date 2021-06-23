@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/macro';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 
 import { login } from '../reducers/user';
 import { TextInput } from '../components/Reusable/TextInput';
@@ -9,6 +10,7 @@ import { PasswordInput } from '../components/LoginSignup/PasswordInput';
 import { SubmitButton } from '../components/LoginSignup/SubmitButton';
 import { Button } from '../components/Reusable/Button';
 import { regexArr } from '../data/regExValdate';
+import { ExitButton } from '../components/Reusable/ExitButton'
 
 const Wrapper = styled.div`
   position: relative;
@@ -43,8 +45,9 @@ const Signin = () => {
       : history.goBack();
   };
 
-  console.log(token);
   return (
+    <>
+    <ExitButton />
     <Wrapper>
       {!token ? (
         <>
@@ -69,7 +72,9 @@ const Signin = () => {
           <Button text='back' handleClick={onBackClick} />
         </Wrapper>
       )}
+      <Link to='/signup'> No account? Click here to Sign Up!</Link>
     </Wrapper>
+    </>
   );
 };
 
