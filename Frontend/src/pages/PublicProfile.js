@@ -42,7 +42,7 @@ const PublicProfile = () => {
  
 
   useEffect(() => {
-    fetch(`http://localhost:8080/user/${username}`)
+    fetch(`https://secure-escarpment-13722.herokuapp.com/user/${username}`)
       .then((res) => res.json())
       .then((json) => setUser(json));
   }, [ username]);
