@@ -21,13 +21,14 @@ const Title = styled.h1`
 const ButtonContainer = styled.div``;
 
 const Text = styled.p`
-margin: 30px;`
+  margin: 30px;
+`;
 
 let typeArr = [];
 export const SaveGame = ({ name, id, setFlip, like, setLike }) => {
   const dispatch = useDispatch();
   const lister = useSelector((store) => store.user.userInfo.lists);
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
 
   const [values, setValues] = useState({
     favourites: false,
@@ -82,26 +83,21 @@ export const SaveGame = ({ name, id, setFlip, like, setLike }) => {
   return (
     <>
       <Title>{name}</Title>
-      {token?
-      <>
-      <FormLabel
-        component='legend'
-      >
-        Add to list/s?
-      </FormLabel>
-      <FormGroup>
-        {renderCheckbox('Favourites')}
-        {renderCheckbox('Wish List')}
-        {renderCheckbox('Owned Games')}
-      </FormGroup>
-      </>
-      : <Text>You need to be logged in to add games to your lists!</Text>}
+      {token ? (
+        <>
+          <FormLabel component='legend'>Add to list/s?</FormLabel>
+          <FormGroup>
+            {renderCheckbox('Favourites')}
+            {renderCheckbox('Wish List')}
+            {renderCheckbox('Owned Games')}
+          </FormGroup>
+        </>
+      ) : (
+        <Text>You need to be logged in to add games to your lists!</Text>
+      )}
       <ButtonContainer>
         <Button text='Done' handleClick={handleClick} />
       </ButtonContainer>
     </>
-
-
- 
   );
 };

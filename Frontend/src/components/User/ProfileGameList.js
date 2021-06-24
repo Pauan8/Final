@@ -140,13 +140,15 @@ export const ProfileGameList = ({mode}) => {
           </Game>
         ))
       );
-  }
+    }
 
-  return      <>
-  <EmptyTitle>List is empty</EmptyTitle>
-  <LottieAnimation lotti={emptylist} height={200} width={200} />
-</>
-};
+    return (
+      <>
+        <EmptyTitle>List is empty</EmptyTitle>
+        <LottieAnimation lotti={emptylist} height={200} width={200} />
+      </>
+    );
+  };
 
   const handleClick = (listtype) => {
     setActive(listtype);
@@ -160,21 +162,21 @@ export const ProfileGameList = ({mode}) => {
           name='favourites'
           onClick={() => handleClick('favourites')}
         >
-          💗
+         <span role='img' aria-label='emoji'>💗</span> 
         </Button>
         <Button
           active={active}
           name='wishlist'
           onClick={() => handleClick('wishlist')}
         >
-          💎
+          <span role='img' aria-label='emoji'>💎</span>
         </Button>
         <Button
           active={active}
           name='ownedgames'
           onClick={() => handleClick('ownedgames')}
         >
-          ✅
+         <span role='img' aria-label='emoji'> ✅</span>
         </Button>
       </ButtonContainer>
       <GameList active={active} name='favourites'>

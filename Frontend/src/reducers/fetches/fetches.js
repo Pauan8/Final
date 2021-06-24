@@ -1,7 +1,21 @@
 /* const BASE_URL = 'https://secure-escarpment-13722.herokuapp.com' */
 const BASE_URL = 'http://localhost:8080'
 
+const testResponse = (response) => {
+  if (!response.ok) {
+    throw Error(response.statusText);
+  }
+  return response.json();
+};
+
+const authHeaders =  {
+    'content-type': 'application/json',
+    Authorization: localStorage.getItem('token'),
+  }
+
+
 export const fetches = {
+  
   profile: {
     auth: (username, password) => {
       return fetch(`${BASE_URL}/login`, {
@@ -17,16 +31,10 @@ export const fetches = {
     },
     user: () => {
       return fetch(`${BASE_URL}/profile/${localStorage.getItem('userID')}`, {
-        headers: {
-          'content-type': 'application/json',
-          Authorization: localStorage.getItem('token'),
-        },
-      }).then((response) => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.json();
-      });
+        headers: authHeaders,
+      })
+      .then((response) => 
+        testResponse(response));
     },
     signup: (username, password, name, surname, e_mail) => {
       return fetch(`${BASE_URL}/users`, {
@@ -41,22 +49,15 @@ export const fetches = {
           surname,
           e_mail,
         }),
-      }).then((response) => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.json();
-      });
+      }).then((response) => 
+        testResponse(response));
     },
     edit: (avatar, name, surname, e_mail, description, age) => {
       return fetch(
         `${BASE_URL}/profile/${localStorage.getItem('userID')}/edit`,
         {
           method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-            Authorization: localStorage.getItem('token'),
-          },
+          headers: authHeaders,
           body: JSON.stringify({
             avatar,
             name,
@@ -66,29 +67,18 @@ export const fetches = {
             age,
           }),
         }
-      ).then((response) => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.json();
-      });
+      ).then((response) => 
+        testResponse(response));
     },
     addFriend: (username) => {
       return fetch(
         `${BASE_URL}/profile/${localStorage.getItem('userID')}/addFriend/${username}`,
         {
           method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-            Authorization: localStorage.getItem('token')
-          },
+          headers: authHeaders,
         })
-        .then((response) => {
-          if (!response.ok) {
-            throw Error(response.statusText);
-          }
-          return response.json();
-        });
+        .then((response) => 
+          testResponse(response));
       },
     answerFriendRequest: (userId, status) =>{
       return fetch(
@@ -97,36 +87,25 @@ export const fetches = {
         }/friendRequest/${userId}?status=${status}`,
         {
           method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-            Authorization: localStorage.getItem('token')
-          },
+          headers: authHeaders,
         })
-        .then((response) => {
-          if (!response.ok) {
-            throw Error(response.statusText);
-          }
-          return response.json();
-        });
+        .then((response) => 
+          testResponse(response));
       },
-    addGame: ( id, list) => {
+    addGame: (game, list) => {
       return fetch(
         `${BASE_URL}/profile/${
           localStorage.getItem('userID')
-        }/addGame/${id}?list=${list}`,
+        }/addGame/${game.id}?list=${list}`,
         {
           method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-            Authorization: localStorage.getItem('token'),
-          },
+          headers: authHeaders,
+          body: JSON.stringify({
+            [list]: game
+          })
         }
-      ).then((response) => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.json();
-      });
+      ).then((response) => 
+        testResponse(response));
     },
     removeGame: ( id, list) => {
       return fetch(
@@ -135,49 +114,31 @@ export const fetches = {
         }/removeGame/${id}?list=${list}`,
         {
           method: 'DELETE',
-          headers: {
-            'content-type': 'application/json',
-            Authorization: localStorage.getItem('token'),
-          },
+          headers: authHeaders,
         }
-      ).then((response) => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.json();
-      });
+      ).then((response) => 
+        testResponse(response));
     },
   },
+
   games: {
     list: (type, value, page) => {
       return fetch(
         `https://api.boardgameatlas.com/api/search?limit=21&pretty=true&client_id=39WI5Y3mBx&${type}=${value}&skip=${(page-1)*21}`
-      ).then((response) => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.json();
-      });
+      ).then((response) => 
+        testResponse(response));
     },
     filteredList: (getState, page) => {
       return fetch(
         `https://api.boardgameatlas.com/api/search?limit=21&pretty=true&client_id=39WI5Y3mBx${getState().boardGames.filter}&skip=${(page-1)*21}`
-      ).then((response) => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.json();
-      });
+      ).then((response) => 
+        testResponse(response));
     },
     game: (id) => {
       return fetch(
         `https://api.boardgameatlas.com/api/search?limit=20&pretty=true&client_id=39WI5Y3mBx&ids=${id}`
-      ).then((response) => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.json();
-      });
+      ).then((response) => 
+        testResponse(response));
     },
   },
 };

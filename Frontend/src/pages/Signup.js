@@ -40,6 +40,7 @@ const Signup = () => {
 
   const handleClick = () => {
     regexArr.map((item) => {
+      console.log(item.regex, value[item.value])
       if (!item.regex.test(value[item.value])) {
         setValidate(false);
       } else {

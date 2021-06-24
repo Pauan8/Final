@@ -37,7 +37,7 @@ const PrivateProfile = () => {
     } else {
       history.push('/signup');
     }
-  }, []);
+  }, [dispatch, history]);
 
   return (
     <>

@@ -43,7 +43,7 @@ const SingleGame = () => {
 
   useEffect(() => {
       dispatch(fetchSingleGame(Id))
-  }, [])
+  }, [Id, dispatch])
 
   const renderGameInfo = (name, value1, value2) => {
     if (!value1 && !value2) {

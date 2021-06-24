@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import { useParams } from 'react-router-dom';
 
-
+import { SearchUser } from '../components/SearchUser'
 import { ProfileCard } from '../components/User/ProfileCard'
 import { ProfileGameList } from 'components/User/ProfileGameList';
 import { Menu } from '../components/Menu'
@@ -23,6 +23,18 @@ const Wrapper = styled.div`
   }
 `;
 
+const SearchContainer = styled.div`
+    position: relative;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+`
+
+const SearchBar = styled.div`
+        width: 250px;
+    `
+
 
 const PublicProfile = () => {
   const [user, setUser] = useState([]);
@@ -33,7 +45,7 @@ const PublicProfile = () => {
     fetch(`http://localhost:8080/user/${username}`)
       .then((res) => res.json())
       .then((json) => setUser(json));
-  }, [fetch]);
+  }, [ username]);
 
   return (
       <>
@@ -44,9 +56,16 @@ const PublicProfile = () => {
       <>
       <ProfileCard id="" mode={user} />
       <ProfileGameList mode={user} />  </>
-      : <p>User doesn't exist</p>
-    
-}
+      : <>
+        <p>User doesn't exist. </p>
+        <p>New Search? </p>
+        <SearchContainer>
+            <SearchBar>
+                <SearchUser mode='expanded'/>
+            </SearchBar>
+        </SearchContainer>
+        </>
+    }
     </Wrapper>
     </>
   );

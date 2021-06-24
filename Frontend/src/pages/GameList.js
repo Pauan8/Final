@@ -1,4 +1,4 @@
-import React , {useEffect, useState} from 'react';
+import React , {useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components/macro';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -75,14 +75,14 @@ const GameList = () => {
     }
   }
 
-  const generateLists =() => {
+  const generateLists =useCallback(() => {
     if(type === 'by_filter'){
       dispatch(boardGames.actions.setFilter(value));
       dispatch(genereateFilteredGamesList('Filtered', page));
     } else{
       dispatch(generateGamesList(type, value, page));
     }
-  }
+  }, [dispatch, page, type, value])
 
   const handleClick = (direction) => {
     if(direction === 'forward'){
@@ -96,7 +96,7 @@ const GameList = () => {
 
   useEffect(() => {
     generateLists();
-  }, [page]);
+  }, [page, generateLists]);
  
   return (
     <Wrapper>
@@ -120,7 +120,7 @@ const GameList = () => {
       <Grid>
         {arr && arr.length > 0 ? (
           arr.map((game) => (
-              <GameCard {...game} />
+              <GameCard key = {game.id} {...game} />
           ))
         ) : (
           <p>No more results</p>

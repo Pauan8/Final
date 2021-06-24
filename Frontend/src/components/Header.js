@@ -50,8 +50,8 @@ const TextContainer = styled.div`
 `;
 
 const Logo = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
 
   @media (min-width: 768px){
     width: auto;
@@ -73,10 +73,19 @@ right: 0;
   right: 50px;
 }`
 
+const SearchContainer = styled.div`
+position: absolute;
+top: 10px;
+z-index:6;`
+
+
 export const Header = () => {
+
   return (
     <Wrapper>
-      <SearchUser />
+      <SearchContainer>
+        <SearchUser />
+        </SearchContainer>
       <UserMenuContainer>
         <UserMenu font='50'/>
       </UserMenuContainer>

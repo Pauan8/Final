@@ -1,18 +1,39 @@
-import React from 'react'
-import styled from 'styled-components/macro'
+import React, { useState } from "react";
+import styled from "styled-components/macro";
+import SearchIcon from "@material-ui/icons/Search";
+import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
 
-import { Search } from './Reusable/Search'
+import { Search } from "./Reusable/Search";
 
 const SearchContainer = styled.div`
-    position: absolute;
-    z-index: 6;
-    top: 5px;
-    right: 150px;`
+  display: flex;
+`;
 
-export const SearchUser = () => {
-    return (
+const SearchBar = styled.div`
+  margin-top: -15px;
+  width: ${(props) => (props.expand ? "250px" : "0")};
+  overflow: hidden;
+  margin-left: 5px;
+`;
+const SearchButton = styled.button`
+  width: 30px;
+  height: 30px;
+  background: transparent;
+  border: none;
+`;
+
+export const SearchUser = ({ mode }) => {
+  const [expand, setExpand] = useState(false);
+
+  return (
     <SearchContainer>
-        <Search mode='user' />
+    {mode === 'expanded'? <></> :
+      <SearchButton onClick={() => setExpand(!expand)}>
+        {expand ? <RemoveCircleIcon /> : <SearchIcon />}
+      </SearchButton>}
+      <SearchBar expand={mode === "expanded" ? true : expand}>
+        <Search mode="user" />
+      </SearchBar>
     </SearchContainer>
-    )
-}
+  );
+};

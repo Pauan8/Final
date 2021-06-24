@@ -7,7 +7,6 @@ import PeopleIcon from '@material-ui/icons/People';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { useDispatch } from 'react-redux';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 
 import { FriendsList } from '../User/FriendsList'
 import { addFriend } from '../../reducers/user'
@@ -130,10 +129,10 @@ const Description = styled.p`
   font-style: italic;
 `;
 
-const Button = styled.button `
-    background: transparent;
-    align-self: flex-start;`
-
+const Button = styled.button`
+  background: transparent;
+  align-self: flex-start;
+`;
 
 export const ProfileCard = ({ id, mode }) => {
   const [visibleLayer, setVisibleLayer] = useState('profile');
@@ -144,25 +143,43 @@ export const ProfileCard = ({ id, mode }) => {
   return (
     <Container>
       <TabContainer>
-        <Tab onClick = {() => setVisibleLayer('profile')} name='profile' visible={visibleLayer}><AccountCircleIcon /></Tab>
-        <Tab onClick = {() => setVisibleLayer('friends')} name='friends' visible={visibleLayer}><PeopleIcon /></Tab>
+        <Tab
+          onClick={() => setVisibleLayer('profile')}
+          name='profile'
+          visible={visibleLayer}
+        >
+          <AccountCircleIcon />
+        </Tab>
+        <Tab
+          onClick={() => setVisibleLayer('friends')}
+          name='friends'
+          visible={visibleLayer}
+        >
+          <PeopleIcon />
+        </Tab>
       </TabContainer>
-      <FriendsList friends={profile.friends} visibleLayer={visibleLayer} mode={mode}/>
+      <FriendsList
+        friends={profile.friends}
+        visibleLayer={visibleLayer}
+        mode={mode}
+      />
       <ImgCard visible={visibleLayer}>
-      {mode === 'private' ?
-       ( <EditLink to={`/profile/${id}/edit`}>
-          <Edit>
-            <EditIcon />
-          </Edit>
-        </EditLink>)
-        : <Button onClick={() => dispatch(addFriend(profile.username))}> 
-            <PersonAddIcon /> 
-          </Button>}
+        {mode === 'private' ? (
+          <EditLink to={`/profile/${id}/edit`}>
+            <Edit>
+              <EditIcon />
+            </Edit>
+          </EditLink>
+        ) : (
+          <Button onClick={() => dispatch(addFriend(profile.username))}>
+            <PersonAddIcon />
+          </Button>
+        )}
         <ImgContainer>
           {profile.avatar ? (
             <Img src={require(`../../assets/avatar/${profile.avatar}`)} />
           ) : (
-            <AccountCircleIcon style={{fontSize: 150}}/>
+            <AccountCircleIcon style={{ fontSize: 150 }} />
           )}
         </ImgContainer>
         <TextContainer>

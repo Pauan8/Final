@@ -42,7 +42,7 @@ const Home = () => {
     if(token){
      dispatch(fetchUser());
     }
-  }, []);
+  }, [dispatch, token]);
 
   return (
     <Section>

@@ -53,7 +53,7 @@ const EditProfile = () => {
   };
 
   const testContent = (props) => {
-    return props != '' ? props : null;
+    return props !== '' ? props : null;
   };
 
   return (

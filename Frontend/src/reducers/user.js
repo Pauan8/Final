@@ -4,13 +4,20 @@ import { fetches } from './fetches/fetches';
 import ui from './ui';
 
 const RESET_STATE = {
-  userID: undefined,
-  loggedOut: true,
+  userID: null,
   avatar: null,
   name: null,
   surname: null,
   username: null,
   e_mail: null,
+  age: null,
+  description: null,
+  lists: null,
+  friends: {
+    username: null,
+    status: null,
+    state: null
+  }
 };
 
 const user = createSlice({
@@ -180,11 +187,11 @@ export const answerFriendRequest = (userId, status) => {
 };
 
 export const addGame = (type, id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     fetches.games
       .game(id)
       .then((data) => {
-        fetches.profile.addGame(getState, data.games[0], type);
+        fetches.profile.addGame(data.games[0], type);
       })
       .then((games) => {
         if (games.success) {

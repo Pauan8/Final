@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import { useHistory, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 
 import { login } from '../reducers/user';
 import { TextInput } from '../components/Reusable/TextInput';

@@ -39,19 +39,19 @@ export const FriendsList = ({ friends, visibleLayer, mode }) => {
   const handleFriends = (friend) => {
     if (friend.status === 0 && friend.state === "sender") {
       return (
-        <Pending>
+        <Pending key={friend._id}>
           {mode === "private" ? <p>{friend.username} - pending</p> : <></>}
         </Pending>
       );
     } else if (friend.status === 1) {
       return (
-        <Accepted>
+        <Accepted key={friend._id}>
           <p>{friend.username} - accepted </p>
         </Accepted>
       );
     } else if (friend.status === 0 && friend.state === "reciever") {
       return (
-        <Requests>
+        <Requests key={friend._id}>
           {mode === "private" ? (
             <>
               <p>{friend.username} - requested</p>

@@ -24,7 +24,7 @@ export const TextInput = ({ title, setValue, value, regexp }) => {
 
   const handleChange = (e) => {
     const newValue = e.target.value;
-    if ((title = 'e_mail' && !regexp.test(newValue))) {
+    if ((title === 'e_mail' && !regexp.test(newValue))) {
       setErrorText('Enter a valid e-mail');
       setError(true);
     } else if (!regexp.test(newValue)) {
