@@ -75,6 +75,7 @@ const SingleGame = () => {
             array.map((x) => (x.id === value ? arr.push(x.name) : null))
           }
         }
+        return item;
       });
       return (
         <Text>
