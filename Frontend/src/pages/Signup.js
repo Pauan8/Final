@@ -37,7 +37,7 @@ const Signup = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   let test ='';
-/* 
+
   const handleClick = () => {
     regexArr.map((item) => {
       if (!item.regex.test(value[item.value])) {
@@ -51,13 +51,13 @@ const Signup = () => {
       } else (
         setValidate(true)
       )
-     if(test.includes('fice')) {
+     if(validate) {
        dispatch(signUp({ ...value }));
       history.push({ pathname: '/' });
       } 
       return;
     });
-  }; */
+  }; 
 
   return (
     <>
