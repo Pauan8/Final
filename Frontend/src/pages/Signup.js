@@ -44,7 +44,7 @@ const Signup = () => {
       } else {
         setValidate(true);
         dispatch(signUp({ ...value }));
-        history.push({ pathname: '/' });
+     /*    history.push({ pathname: '/' }); */
       }
       return item;
     });
