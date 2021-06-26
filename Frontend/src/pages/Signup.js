@@ -36,7 +36,6 @@ const Signup = () => {
   const [validate, setValidate] = useState(true);
   const history = useHistory();
   const dispatch = useDispatch();
-  const token = useSelector((store) => store.user.accessToken);
 
   const handleClick = () => {
     regexArr.map((item) => {
@@ -59,7 +58,7 @@ const Signup = () => {
     <>
     <ExitButton />
     <Wrapper>
-      {token ? (
+      {localStorage.getItem('token') ? (
         <>
           <Title>
             You're already logged in, log out or delete your user to be able to
