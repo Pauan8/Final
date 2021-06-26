@@ -47,7 +47,7 @@ const Signup = () => {
   
       }
       if(test.includes('false')){
-        setValidate(false)
+        setValidate(false)net
       } else (
         setValidate(true)
       )
