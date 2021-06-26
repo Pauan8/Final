@@ -5,10 +5,14 @@ import { Link } from 'react-router-dom';
 import hexArr from 'data/hexArray.json';
 
 const Wrapper = styled.div`
-  display: flex;
+display: none;
+
+  @media (min-width: 768px){
+    display: flex;
   flex-direction: column;
   position: relative;
   z-index: 5;
+  }
 `;
 
 const Outerclip = styled.div`
@@ -85,7 +89,6 @@ export const Sidebar = () => {
   };
 
   const onMapArray = (arr) => {
-    if (window.innerWidth > 767) {
       return arr.map((hex, i) => (
         <Outerclip left={hex.left} up={hex.top}>
           <Innerclip>
@@ -95,10 +98,7 @@ export const Sidebar = () => {
           </Innerclip>
         </Outerclip>
       ));
-    } else {
-      return <></>;
     }
-  };
 
   return <Wrapper>{onMapArray(hexArr)}</Wrapper>;
 };
