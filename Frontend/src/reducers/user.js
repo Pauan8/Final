@@ -23,7 +23,6 @@ const RESET_STATE = {
 const user = createSlice({
   name: 'user',
   initialState: {
-    accessToken: localStorage.getItem('token'),
   userInfo: {
       userID: null,
       avatar: null,
@@ -47,9 +46,6 @@ const user = createSlice({
         : false,
   },
   reducers: {
-    setToken: (store, action) => {
-      store.accessToken = action.payload;
-    },
     setUser: (store, action) => {
       const userInfo= action.payload;
       store.userInfo = userInfo;
@@ -121,7 +117,6 @@ export const login = (username, password) => {
           localStorage.setItem('token', json.accessToken);
           localStorage.setItem('userID', json.userID);
           dispatch(user.actions.setUser(json));
-          dispatch(user.actions.setToken(json.accessToken));
           dispatch(user.actions.setErrors(null));
         } else {
           dispatch(user.actions.setErrors(json));

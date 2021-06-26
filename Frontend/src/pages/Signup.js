@@ -44,7 +44,7 @@ const Signup = () => {
       } else {
         setValidate(true);
         dispatch(signUp({ ...value }));
-     /*    history.push({ pathname: '/' }); */
+        history.push({ pathname: '/' });
       }
       return item;
     });
@@ -100,7 +100,7 @@ const Signup = () => {
             handleClick={handleClick}
           />
 
-          <Link to='/login'> Already got a account? Go to login</Link>
+          {/* <Link to='/login'> Already got a account? Go to login</Link> */}
         </>
       )}
     </Wrapper>

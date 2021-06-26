@@ -10,6 +10,7 @@ import { SubmitButton } from '../components/LoginSignup/SubmitButton';
 import { Button } from '../components/Reusable/Button';
 import { regexArr } from '../data/regExValdate';
 import { ExitButton } from '../components/Reusable/ExitButton'
+import { LocalGasStationRounded } from '@material-ui/icons';
 
 const Wrapper = styled.div`
   position: relative;
@@ -26,7 +27,6 @@ const Title = styled.h1``;
 const Signin = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const token = useSelector((store) => store.user.accessToken);
   const [value, setValue] = useState({
     username: '',
     password: '',
@@ -48,7 +48,7 @@ const Signin = () => {
     <>
     <ExitButton />
     <Wrapper>
-      {!token ? (
+      {!localStorage.getItem('token') ? (
         <>
           <Title>Login</Title>
           <TextInput
