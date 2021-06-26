@@ -51,10 +51,10 @@ const Signup = () => {
       } else (
         setValidate(true)
       )
-     if(test.includes('fice')) {
+/*      if(test.includes('fice')) {
        dispatch(signUp({ ...value }));
       history.push({ pathname: '/' });
-      }
+      } */
       return;
     });
   };
