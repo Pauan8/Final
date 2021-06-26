@@ -37,7 +37,7 @@ const Signup = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   let test ='';
-
+/* 
   const handleClick = () => {
     regexArr.map((item) => {
       if (!item.regex.test(value[item.value])) {
@@ -47,17 +47,17 @@ const Signup = () => {
   
       }
       if(test.includes('false')){
-        setValidate(false)net
+        setValidate(false)
       } else (
         setValidate(true)
       )
-/*      if(test.includes('fice')) {
+     if(test.includes('fice')) {
        dispatch(signUp({ ...value }));
       history.push({ pathname: '/' });
-      } */
+      } 
       return;
     });
-  };
+  }; */
 
   return (
     <>

@@ -10,7 +10,6 @@ import { SubmitButton } from '../components/LoginSignup/SubmitButton';
 import { Button } from '../components/Reusable/Button';
 import { regexArr } from '../data/regExValdate';
 import { ExitButton } from '../components/Reusable/ExitButton'
-import { LocalGasStationRounded } from '@material-ui/icons';
 
 const Wrapper = styled.div`
   position: relative;
