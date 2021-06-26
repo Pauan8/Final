@@ -74,7 +74,7 @@ export const signUp = ({ username, password, name, surname, e_mail }) => {
       .signup(username, password, name, surname, e_mail)
       .then((data) => {
         dispatch(ui.actions.setLoading(false));
-        if (data.sucess) {
+        if (data.success) {
           localStorage.setItem('userID', data.userID);
           localStorage.setItem('token', data.accessToken);
           dispatch(user.actions.setUser(data));

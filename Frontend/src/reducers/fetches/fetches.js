@@ -1,4 +1,4 @@
-const BASE_URL = 'https://secure-escarpment-13722.herokuapp.com/'
+const BASE_URL = 'https://secure-escarpment-13722.herokuapp.com'
 
 const testResponse = (response) => {
   if (!response.ok) {

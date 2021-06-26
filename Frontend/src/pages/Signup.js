@@ -46,17 +46,19 @@ const Signup = () => {
         test += 'true'
   
       }
+    });
       if(test.includes('false')){
         setValidate(false)
-      } else (
+      } else {
         setValidate(true)
-      )
+      }
+
      if(validate) {
        dispatch(signUp({ ...value }));
       history.push({ pathname: '/' });
       } 
       return;
-    });
+    
   }; 
 
   return (
