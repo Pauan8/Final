@@ -55,7 +55,6 @@ const Expanded = styled.div`
 
 export const UserMenu = ({ font }) => {
   const userID = useSelector((store) => store.user.userInfo.userID);
-  const token = useSelector((store) => store.user.accessToken);
   const [expand, setExpand] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -102,7 +101,7 @@ export const UserMenu = ({ font }) => {
         />
       </IconContainer>
       <Expanded expand={expand}>
-        {token ? renderMenu(loggedInArr) : renderMenu(loggedOutArr)}
+        {localStorage.getItem('token') ? renderMenu(loggedInArr) : renderMenu(loggedOutArr)}
       </Expanded>
     </Wrapper>
   );
