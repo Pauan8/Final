@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import styled from 'styled-components/macro';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 
 import { TextInput } from '../components/Reusable/TextInput';
 import { PasswordInput } from '../components/LoginSignup/PasswordInput';
 import { SubmitButton } from '../components/LoginSignup/SubmitButton';
 import { Button } from '../components/Reusable/Button';
-import { signUp, fetchUser } from '../reducers/user';
+import { signUp } from '../reducers/user';
 import { regexArr } from '../data/regExValdate';
 import { ExitButton } from '../components/Reusable/ExitButton'
 

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { fetchUser } from '../reducers/user';
 import { Sidebar } from '../components/Sidebar';
@@ -36,13 +36,12 @@ const Title = styled.h2`
 
 const Home = () => {
   const dispatch = useDispatch();
-  const token = useSelector(store => store.user.accessToken)
 
   useEffect(() => {
-    if(token){
+    if(localStorage.getItem('token')){
      dispatch(fetchUser());
     }
-  }, [dispatch, token]);
+  }, [dispatch]);
 
   return (
     <Section>
