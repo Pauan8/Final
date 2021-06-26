@@ -46,16 +46,16 @@ const Signup = () => {
         test += 'true'
   
       }
-if(test.includes('false')){
-  setValidate(false)
-} else (
-  setValidate(true)
-)
-     if(valudate) {
+      if(test.includes('false')){
+        setValidate(false)
+      } else (
+        setValidate(true)
+      )
+     if(test.includes('fice')) {
        dispatch(signUp({ ...value }));
       history.push({ pathname: '/' });
       }
-      return item;
+      return;
     });
   };
 
