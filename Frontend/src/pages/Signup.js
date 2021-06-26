@@ -50,10 +50,6 @@ const Signup = () => {
     });
   };
 
-  useEffect(() => {
-    dispatch(fetchUser());
-  }, [dispatch]);
-
   return (
     <>
     <ExitButton />
