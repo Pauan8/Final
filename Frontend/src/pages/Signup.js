@@ -36,15 +36,24 @@ const Signup = () => {
   const [validate, setValidate] = useState(true);
   const history = useHistory();
   const dispatch = useDispatch();
+  let test ='';
 
   const handleClick = () => {
     regexArr.map((item) => {
       if (!item.regex.test(value[item.value])) {
-        setValidate(false);
+        test += 'false';
       } else {
-        setValidate(true);
-        dispatch(signUp({ ...value }));
-        history.push({ pathname: '/' });
+        test += 'true'
+  
+      }
+if(test.includes('false')){
+  setValidate(false)
+} else (
+  setValidate(true)
+)
+     if(valudate) {
+       dispatch(signUp({ ...value }));
+      history.push({ pathname: '/' });
       }
       return item;
     });
@@ -100,7 +109,7 @@ const Signup = () => {
             handleClick={handleClick}
           />
 
-          {/* <Link to='/login'> Already got a account? Go to login</Link> */}
+          <Link to='/login'> Already got a account? Go to login</Link>
         </>
       )}
     </Wrapper>
