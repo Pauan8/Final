@@ -7,7 +7,7 @@ import { fetchUser } from '../reducers/user';
 import { Sidebar } from '../components/Sidebar';
 import { Header } from '../components/Header';
 import { Slideshow } from '../components/Games/Slideshow';
-import { SearchMenu } from '../components/Filter/SearchMenu';
+import { SearchMenu } from '../components/Search/SearchMenu';
 
 const Section = styled.section`
 `

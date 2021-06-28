@@ -10,6 +10,7 @@ import { LottieAnimation } from '../animation/LottieAnimation';
 import loading from 'animation/json/loading.json';
 import { Menu } from '../components/Menu'
 import { GameCard } from '../components/Games/GameCard';
+import { SearchMenu } from '../components/Search/SearchMenu'
 import boardGames, { generateGamesList, genereateFilteredGamesList } from 'reducers/boardGames';
 
 const Wrapper = styled.div`
@@ -101,6 +102,7 @@ const GameList = () => {
   return (
     <Wrapper>
       <Menu />
+      <SearchMenu />
       {isLoading?
            <LottieAnimation lotti={loading} height={300} width={300} />
       :

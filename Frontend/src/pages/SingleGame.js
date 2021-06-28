@@ -7,6 +7,7 @@ import mechanics from '../data/mechanics.json'
 import categories from '../data/categories.json'
 import { fetchSingleGame } from '../reducers/boardGames'
 import { Menu } from '../components/Menu'
+import { SearchMenu } from 'components/Search/SearchMenu'
 
 const Wrapper = styled.div`
 position: relative;
@@ -90,6 +91,7 @@ const SingleGame = () => {
   return (
     <Wrapper>
        <Menu />
+       <SearchMenu />
       <Title>{game.name}</Title>
       <ImageContainer>
         <Image src={game.image_url} />

@@ -3,6 +3,7 @@ import { useDispatch, } from 'react-redux';
 import styled from 'styled-components/macro';
 
 import { answerFriendRequest } from '../../reducers/user'
+import { TransparentBtn } from 'components/Reusable/TransparentBtn';
 
 const Wrapper = styled.div`
 width: 300px;
@@ -25,48 +26,67 @@ color: #733c3c;
 `
 
 const Title = styled.h2``
-const Pending = styled.div`
 
-`
-const Accepted = styled.div`
+const Text = styled.p`
+color: #f2d3ac;`
+
+const FriendContainer = styled.div`
+display: flex;
+align-items: center;
+justify-content: space-evenly;
+height: 70px;
+background: #a65151;
+width: 100%;
+border-radius: 5px;
 `
 
-const Requests = styled.div`
-`
+const Image = styled.img`
+height: 50px;
+width: 50px;`
+
 
 export const FriendsList = ({ friends, visibleLayer, mode }) => {
   const dispatch = useDispatch();
   const handleFriends = (friend) => {
     if (friend.status === 0 && friend.state === "sender") {
       return (
-        <Pending key={friend._id}>
-          {mode === "private" ? <p>{friend.username} - pending</p> : <></>}
-        </Pending>
+        <FriendContainer key={friend._id}>
+          {mode === "private" ? <Text>{friend.username} - pending</Text> : <></>}
+        </FriendContainer>
       );
     } else if (friend.status === 1) {
       return (
-        <Accepted key={friend._id}>
-          <p>{friend.username} - accepted </p>
-        </Accepted>
+        <FriendContainer key={friend._id}>
+          <Text>{friend.username} - accepted </Text>
+        </FriendContainer>
       );
     } else if (friend.status === 0 && friend.state === "reciever") {
       return (
-        <Requests key={friend._id}>
+        <FriendContainer key={friend._id}>
           {mode === "private" ? (
-            <>
-              <p>{friend.username} - requested</p>
-              <button
-                onClick={() =>
+            <><Image src={friend.avatar} />
+              <Text>{friend.username} - requested</Text>
+              <TransparentBtn
+                handleClick={() =>
                   dispatch(answerFriendRequest(friend._id, 1))
                 }
-              >
-                accept
-              </button>
+                fontSize="30px"
+                text="✓"
+                color="#C1D98F"
+              />
+              <TransparentBtn
+                handleClick={() =>
+                  dispatch(answerFriendRequest(friend._id, 2))
+                }
+                fontSize="30px"
+                color="#F2811D"
+                text="✗"
+              />
             </>
           ) : (
             <></>
           )}
-        </Requests>
+        </FriendContainer>
       );
     }
   };
@@ -75,7 +95,7 @@ export const FriendsList = ({ friends, visibleLayer, mode }) => {
       <Title>Friends</Title>
       {friends ? (
         friends.length > 0 ? (
-          friends.map((friend) => handleFriends(friend))
+          friends.sort((a, b) => a.status>b.status?1:1).map((friend) => handleFriends(friend))
         ) : (
           <></>
         )
