@@ -2,6 +2,7 @@ import express from 'express';
 import listEndpoints from 'express-list-endpoints';
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt-nodejs';
+import { ObjectId } from 'mongodb';
 
 const User = require('../models/User');
 
@@ -148,7 +149,7 @@ router.post('/profile/:id/friendRequest/:userId', async (req, res) => {
   const { status } = req.query;
 
   try {
-   const user = await User.findOneAndUpdate({_id: id, 'friends._id': userId},  {$set:{'friends.status': status}}, {new:true}); 
+   const user = await User.findOneAndUpdate({_id: ObjectId(id), 'friends._id': ObjectId(userId)},  {$set:{'friends.status': status}}, {new:true}); 
    /*  await findOneAndUpdate({username: username, 'friends.username': user.username}, {set: {'friends.status': status}}, {new: true}); */
       res.json({
         friends: user.friends,
