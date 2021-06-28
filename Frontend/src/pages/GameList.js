@@ -2,9 +2,6 @@ import React , {useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components/macro';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import KeyboardArrowLeftIcon  from '@material-ui/icons/KeyboardArrowLeft'
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
 
 import { LottieAnimation } from '../animation/LottieAnimation';
 import loading from 'animation/json/loading.json';
@@ -12,6 +9,8 @@ import { Menu } from '../components/Menu'
 import { GameCard } from '../components/Games/GameCard';
 import { SearchMenu } from '../components/Search/SearchMenu'
 import boardGames, { generateGamesList, genereateFilteredGamesList } from 'reducers/boardGames';
+import { Pagination } from 'components/Reusable/Pagination';
+import { FilterMenu } from 'components/Filter/FilterMenu'
 
 const Wrapper = styled.div`
   display: flex;
@@ -22,22 +21,6 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.h1``;
-
-const Page = styled.div`
- display: flex;
- width: 100%;
- max-width: 300px;
- justify-content: space-evenly;
- align-items: center;
- padding-right: 40px;`
-
-const Paging = styled.button`
-  cursor: pointer;
-  background: transparent;
-  height: 30px;
-  border-radius: 5px;`
-
-const PageNumber = styled.p``
 
 const Grid = styled.div`
   display: grid;
@@ -76,7 +59,7 @@ const GameList = () => {
     }
   }
 
-  const generateLists =useCallback(() => {
+  const generateLists = useCallback(() => {
     if(type === 'by_filter'){
       dispatch(boardGames.actions.setFilter(value));
       dispatch(genereateFilteredGamesList('Filtered', page));
@@ -85,15 +68,6 @@ const GameList = () => {
     }
   }, [dispatch, page, type, value])
 
-  const handleClick = (direction) => {
-    if(direction === 'forward'){
-      setPage(page + 1)
-    } else if(direction === 'back'){
-      setPage(page - 1)
-    } else {
-      setPage(1)
-    }
-  }
 
   useEffect(() => {
     generateLists();
@@ -103,22 +77,12 @@ const GameList = () => {
     <Wrapper>
       <Menu />
       <SearchMenu />
+      <FilterMenu search={value} isNew={value === '2021' ? true : false}/>
       {isLoading?
            <LottieAnimation lotti={loading} height={300} width={300} />
       :
       (<><Title> {setTitle()} </Title>
-      <Page>
-      <Paging onClick={() => handleClick('start')} disabled={page === 1}> 
-        <FirstPageIcon />
-      </Paging> 
-      <Paging onClick={() => handleClick('back')} disabled={page === 1}> 
-          <KeyboardArrowLeftIcon />
-        </Paging> 
-        <PageNumber>Page: {page}</PageNumber>
-        <Paging onClick={() => handleClick('forward')} disabled={arr?arr.length === 0:false}> 
-          <KeyboardArrowRightIcon />
-        </Paging> 
-      </Page>
+      <Pagination setPage={setPage} page={page} arr={arr} />
       <Grid>
         {arr && arr.length > 0 ? (
           arr.map((game) => (

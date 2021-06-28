@@ -47,7 +47,7 @@ const Signup = () => {
   
       }
     });
-      if(test.includes('false')){
+      if(test.contains('false')){
         setValidate(false)
       } else {
         setValidate(true)

@@ -45,5 +45,5 @@ export const SearchButton = ({ value }) => {
     filteredString = [];
   };
 
-  return <Button onClick={handleClick}>Filter</Button>;
+  return <Button onClick={handleClick}>Advanced Search</Button>;
 };

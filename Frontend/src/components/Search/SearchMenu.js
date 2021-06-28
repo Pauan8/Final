@@ -5,7 +5,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 import { Search } from '../Reusable/Search';
 import { SearchButton } from './SearchButton';
-import { RadioButtons } from './RadioButtons';
+import { RadioButtons } from '../Reusable/RadioButtons';
 import categories from '../../data/categories.json';
 import mechanics from '../../data/mechanics.json';
 import { minAgeArr } from '../../data/choicesArrays';
