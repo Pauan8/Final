@@ -220,7 +220,6 @@ export const logout = () => {
   return (dispatch) => {
     localStorage.clear();
     dispatch(user.actions.setUser(RESET_STATE));
-    dispatch(user.actions.setToken(null));
   };
 };
 export default user;
