@@ -5,16 +5,12 @@ import { red } from "@material-ui/core/colors";
 import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import { useSelector } from "react-redux";
 
-const Button = styled.button`
-  background: transparent;
-  width: 30px;
-  height: 30px;
-  border: none;
-  font-size: 30px;
+import { TransparentBtn } from 'components/Reusable/TransparentBtn'
+
+const ButtonContainer = styled.div`
   position: absolute;
   bottom: 10px;
   right: 10px;
-  cursor: pointer;
 `;
 
 export const LikeButton = ({ handleClick, id, like, setLike }) => {
@@ -48,5 +44,9 @@ export const LikeButton = ({ handleClick, id, like, setLike }) => {
     render();
   }, [render]);
 
-  return <Button onClick={handleClick}> {render()}</Button>;
+  return (
+    <ButtonContainer>
+      <TransparentBtn handleClick={handleClick} text={render()} />
+    </ButtonContainer>
+  );
 };

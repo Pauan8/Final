@@ -4,8 +4,14 @@ import {  Link } from 'react-router-dom';
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 
 const ExitLink = styled(Link)`
-position: relative;`
+    position: relative;
+    cursor: pointer;
+`
 
 export const ExitButton = () => {
-    return <ExitLink to='/' > <CancelOutlinedIcon /> </ExitLink>
+    return (
+    <ExitLink to='/' > 
+        <CancelOutlinedIcon /> 
+    </ExitLink>
+    )
 }

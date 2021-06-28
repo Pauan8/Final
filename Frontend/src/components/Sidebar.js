@@ -31,12 +31,12 @@ const Outerclip = styled.div`
 
   &:nth-child(4) > div,
   &:nth-child(8) > div {
-    background: #d94a56;
+    background: ${props => props.token? "#c2d991": "#d94a56"};
   }
 
   &:nth-child(4):hover > div,
   &:nth-child(8):hover > div {
-    background: #608ba6;
+    background: ${props => props.token? "#c2d991": "#608ba6"};
   }
 `;
 
@@ -77,7 +77,12 @@ const PathLink = styled(Link)`
 `;
 
 export const Sidebar = () => {
+  const token = localStorage.getItem('token');
   const setMenuTitles = (index) => {
+    if(token){
+      return '';
+    }
+
     switch (index) {
       case 3:
         return 'Sign Up';
@@ -85,12 +90,13 @@ export const Sidebar = () => {
         return 'Log In';
       default:
         return '';
-    }
+  }
+   
   };
 
   const onMapArray = (arr) => {
       return arr.map((hex, i) => (
-        <Outerclip left={hex.left} up={hex.top}>
+        <Outerclip key={`hex${i}`} left={hex.left} up={hex.top} token={token? true:false}>
           <Innerclip>
             <PathLink to={setMenuTitles(i).toLowerCase().replace(' ', '')}>
               <MenuTitles>{setMenuTitles(i)}</MenuTitles>

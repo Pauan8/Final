@@ -4,12 +4,14 @@ import styled from 'styled-components/macro';
 const Btn = styled.button`
   background: white;
   box-shadow: 2px 2px 1px 2px grey;
-  font-size: 18px;
+  font-size: ${props => props.size === 'small'? "12px" : "18px"};
   border: none;
   border-radius: 10px;
   padding: 5px;
   width: 100px;
   position: relative;
+  cursor: pointer;
+
 
   &:hover {
     background: #f2d3ac;
@@ -22,6 +24,6 @@ const Btn = styled.button`
   }
 `;
 
-export const Button = ({ text, handleClick }) => {
-  return <Btn onClick={handleClick}>{text}</Btn>;
+export const Button = ({ text, handleClick, size}) => {
+  return <Btn onClick={handleClick} size={size}>{text}</Btn>;
 };

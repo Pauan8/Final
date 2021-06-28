@@ -25,6 +25,10 @@ const IconContainer = styled.div`
   z-index: 8;
   right: 5px;
   top: 0; ;
+
+  @media (min-width: 768px) {
+    right: 50px;
+  }
 `;
 
 const MenuItem = styled.h3`

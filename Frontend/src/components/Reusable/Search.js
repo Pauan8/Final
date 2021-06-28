@@ -1,13 +1,7 @@
-import React, {useState}from 'react';
-import { 
-  makeStyles,
-  InputBase,
-  Paper,
-  IconButton
-} from '@material-ui/core';
+import React, { useState } from 'react';
+import { makeStyles, InputBase, Paper, IconButton } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { Link } from 'react-router-dom';
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,10 +22,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Search = ({mode}) => {
-  
+export const Search = ({ mode }) => {
   const classes = useStyles();
-  const [userInput, setUserInput] = useState("");
+  const [userInput, setUserInput] = useState('');
 
   return (
     <Paper className={classes.root}>
@@ -40,18 +33,24 @@ export const Search = ({mode}) => {
         value={userInput}
         onChange={(e) => setUserInput(e.target.value)}
         placeholder={mode === 'games' ? 'Search Boardgame' : 'Search user'}
-        inputProps={{ 'aria-label': mode === 'games' ? 'Search Boardgame' : 'Search user'}}
+        inputProps={{
+          'aria-label': mode === 'games' ? 'Search Boardgame' : 'Search user',
+        }}
       />
-      <Link to={mode === 'games' 
-        ? `/GameList/name/${userInput}`
-        :`/User/${userInput}`}>
-      <IconButton
-        type='submit'
-        className={classes.iconButton}
-        aria-label='search'
-      > 
-        <SearchIcon />
-      </IconButton>
+      <Link
+        to={
+          mode === 'games'
+            ? `/GameList/name/${userInput}`
+            : `/User/${userInput}`
+        }
+      >
+        <IconButton
+          type='submit'
+          className={classes.iconButton}
+          aria-label='search'
+        >
+          <SearchIcon />
+        </IconButton>
       </Link>
     </Paper>
   );

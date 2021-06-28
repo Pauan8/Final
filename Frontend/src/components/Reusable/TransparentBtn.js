@@ -4,6 +4,7 @@ import styled from 'styled-components/macro';
 const Button = styled.button`
     background: transparent;
     border: none;
+    cursor: pointer;
 
 `
 const Text = styled.p`
@@ -13,6 +14,9 @@ const Text = styled.p`
 
 export const TransparentBtn = ({text, handleClick, fontSize, color}) => {
 
-    return <Button onClick={handleClick} ><Text size={fontSize} color={color}>{text}</Text></Button>
-
+    return (
+    <Button onClick={handleClick} >
+        <Text size={fontSize} color={color}>{text}</Text>
+    </Button>
+    )
 }
