@@ -16,7 +16,8 @@ const RESET_STATE = {
   friends: {
     username: null,
     status: null,
-    state: null
+    state: null,
+    messages: null
   }
 };
 
