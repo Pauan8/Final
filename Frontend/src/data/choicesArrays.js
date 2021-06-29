@@ -4,16 +4,16 @@ export const minAgeArr= [{index: "1",name: ["gt_min_age"], value:[0], label: "1 
 {index: "4",name: ["gt_min_age"], value:[12], label: "13 years"},
 {index: "5",name: ["gt_min_age"], value:[15], label: "16 years"}]
 
-export const ageRange= [{index: "1",name: ["lt_max_age"], value:[5], label: "0-4 years"},
-{index: "2",name: ["gt_min_age", "lt_max_age"], value:[4,11], label: "5-10 years"},
-{index: "3",name: ["gt_min_age", "lt_max_age"], value:[10, 14], label: "10-13 years"},
-{index: "4",name: ["gt_min_age", "lt_max_age"], value:[13,17], label: "14-17 years"},
+export const ageRange= [{index: "1",name: ["lt_min_age"], value:[5], label: "0-4 years"},
+{index: "2",name: ["gt_min_age", "lt_min_age"], value:[4,11], label: "5-10 years"},
+{index: "3",name: ["gt_min_age", "lt_min_age"], value:[10, 14], label: "10-13 years"},
+{index: "4",name: ["gt_min_age", "lt_min_age"], value:[13,17], label: "14-17 years"},
 {index: "5",name: ["gt_min_age"], value:[17], label: "18+ years"}]
 
 export const yearRange= [{index: "1",name: ["lt_publish_year"], value:[2000], label: "Pre 2000"},
 {index: "2",name: ["gt_publish_year", "lt_publish_year"], value:[1999,2009], label: "2000-2008"},
-{index: "3",name: ["gt_publish_year", "lt_publish_year"], value:[2008-2017], label: "2009-2016"},
-{index: "4",name: ["gt_publish_year", "lt_publish_year"], value:[2017-2021], label: "2018-2020"},
+{index: "3",name: ["gt_publish_year", "lt_publish_year"], value:[2008,2017], label: "2009-2016"},
+{index: "4",name: ["gt_publish_year", "lt_publish_year"], value:[2017,2021], label: "2018-2020"},
 {index: "5",name: ["publish_year"], value:[2021], label: "2021"}]
 
 export const playerRange= [{index: "1",name: ["lt_max_players"], value:[2], label: "Solo"},

@@ -44,7 +44,6 @@ const GameList = () => {
   const isLoading = useSelector((store) => store.ui.isLoading);
   const hasFilter = useSelector((store) => store.boardGames.filters[0])
 
-  console.log(hasFilter.length)
   const arr = type === 'search' ? data.search: data[value]
   const [page, setPage] = useState(1)
 
@@ -62,8 +61,8 @@ const GameList = () => {
   }
 
   const generateLists = useCallback(() => {
-    if (hasFilter.length && hasFilter.length > 0){
-      dispatch(filterList(type, value, 1))
+    if (hasFilter && hasFilter.length && hasFilter.length > 0){
+      dispatch(filterList(type, value, page))
     }
     else if(type === 'search'){
       dispatch(boardGames.actions.setSearchString(value));

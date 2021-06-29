@@ -55,7 +55,21 @@ const RadioContainer = styled.div`
 `
 
 const RadioGroup = styled.div`
-margin-bottom: 20px;`
+    margin-bottom: 20px;`
+
+const TextContainer = styled.div`
+    display: flex;
+    width: 300px;`
+
+const Text = styled.p`
+    display: flex;
+   `
+
+const ButtonGroup = styled.div`
+ display: ${props => props.hide? "none" : "flex"};
+ width: 250px;
+ padding: 10px;
+ justify-content: space-between;`
 
 export const FilterMenu = ({ isNew, type, mode }) => {
   const [value, setValue] = useState({
@@ -65,39 +79,61 @@ export const FilterMenu = ({ isNew, type, mode }) => {
     year: null,
   });
   const [expand, setExpand] = useState(false);
+  const [hideButton, setHideButton] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
+  let searchString;
 
   const handleChange = (props) => (e) => {
     setValue({ ...value, [props]: e.target.value });
   };
+
   let filterArr = []
-  const handleFilters = (arr) => {
-      if(arr && arr.length > 0){
-          console.log("more than 1")
+  const handleFilters = (type, arr) => {
+      console.log(type, arr.length)
+      if(type && arr[0].value.length > 1){
          filterArr.push({[arr[0].name[0]]: arr[0].value[0]}, {[arr[0].name[1]]: arr[0].value[1]});
-      } else if(arr) {
-        console.log("just 1")
+      } else if(type) {
         filterArr.push({[arr[0].name[0]]: arr[0].value[0]});
-      }
-      
+      } 
   }
 
   const handleClick = () => {
-        handleFilters(value.players ? playerRange.filter(players => players.index === value.players) : null)
-        handleFilters(value.playtime ? playtimeRange.filter(playtime => playtime.index === value.playtime) : null)
-        handleFilters(value.age ? ageRange.filter(age => age.index === value.age) : null)
-        handleFilters(value.year ? yearRange.filter(year => year.index === value.year): null)
-        dispatch(boardGames.actions.setFilter(filterArr));        
+        handleFilters(value.players, playerRange.filter(players => players.index === value.players))
+        handleFilters(value.playtime, playtimeRange.filter(playtime => playtime.index === value.playtime))
+        handleFilters(value.age, ageRange.filter(age => age.index === value.age))
+        handleFilters(value.year, yearRange.filter(year => year.index === value.year))
+        dispatch(boardGames.actions.setFilter(filterArr));   
+
         history.push(`/GameList/${type}/${mode}`)
+        setExpand(false);
         filterArr= [];
     };
 
+    const handleClear = () => {
+        setValue("")
+    }
+
+    const emptyState = () => {
+        if(mode.includes('year', 'age', 'playtime', 'players')){
+            if(hideButton === false) {setHideButton(true)}
+            return (
+            <TextContainer>
+                <Text>You already filtered on all available options in your search. Please do a new advanced search for new results.</Text>
+            </TextContainer>
+            )
+        }
+    }
+
   const renderFilter = () => {
     if (type === 'search') {
+        searchString = mode;
+    } else {
+        searchString = " ";
+    }
       return (
         <RadioContainer>
-          {mode.includes('players') ? (
+          {searchString.includes('players') ? (
             <></>
           ) : (
             <RadioGroup>
@@ -109,7 +145,7 @@ export const FilterMenu = ({ isNew, type, mode }) => {
                 />
             </RadioGroup>
           )}
-          {mode.includes('playtime') ? (
+          {searchString.includes('playtime') ? (
             <></>
           ) : (
             <RadioGroup>
@@ -121,7 +157,7 @@ export const FilterMenu = ({ isNew, type, mode }) => {
                 />
             </RadioGroup>    
           )}
-          {mode.includes('age') ? (
+          {searchString.includes('age') ? (
             <></>
           ) : (
             <RadioGroup>
@@ -133,7 +169,7 @@ export const FilterMenu = ({ isNew, type, mode }) => {
                 />
             </RadioGroup>     
           )}
-          {isNew || mode.includes('year') ? (
+          {isNew || searchString.includes('year') ? (
             <></>
           ) : (
             <RadioGroup>
@@ -147,57 +183,20 @@ export const FilterMenu = ({ isNew, type, mode }) => {
           )}
         </RadioContainer>
       );
-    }
-    return (
-      <RadioContainer>
-        <RadioGroup>
-            <RadioButtons
-            choices={playerRange}
-            type='Players'
-            value={value.players}
-            handleChange={handleChange('players')}
-            />
-        </RadioGroup>
-        <RadioGroup>
-            <RadioButtons
-            choices={playtimeRange}
-            type='Play-time'
-            value={value.playtime}
-            handleChange={handleChange('playtime')}
-            />
-        </RadioGroup>
-        <RadioGroup>
-            <RadioButtons
-            choices={ageRange}
-            type='Minimum age'
-            value={value.age}
-            handleChange={handleChange('age')}
-            />
-        </RadioGroup>
-        {isNew ? (
-          <></>
-        ) : (
-        <RadioGroup>    
-          <RadioButtons
-            choices={yearRange}
-            type='Publish year'
-            value={value.year}
-            handleChange={handleChange('year')}
-          />
-        </RadioGroup>  
-        )}
-      </RadioContainer>
-    );
-  };
+    };
 
   return (
     <Wrapper>
-        <ButtonContainer>
-            <TransparentBtn handleClick={() => setExpand(!expand)} text="Filter" fontSize="14px" />
+        <ButtonContainer onClick={() => setExpand(!expand)}>
+            <TransparentBtn text={expand?"^":"Filter"} fontSize="14px"/>
         </ButtonContainer>
         <ExpandContainer expand={expand}>
             {renderFilter()}
-            <Button handleClick={handleClick} size='small' text='Apply' />
+            {emptyState()}
+            <ButtonGroup hide={hideButton} >
+                <Button handleClick={handleClick} size='small' text='Apply' />
+                <Button handleClick={handleClear} size='small' text='Clear' />
+            </ButtonGroup>    
       </ExpandContainer>
     </Wrapper>
   );
