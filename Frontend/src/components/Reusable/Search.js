@@ -8,10 +8,14 @@ const useStyles = makeStyles((theme) => ({
     padding: '2px 4px',
     display: 'flex',
     alignItems: 'center',
-    width: 250,
+    width: 200,
     height: 30,
     marginTop: 10,
     marginBottom: 10,
+
+    [theme.breakpoints.up('md')]: {
+      width: 250,
+    },
   },
   input: {
     marginLeft: theme.spacing(1),

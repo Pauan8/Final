@@ -68,14 +68,12 @@ const UserMenuContainer = styled.div`
 position: absolute;
 z-index: 6;
 right: 0;
-
-@media (min-width: 768px){
-  right: 50px;
-}`
+`
 
 const SearchContainer = styled.div`
 position: absolute;
 top: 10px;
+right: 50px;
 z-index:6;`
 
 
@@ -85,7 +83,7 @@ export const Header = () => {
     <Wrapper>
       <SearchContainer>
         <SearchUser />
-        </SearchContainer>
+      </SearchContainer>
       <UserMenuContainer>
         <UserMenu font='50'/>
       </UserMenuContainer>

@@ -127,11 +127,34 @@ export const fetches = {
       ).then((response) => 
         testResponse(response));
     },
-    filteredList: (getState, page) => {
+    searchList: (getState, page) => {
       return fetch(
-        `https://api.boardgameatlas.com/api/search?limit=21&pretty=true&client_id=39WI5Y3mBx${getState().boardGames.filter}&skip=${(page-1)*21}`
+        `https://api.boardgameatlas.com/api/search?limit=21&pretty=true&client_id=39WI5Y3mBx${getState().boardGames.searchString}&skip=${(page-1)*21}`
       ).then((response) => 
         testResponse(response));
+    },
+    filterList: ( getState, type, mode, page) => {
+      let filteredString = ""
+      const handleFilter = () =>{
+        for( let [key, value] of getState().boardGames.filters[0].entries()){
+          console.log(typeof value)
+        for( let [k, val] of Object.entries(value)){
+          filteredString += `&${k}=${val}`
+        }
+      }
+        return filteredString;
+      }
+      if(type === 'search'){
+      return fetch(
+        `https://api.boardgameatlas.com/api/search?limit=21&pretty=true&client_id=39WI5Y3mBx${getState().boardGames.searchString}${handleFilter()}&skip=${(page-1)*21}`)
+          .then((response) => 
+          testResponse(response));
+      } else {
+        return fetch(
+          `https://api.boardgameatlas.com/api/search?limit=21&pretty=true&client_id=39WI5Y3mBx&${type}=${mode}${handleFilter()}&skip=${(page-1)*21}`)
+          .then((response) => 
+          testResponse(response));
+      }
     },
     game: (id) => {
       return fetch(

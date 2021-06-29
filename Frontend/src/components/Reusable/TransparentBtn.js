@@ -5,9 +5,9 @@ const Button = styled.button`
     background: transparent;
     border: none;
     cursor: pointer;
-
 `
 const Text = styled.p`
+    margin: 5px;
     font-size: ${props => props.size};
     color:${props => props.color};
 `

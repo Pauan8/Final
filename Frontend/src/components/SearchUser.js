@@ -1,28 +1,20 @@
 import React, { useState } from "react";
 import styled from "styled-components/macro";
-import SearchIcon from "@material-ui/icons/Search";
 import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
 
 import { Search } from "./Reusable/Search";
 
 const SearchContainer = styled.div`
   display: flex;
-
-  @media (min-width: 768px){
-        margin-top: 10px;
-        width: 85vw;
-        justify-content: flex-end;
-  }
-
-  @media (min-width: 1024px){
-    width: 90vw;
-    justify-content: flex-end;
-  }
+  width: calc(100vw - 70px) ;
+  padding-right: 30px;
+  justify-content: flex-end;
+  margin-top: 5px;   
 `;
 
 const SearchBar = styled.div`
   margin-top: -15px;
-  width: ${(props) => (props.expand ? "250px" : "0")};
+  width: ${(props) => (props.expand ? "210px" : "0")};
   overflow: hidden;
   margin-left: 5px;
 
@@ -42,18 +34,22 @@ const SearchButton = styled.button`
   }
 `;
 
+const SearchIcon = styled.img`
+    width: 30px;
+    height: 30px;`
+
 export const SearchUser = ({ mode }) => {
   const [expand, setExpand] = useState(false);
 
   return (
     <SearchContainer>
-    {mode === 'expanded'? <></> :
-      <SearchButton onClick={() => setExpand(!expand)}>
-        {expand ? <RemoveCircleIcon /> : <SearchIcon />}
-      </SearchButton>}
-      <SearchBar expand={mode === "expanded" ? true : expand}>
-        <Search mode="user" />
-      </SearchBar>
+    {mode === 'expanded'? <></> :<>
+        <SearchBar expand={mode === "expanded" ? true : expand}>
+            <Search mode="user" />
+        </SearchBar>
+        <SearchButton onClick={() => setExpand(!expand)}>
+            {expand ? <RemoveCircleIcon /> : <SearchIcon src={require("../assets/search.png")} />}
+        </SearchButton>  </>}
     </SearchContainer>
   );
 };

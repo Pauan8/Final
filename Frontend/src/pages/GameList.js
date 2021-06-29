@@ -8,7 +8,7 @@ import loading from 'animation/json/loading.json';
 import { Menu } from '../components/Menu'
 import { GameCard } from '../components/Games/GameCard';
 import { SearchMenu } from '../components/Search/SearchMenu'
-import boardGames, { generateGamesList, genereateFilteredGamesList } from 'reducers/boardGames';
+import boardGames, { generateGamesList, genereateSearchList, filterList } from 'reducers/boardGames';
 import { Pagination } from 'components/Reusable/Pagination';
 import { FilterMenu } from 'components/Filter/FilterMenu'
 
@@ -42,8 +42,10 @@ const GameList = () => {
   const {type, value} = useParams();
   const data = useSelector((store) => store.boardGames.gameLists);
   const isLoading = useSelector((store) => store.ui.isLoading);
+  const hasFilter = useSelector((store) => store.boardGames.filters[0])
 
-  const arr = type === 'by_filter' ? data.Filtered: data[value]
+  console.log(hasFilter.length)
+  const arr = type === 'search' ? data.search: data[value]
   const [page, setPage] = useState(1)
 
   const setTitle = () => {
@@ -60,13 +62,16 @@ const GameList = () => {
   }
 
   const generateLists = useCallback(() => {
-    if(type === 'by_filter'){
-      dispatch(boardGames.actions.setFilter(value));
-      dispatch(genereateFilteredGamesList('Filtered', page));
-    } else{
+    if (hasFilter.length && hasFilter.length > 0){
+      dispatch(filterList(type, value, 1))
+    }
+    else if(type === 'search'){
+      dispatch(boardGames.actions.setSearchString(value));
+      dispatch(genereateSearchList(type, page));
+    } else {
       dispatch(generateGamesList(type, value, page));
     }
-  }, [dispatch, page, type, value])
+  }, [dispatch, page, type, value, hasFilter])
 
 
   useEffect(() => {
@@ -77,7 +82,7 @@ const GameList = () => {
     <Wrapper>
       <Menu />
       <SearchMenu />
-      <FilterMenu search={value} isNew={value === '2021' ? true : false}/>
+      <FilterMenu mode={value} type={type} isNew={value === '2021' ? true : false}/>
       {isLoading?
            <LottieAnimation lotti={loading} height={300} width={300} />
       :

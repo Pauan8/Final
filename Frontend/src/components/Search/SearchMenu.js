@@ -44,13 +44,37 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const ShowFilter = styled.button`
+const AdvancedSearch = styled.button`
   background: none;
-  border: ${(props) => (props.expand ? 'none' : 'solid lightgrey 0.2px')};
-  width: 50px;
-  height: 30px;
+  border: none;
+  width: 70px;
+  height: 50px;
   border-radius: 5px;
   margin-left: 10px;
+  opacity: 0.5;
+  position: absolute;
+  right: 0;
+  content: '';
+  cursor: pointer;
+
+  @media (min-width: 768px) {
+    right: 40px;
+    margin-top: 10px;
+    &::after {
+      content: 'Advanced search';
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+      opacity: 1;
+    }
+  }
+`;
+
+const AdvancedSearchIcon = styled.img`
+  height: 30px;
+  width: 30px;
 `;
 
 const SelectContainer = styled.div`
@@ -113,14 +137,13 @@ const RadioContainer = styled.div`
   width: 300px;
   flex-direction: column;
   margin: 20px 0;
-`
+`;
 const RangeContainer = styled.div`
   display: flex;
   width: 300px;
   flex-direction: column;
   justify-content: center;
   margin: 20px 0;
-
 `;
 
 export const SearchMenu = () => {
@@ -137,15 +160,14 @@ export const SearchMenu = () => {
   const handleChange = (props) => (event) => {
     setValue({ ...value, [props]: event.target.value });
   };
-  
 
   return (
     <>
       <Container>
         <Search mode='games' />
-        <ShowFilter expand={expand} onClick={() => setExpand(!expand)}>
-          {expand ? '' : 'filter'}
-        </ShowFilter>
+        <AdvancedSearch expand={expand} onClick={() => setExpand(!expand)}>
+          <AdvancedSearchIcon src={require('../../assets/search-bar.png')} />
+        </AdvancedSearch>
       </Container>
       <Wrapper>
         <Form noValidate autoComplete='off'>

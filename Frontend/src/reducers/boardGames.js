@@ -7,10 +7,10 @@ const boardGames = createSlice({
   name: 'boardGames',
   initialState: {
     gameLists: [{}],
-    searchList: [{}],
-    game: [{}],
-    history: [{}],
-    filter: null,
+    searchList: null,
+    game: null,
+    searchString: null,
+    filters: [{}],
   },
   error: 'Error',
   reducers: {
@@ -24,9 +24,20 @@ const boardGames = createSlice({
       const newGame = action.payload;
       store.game = newGame;
     },
-    setFilter: (store, action) => {
+    setSearchString: (store, action) => {
       const updateString = action.payload;
-      store.filter = updateString;
+      store.searchString = updateString;
+    },
+    setFilter: (store, action) => {
+        let updateArr = store.filters.map(filter => {
+          if(filter !== action.payload){
+            return action.payload;
+          } else{
+            return filter;
+          }
+        })
+        store.filters = updateArr;
+
     },
   },
 });
@@ -59,11 +70,10 @@ export const fetchSingleGame = (id) => {
   };
 };
 
-export const genereateFilteredGamesList = (value, page) => {
+export const genereateSearchList = (value, page) => {
   return (dispatch, getState) => {
     dispatch(ui.actions.setLoading(true));
-    fetches.games
-      .filteredList(getState, page)
+     fetches.games.searchList(getState, page)
       .then((data) => {
         dispatch(
           boardGames.actions.setGameLists({ arr: data.games, listType: value })
@@ -73,5 +83,20 @@ export const genereateFilteredGamesList = (value, page) => {
       .catch((error) => console.log('catch error'));
   };
 };
+
+export const filterList = (type, mode, page) =>{
+    return (dispatch, getState) => {
+      dispatch(ui.actions.setLoading(true));
+  fetches.games.filterList(getState, type, mode, page)
+  .then((data) => {
+    console.log(data.games)
+    dispatch(
+      boardGames.actions.setGameLists({ arr: data.games, listType: type === 'search' ? type : mode })
+    );
+    dispatch(ui.actions.setLoading(false));
+  })
+  .catch((error) => console.log('catch error'));
+  };
+}
 
 export default boardGames;
