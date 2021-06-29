@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 
+const message = require('./Message')
+
 const FriendSchema = mongoose.Schema({
     username: {
         type: String,
@@ -8,7 +10,8 @@ const FriendSchema = mongoose.Schema({
         required: [true, 'A username is required.'],
       },
       status: Number,
-      state: String
+      state: String,
+      messages: [message.schema]
     })
 
     const friend = mongoose.model('friend', FriendSchema);

@@ -10,6 +10,7 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 import { FriendsList } from '../User/FriendsList'
 import { addFriend } from '../../reducers/user'
+import { Message } from '../User/Message'
 
 const Container = styled.div`
   display: flex;
@@ -212,6 +213,7 @@ export const ProfileCard = ({ id, mode }) => {
         ) : (
           <></>
         )}
+         <Message />
       </ImgCard>
     </Container>
   );

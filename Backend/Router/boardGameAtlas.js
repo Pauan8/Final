@@ -2,7 +2,6 @@ import express from 'express';
 import listEndpoints from 'express-list-endpoints';
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt-nodejs';
-import { ObjectId } from 'mongodb';
 
 const User = require('../models/User');
 
@@ -159,6 +158,23 @@ router.post('/profile/:id/friendRequest/:userId', async (req, res) => {
     } catch (err) {
       catchError(res, err, 'Invalid user id');
     }
+});
+
+router.post('/profile/:id/sendMessage', authenticateUser)
+router.post('/profile/:id/sendMessage', async (req, res) => {
+  const { username } = req.query;
+  
+  try {
+    const user = await User.findOneAndUpdate({_id: id, 'friends.username': username}, {$push: {messages: req.body.message}}, {new:true});
+    const messages = user.friends.map(friend => friend.username === [username]? friend.messages : null)
+    res.json({
+      messages: [messages],
+      success: true,
+      loggedOut: false,
+    })
+  } catch (err) {
+    catchError(res, err, 'Invalid user id');
+  }
 });
 
 router.post('/profile/:id/addGame/:gameId', authenticateUser);

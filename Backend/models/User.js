@@ -49,7 +49,6 @@ const UserSchema = mongoose.Schema({
     ownedgames: [list.schema],
   },
   friends:[friend.schema]
-  
 });
 
 const User = mongoose.model('User', UserSchema);
