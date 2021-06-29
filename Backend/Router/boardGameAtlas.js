@@ -170,7 +170,7 @@ router.post('/profile/:id/sendMessage', async (req, res) => {
     const messages = user.friends.map(friend => friend.username === [username]? friend.messages : null)  */
 
     await User.findById(id)
-    .then((user) => user.findOneAndUpdate({'friends.username': username}, {$push: {'friends.messages': req.body}}, {new:true}))
+    .then((user) => user.findOneAndUpdate({'friends.username': username}, {$push: {'friends.$': req.body}}, {new:true}))
     .then((user) => 
     res.json({
       messages: user,
