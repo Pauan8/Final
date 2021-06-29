@@ -172,7 +172,7 @@ router.post('/profile/:id/sendMessage', async (req, res) => {
       messages: messages,
       success: true,
       loggedOut: false,
-    }))
+    })
   } catch (err) {
     catchError(res, err, 'Invalid user id');
   }
