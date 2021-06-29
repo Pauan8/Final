@@ -34,7 +34,7 @@ export const Message = () => {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
       ></input>
-      <button onClick={() => handleClick}>Send</button>
+      <button onClick={handleClick}>Send</button>
     </>
   );
 };
