@@ -162,11 +162,14 @@ router.post('/profile/:id/friendRequest/:userId', async (req, res) => {
 
 router.post('/profile/:id/sendMessage', authenticateUser)
 router.post('/profile/:id/sendMessage', async (req, res) => {
+  const { id } = req.params;
   const { username } = req.query;
   
   try {
-    const user = await Friend.findOneAndUpdate({_id: id, friends: {username: username}}, {$push: {messages: req.body.message}}, {new:true});
-    const messages = user.friends.map(friend => friend.username === [username]? friend.messages : null)
+const user = await User.findOneAndUpdate({_id: id, friends: {username: username}}, {$push: {messages: req.body.message}}, {new:true});
+    const messages = user.friends.map(friend => friend.username === [username]? friend.messages : null) 
+/* 
+    const user = await User.findById(id) */
     res.json({
       messages: [messages],
       success: true,
