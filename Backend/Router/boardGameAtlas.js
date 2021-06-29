@@ -166,15 +166,17 @@ router.post('/profile/:id/sendMessage', async (req, res) => {
   const { username } = req.query;
   
   try {
-const user = await User.findOneAndUpdate({_id: id, friends: {username: username}}, {$push: {messages: req.body.message}}, {new:true});
-    const messages = user.friends.map(friend => friend.username === [username]? friend.messages : null) 
-/* 
-    const user = await User.findById(id) */
+/* const user = await User.findOneAndUpdate({_id: id, friends: {username: username}}, {$push: {messages: req.body.message}}, {new:true});
+    const messages = user.friends.map(friend => friend.username === [username]? friend.messages : null)  */
+
+    await User.findById(id)
+    .then((user) => user.findOneAndUpdate({'friends.username': username}, {$push: {messages: req.body.message}}, {new:true}))
+    .then((user) => 
     res.json({
-      messages: [messages],
+      messages: user,
       success: true,
       loggedOut: false,
-    })
+    }))
   } catch (err) {
     catchError(res, err, 'Invalid user id');
   }
