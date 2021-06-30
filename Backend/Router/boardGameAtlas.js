@@ -169,7 +169,7 @@ router.post("/profile/:id/friendRequest/:username", async (req, res) => {
     if(status === "2"){
     user = await User.findByIdAndUpdate(
       id,
-      { $pull: { friends: {username: username } }},
+      { $pull: { "friends.username": username } },
       { new: true }
     );
     } else {
