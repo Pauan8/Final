@@ -11,6 +11,8 @@ const MessageSchema = mongoose.Schema([{
         minlength: 5,
         maxlength: 500
     },
+    sender: String,
+    reciever: String
  
 }])
 
