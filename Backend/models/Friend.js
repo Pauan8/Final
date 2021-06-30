@@ -11,20 +11,7 @@ const FriendSchema = mongoose.Schema([{
       },
       status: Number,
       state: String,
-      messages: {    
-        createdAt: {
-        type: Date,
-        default: () => new Date()
-    },
-    message: {
-        type: String,
-        required: [true, 'A message is needed'],
-        minlength: 5,
-        maxlength: 500
-    },
-    sender: String,
-    reciever: String
-  }
+      messages: [message.schema]
     }])
 
     const friend = mongoose.model('friend', FriendSchema);
