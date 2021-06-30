@@ -210,9 +210,6 @@ router.post("/profile/:id/sendMessage", async (req, res) => {
       },
       { new: true }
     );
-    const messages = user.friends.map((friend) =>
-      friend.username === username ? friend.messages : null
-    );
     res.json({
       messages: user,
       success: true,
