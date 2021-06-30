@@ -8,6 +8,7 @@ import { TransparentBtn } from 'components/Reusable/TransparentBtn';
 const Wrapper = styled.div`
   width: 300px;
   height: 500px;
+  overflow-y: auto;
   background: #f2d3ac;
   border: solid #a65151 1px;
   border-radius: 5px;
@@ -89,7 +90,7 @@ export const FriendsList = ({ friends, visibleLayer, mode }) => {
         <FriendContainer key={friend._id}>
           {mode === 'private' ? (
             <>
-              <Text>{friend.username} - requested</Text>
+              <Text>{friend.username}</Text>
               <TransparentBtn
                 handleClick={() => dispatch(answerFriendRequest(friend.username, 1, friend._id))}
                 fontSize='30px'
@@ -112,12 +113,16 @@ export const FriendsList = ({ friends, visibleLayer, mode }) => {
   };
   
   const renderFriends = (arr, title) => {
-    if(arr.length > 0){ 
-        return (<><SubTitle>{title}</SubTitle>
-        {arr.map(friend => handleFriends(friend))}</>
-        )
+    if(arr.length > 0 ){ 
+        if(title === "Declined" || title === "Recieved" || title === "Pending"){
+        return <>{mode === "private" ? <><SubTitle>{title}</SubTitle>
+        {arr.map(friend => handleFriends(friend))}</>:<></>}</>
+      } else {
+          return <><SubTitle>{title}</SubTitle>
+          {arr.map(friend => handleFriends(friend))}</>
       }
-    }   
+    } 
+}  
 
   return (
     <Wrapper visible={visibleLayer}>
