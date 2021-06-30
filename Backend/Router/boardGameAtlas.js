@@ -1,14 +1,14 @@
-import express from 'express';
-import listEndpoints from 'express-list-endpoints';
-import mongoose from 'mongoose';
-import bcrypt from 'bcrypt-nodejs';
+import express from "express";
+import listEndpoints from "express-list-endpoints";
+import mongoose from "mongoose";
+import bcrypt from "bcrypt-nodejs";
 import { ObjectId } from "mongodb";
 
-const User = require('../models/User');
+const User = require("../models/User");
 
 const router = express.Router();
 
-const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost/boardGameAtlas';
+const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/boardGameAtlas";
 mongoose.connect(mongoUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -20,7 +20,7 @@ mongoose.Promise = Promise;
 const authenticateUser = async (req, res, next) => {
   try {
     const currentUser = await User.findOne({
-      accessToken: req.header('Authorization'),
+      accessToken: req.header("Authorization"),
     });
     if (currentUser) {
       req.user = currentUser;
@@ -29,7 +29,7 @@ const authenticateUser = async (req, res, next) => {
       res.status(401).json({ success: false, loggedOut: true });
     }
   } catch (err) {
-    catchError(res, err, 'Something went wrong');
+    catchError(res, err, "Something went wrong");
   }
 };
 
@@ -39,15 +39,15 @@ const catchError = (res, err, msg) => {
     .json({ success: false, message: msg, errors: err.errors });
 };
 
-router.get('/', async (_req, res) => {
+router.get("/", async (_req, res) => {
   try {
     res.json(listEndpoints(router));
   } catch (err) {
-    res.status(404).send({ success: false, error: 'Not found' });
+    res.status(404).send({ success: false, error: "Not found" });
   }
 });
 
-router.get('/users', async (_req, res) => {
+router.get("/users", async (_req, res) => {
   try {
     const allUsers = await User.find().exec();
     return allUsers
@@ -62,13 +62,13 @@ router.get('/users', async (_req, res) => {
           loggedOut: false,
           lists: allUsers.lists,
         })
-      : res.json({ success: false, message: 'No users in the database' });
+      : res.json({ success: false, message: "No users in the database" });
   } catch (err) {
-    catchError(res, err, 'Something went wrong');
+    catchError(res, err, "Something went wrong");
   }
 });
 
-router.post('/login', async (req, res) => {
+router.post("/login", async (req, res) => {
   const { username, password } = req.body;
   try {
     const user = await User.findOne({ username }).exec();
@@ -91,15 +91,15 @@ router.post('/login', async (req, res) => {
     } else {
       res
         .status(401)
-        .json({ success: false, message: 'Wrong username or password' });
+        .json({ success: false, message: "Wrong username or password" });
     }
   } catch (err) {
-    catchError(res, err, 'Something went wrong');
+    catchError(res, err, "Something went wrong");
   }
 });
 
-router.get('/profile/:id', authenticateUser);
-router.get('/profile/:id', async (req, res) => {
+router.get("/profile/:id", authenticateUser);
+router.get("/profile/:id", async (req, res) => {
   const { id } = req.params;
   try {
     let privateProfile = await User.findById(id).exec();
@@ -118,69 +118,106 @@ router.get('/profile/:id', async (req, res) => {
       loggedOut: false,
     });
   } catch (err) {
-    catchError(res, err, 'Invalid user id');
+    catchError(res, err, "Invalid user id");
   }
 });
 
-router.post('/profile/:id/addFriend/:username', authenticateUser)
-router.post('/profile/:id/addFriend/:username', async (req, res) => {
+router.post("/profile/:id/addFriend/:username", authenticateUser);
+router.post("/profile/:id/addFriend/:username", async (req, res) => {
   const { id, username } = req.params;
   try {
     const exists = await User.find({
-    _id: id, 'friends.username': username
-  })
-  if (exists.length === 0) {
-     const user = await User.findByIdAndUpdate(id, {$push: {friends: {username: username, status: 0, state: 'sender'}}}, {new: true})
-     await User.findOneAndUpdate({username: username}, {$push: {friends: {username: user.username, status: 0, state: 'reciever'}}})
+      _id: id,
+      "friends.username": username,
+    });
+    if (exists.length === 0) {
+      const user = await User.findByIdAndUpdate(
+        id,
+        {
+          $push: {
+            friends: { username: username, status: 0, state: "sender" },
+          },
+        },
+        { new: true }
+      );
+      await User.findOneAndUpdate(
+        { username: username },
+        {
+          $push: {
+            friends: { username: user.username, status: 0, state: "reciever" },
+          },
+        }
+      );
       res.json({
         friends: user.friends,
         success: true,
         loggedOut: false,
-      })
+      });
     }
   } catch (err) {
-      catchError(res, err, 'Invalid user id');
-    }
-  });
+    catchError(res, err, "Invalid user id");
+  }
+});
 
-router.post('/profile/:id/friendRequest/:username', authenticateUser)
-router.post('/profile/:id/friendRequest/:username', async (req, res) => {
-  const { id, username} = req.params;
+router.post("/profile/:id/friendRequest/:username", authenticateUser);
+router.post("/profile/:id/friendRequest/:username", async (req, res) => {
+  const { id, username } = req.params;
   const { status } = req.query;
 
   try {
-   const user = await User.findOneAndUpdate({_id: id, 'friends.username': username},  {$set:{"friends.$.status": status}}, {new:true}); 
-   await User.findOneAndUpdate({_id: req.body.userId, 'friends._id': id}, {$set: {"friends.$.status": status}});
-      res.json({
-        friends: user.friends,
-        success: true,
-        loggedOut: false,
-      })
-    } catch (err) {
-      catchError(res, err, 'Invalid user id');
-    }
+    const user = await User.findOneAndUpdate(
+      { _id: id, "friends.username": username },
+      { $set: { "friends.$.status": status } },
+      { new: true }
+    );
+    await User.findOneAndUpdate(
+      { _id: req.body.userId, "friends.username": user.username },
+      { $set: { "friends.$.status": status } },
+    );
+    res.json({
+      friends: user.friends,
+      success: true,
+      loggedOut: false,
+    });
+  } catch (err) {
+    catchError(res, err, "Invalid user id");
+  }
 });
 
-router.post('/profile/:id/sendMessage', authenticateUser)
-router.post('/profile/:id/sendMessage', async (req, res) => {
+router.post("/profile/:id/sendMessage", authenticateUser);
+router.post("/profile/:id/sendMessage", async (req, res) => {
   const { id } = req.params;
   const { username } = req.query;
-  
+
   try {
-    const user = await User.finOneAndUpdate({_id: id, 'friends.username': username}, {$push: {'friends.$.messages': {message: req.body.message, sender: req.body.sender, reciever: req.body.reciever}}}, {new:true});
-    const messages = user.friends.map(friend => friend.username === username? friend.messages : null) 
+    const user = await User.finOneAndUpdate(
+      { _id: id, "friends.username": username },
+      {
+        $push: {
+          "friends.$.messages": {
+            message: req.body.message,
+            sender: req.body.sender,
+            reciever: req.body.reciever,
+          },
+        },
+      },
+      { new: true }
+    );
+    const messages = user.friends.map((friend) =>
+      friend.username === username ? friend.messages : null
+    );
     res.json({
       messages: messages,
       success: true,
       loggedOut: false,
-    })
+    });
   } catch (err) {
-    catchError(res, err, 'Invalid user id');
+    catchError(res, err, "Invalid user id");
   }
 });
 
-router.post('/profile/:id/addGame/:gameId', authenticateUser);
-router.post('/profile/:id/addGame/:gameId', async (req, res) => {
+router.post("/profile/:id/addGame/:gameId", authenticateUser);
+router.post("/profile/:id/addGame/:gameId", async (req, res) => {
   const { id, gameId } = req.params;
   const { list } = req.query;
   const attr = `lists.${list}`;
@@ -188,12 +225,15 @@ router.post('/profile/:id/addGame/:gameId', async (req, res) => {
   try {
     const exists = await User.find({
       _id: id,
-      $and: [{
-      [attr]: {
-        $elemMatch: {
-          id: { $in: gameId },
+      $and: [
+        {
+          [attr]: {
+            $elemMatch: {
+              id: { $in: gameId },
+            },
+          },
         },
-      }}],
+      ],
     });
     if (exists.length === 0) {
       const user = await User.findByIdAndUpdate(
@@ -206,14 +246,14 @@ router.post('/profile/:id/addGame/:gameId', async (req, res) => {
         success: true,
         loggedOut: false,
       });
-    } 
+    }
   } catch (err) {
-    catchError(res, err, 'Invalid user id');
+    catchError(res, err, "Invalid user id");
   }
 });
 
-router.delete('/profile/:id/removeGame/:gameId', authenticateUser);
-router.delete('/profile/:id/removeGame/:gameId', async (req, res) => {
+router.delete("/profile/:id/removeGame/:gameId", authenticateUser);
+router.delete("/profile/:id/removeGame/:gameId", async (req, res) => {
   const { id, gameId } = req.params;
   const { list } = req.query;
   const attr = `lists.${list}`;
@@ -230,12 +270,12 @@ router.delete('/profile/:id/removeGame/:gameId', async (req, res) => {
       loggedOut: false,
     });
   } catch (err) {
-    catchError(res, err, 'Invalid user id');
+    catchError(res, err, "Invalid user id");
   }
 });
 
-router.post('/profile/:id/edit', authenticateUser);
-router.post('/profile/:id/edit', async (req, res) => {
+router.post("/profile/:id/edit", authenticateUser);
+router.post("/profile/:id/edit", async (req, res) => {
   const { id } = req.params;
   try {
     let params = {};
@@ -256,11 +296,11 @@ router.post('/profile/:id/edit', async (req, res) => {
       loggedOut: false,
     });
   } catch (err) {
-    catchError(res, err, 'Invalid user id');
+    catchError(res, err, "Invalid user id");
   }
 });
 
-router.get('/user/:username', async (req, res) => {
+router.get("/user/:username", async (req, res) => {
   const { username } = req.params;
   try {
     const userProfile = await User.findOne(
@@ -279,11 +319,11 @@ router.get('/user/:username', async (req, res) => {
       success: true,
     });
   } catch (err) {
-    catchError(res, err, 'Invalid user id');
+    catchError(res, err, "Invalid user id");
   }
 });
 
-router.post('/users', async (req, res) => {
+router.post("/users", async (req, res) => {
   const { username, password, name, surname, e_mail } = req.body;
   try {
     const salt = bcrypt.genSaltSync();
@@ -307,19 +347,19 @@ router.post('/users', async (req, res) => {
     if (err.code === 11000) {
       res
         .status(401)
-        .json({ success: false, error: 'That username is already taken' });
+        .json({ success: false, error: "That username is already taken" });
     } else {
-      catchError(res, err, 'Something went wrong');
+      catchError(res, err, "Something went wrong");
     }
   }
 });
 
-router.delete('/users', async (_req, res) => {
+router.delete("/users", async (_req, res) => {
   try {
     const deleteAll = await User.deleteMany();
     res.json(deleteAll, { success: false });
   } catch (err) {
-    catchError(res, err, 'Something went wrong');
+    catchError(res, err, "Something went wrong");
   }
 });
 
