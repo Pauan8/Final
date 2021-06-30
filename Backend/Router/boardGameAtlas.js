@@ -2,6 +2,7 @@ import express from 'express';
 import listEndpoints from 'express-list-endpoints';
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt-nodejs';
+import { ObjectId } from "mongodb";
 
 const User = require('../models/User');
 
@@ -166,7 +167,7 @@ router.post('/profile/:id/sendMessage', async (req, res) => {
   const { username } = req.query;
   
   try {
-    const user = await User.finOneAndUpdate({_id: mongoose.Types.ObjectId(id), 'friends.username': username}, {$push: {'friends.$.messages': {message: req.body.message, sender: req.body.sender, reciever: req.body.reciever}}}, {new:true});
+    const user = await User.finOneAndUpdate({_id: new ObjectId(id), 'friends.username': username}, {$push: {'friends.$.messages': {message: req.body.message, sender: req.body.sender, reciever: req.body.reciever}}}, {new:true});
     const messages = user.friends.map(friend => friend.username === [username]? friend.messages : null) 
     res.json({
       messages: messages,
