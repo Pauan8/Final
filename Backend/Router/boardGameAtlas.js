@@ -148,7 +148,7 @@ router.post('/profile/:id/friendRequest/:username', async (req, res) => {
   const { status } = req.query;
 
   try {
-   const user = await User.findOneAndUpdate({_id: mongoose.Types.ObjectId(id), 'friends.username': username},  {$set:{"friends.$.status": status}}, {new:true}); 
+   const user = await User.findOneAndUpdate({username: "Leya", 'friends.username': username},  {$set:{"friends.$.status": status}}, {new:true}); 
    /*  await findOneAndUpdate({username: username, 'friends.username': user.username}, {set: {'friends.status': status}}, {new: true}); */
       res.json({
         friends: user.friends,
@@ -166,7 +166,7 @@ router.post('/profile/:id/sendMessage', async (req, res) => {
   const { username } = req.query;
   
   try {
-    const user = await User.update({_id: mongoose.Types.ObjectId(id), 'friends.username': username}, {$push: {'friends.$.messages': req.body}}, callback);
+    const user = await User.update({username: "Leya", 'friends.username': username}, {$push: {'friends.$.messages': req.body}}, callback);
     console.log(user)
 
     const messages = user.friends.map(friend => friend.username === [username]? friend.messages : null) 
