@@ -215,7 +215,7 @@ router.post("/profile/:id/sendMessage", async (req, res) => {
       friend.username === username ? friend.messages : null
     );
     res.json({
-      messages: messages,
+      messages: user,
       success: true,
       loggedOut: false,
     });
