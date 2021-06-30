@@ -11,12 +11,7 @@ const MessageSchema = mongoose.Schema({
         minlength: 5,
         maxlength: 500
     },
-    sender: {
-        type: String
-    },
-    reciever: {
-        type: String
-    }
+ 
 })
 
 const message = mongoose.model('message', MessageSchema);
