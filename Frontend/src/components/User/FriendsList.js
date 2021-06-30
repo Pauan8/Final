@@ -92,17 +92,18 @@ export const FriendsList = ({ friends, visibleLayer, mode }) => {
       );
     }
   };
+
+  console.log(friends)
+
+  const sorting =()=> {
+    let friendsArr = friends.sort((a, b) => (a.status > b.status ? 1 : -1))
+    return friendsArr.map((friend) => handleFriends(friend))
+  }
   return (
     <Wrapper visible={visibleLayer}>
       <Title>Friends</Title>
       {friends ? (
-        friends.length > 0 ? (
-          friends
-            .sort((a, b) => (a.status > b.status ? 1 : 1))
-            .map((friend) => handleFriends(friend))
-        ) : (
-          <></>
-        )
+        friends.map(friend => handleFriends(friend))
       ) : (
         <></>
       )}

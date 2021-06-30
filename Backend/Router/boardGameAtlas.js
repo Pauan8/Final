@@ -149,8 +149,8 @@ router.post('/profile/:id/friendRequest/:username', async (req, res) => {
   const { status } = req.query;
 
   try {
-   const user = await User.findOneAndUpdate({_id: id, 'friends[0].username': username},  {$set:{"friends[0].$.status": status}}, {new:true}); 
-   await findOneAndUpdate({username: username, 'friends[0].username': user.username}, {$set: {'friends[0].$.status': status}}, {new: true});
+   const user = await User.findOneAndUpdate({_id: id, 'friends.username': username},  {$set:{"friends.$.status": status}}, {new:true}); 
+   await findOneAndUpdate({username: username, 'friends.username': user.username}, {$set: {'friends.$.status': status}}, {new: true});
       res.json({
         friends: user.friends,
         success: true,
@@ -167,7 +167,7 @@ router.post('/profile/:id/sendMessage', async (req, res) => {
   const { username } = req.query;
   
   try {
-    const user = await User.finOneAndUpdate({_id: id, 'friends[0].username': username}, {$push: {'friends[0].$.messages': {message: req.body.message, sender: req.body.sender, reciever: req.body.reciever}}}, {new:true});
+    const user = await User.finOneAndUpdate({_id: id, 'friends.username': username}, {$push: {'friends.$.messages': {message: req.body.message, sender: req.body.sender, reciever: req.body.reciever}}}, {new:true});
     const messages = user.friends.map(friend => friend.username === [username]? friend.messages : null) 
     res.json({
       messages: messages,
