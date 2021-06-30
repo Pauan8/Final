@@ -176,7 +176,7 @@ router.post('/profile/:id/sendMessage', async (req, res) => {
         },
       }}],
     }, 
-    {$push:{ 'friends.messages': req.body}});
+    {$push:{ friends: {messages: req.body}}});
     const messages = user.friends.map(friend => friend.username === [username]? friend.messages : null) 
     res.json({
       messages: messages,
