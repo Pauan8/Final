@@ -9,6 +9,7 @@ const FriendSchema = mongoose.Schema({
         unique: true,
         required: [true, 'A username is required.'],
       },
+      avatar: String,
       status: Number,
       state: String,
       messages: {

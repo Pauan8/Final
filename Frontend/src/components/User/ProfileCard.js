@@ -172,7 +172,7 @@ export const ProfileCard = ({ id, mode }) => {
             </Edit>
           </EditLink>
         ) : (
-          <Button onClick={() => dispatch(addFriend(profile.username))}>
+          <Button onClick={() => dispatch(addFriend(profile.username, profile.avatar))}>
             <PersonAddIcon />
           </Button>
         )}

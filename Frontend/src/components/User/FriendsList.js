@@ -27,6 +27,8 @@ const Wrapper = styled.div`
 
 const Title = styled.h2``;
 
+const SubTitle = styled.h3``;
+
 const Text = styled.p`
   color: #f2d3ac;
 `;
@@ -39,6 +41,7 @@ const FriendContainer = styled.div`
   background: #a65151;
   width: 100%;
   border-radius: 5px;
+  margin-bottom: 10px;
 `;
 
 const Image = styled.img`
@@ -48,31 +51,50 @@ const Image = styled.img`
 
 export const FriendsList = ({ friends, visibleLayer, mode }) => {
   const dispatch = useDispatch();
+  let declined = friends && friends.length > 0? friends.filter(friend => friend.status === 2) : [];
+  let pending = friends && friends.length > 0? friends.filter(friend => friend.status === 0 && friend.state === 'sender'): [];
+  let recieved = friends && friends.length > 0? friends.filter(friend => friend.status === 0 && friend.state === 'reciever'): [];
+  let accepted = friends && friends.length > 0? friends.filter(friend => friend.status === 1): [];
 
   const handleFriends = (friend) => {
-    if (friend.status === 0 && friend.state === 'sender') {
+    if (friend.status === 2 && friend.state === 'sender') {
+        return (
+          mode === 'private' ? (
+          <FriendContainer key={friend._id}>
+              <Text>{friend.username}</Text>
+              <TransparentBtn  
+                handleClick={()=>console.log("clicked")}
+                fontSize='30px'
+                color='#F2811D'
+                text='✗' />
+          </FriendContainer>
+            ) : (
+              <></>
+            )
+          )
+    } else if (friend.status === 0 && friend.state === 'sender') {
       return (
+        mode === 'private' ? (
         <FriendContainer key={friend._id}>
-          {mode === 'private' ? (
-            <Text>{friend.username} - pending</Text>
+            <Text>{friend.username}</Text>
+        </FriendContainer>
           ) : (
             <></>
-          )}
-        </FriendContainer>
-      );
+          )
+        )
     } else if (friend.status === 1) {
       return (
         <FriendContainer key={friend._id}>
-          <Text>{friend.username} - accepted </Text>
+          <Image src={friend.avatar?require(`../../assets/avatar/${friend.avatar}`): ""} />
+          <Text>{friend.username}</Text>
         </FriendContainer>
       );
-    } else if (friend.status === 0 && friend.state === 'reciever') {
-       
+    }  else if (friend.status === 0 && friend.state === 'reciever') {
       return (
         <FriendContainer key={friend._id}>
           {mode === 'private' ? (
             <>
-              <Image src={friend.avatar} />
+              <Image src={friend.avatar?require(`../../assets/avatar/${friend.avatar}`): ""} />
               <Text>{friend.username} - requested</Text>
               <TransparentBtn
                 handleClick={() => dispatch(answerFriendRequest(friend.username, 1, friend._id))}
@@ -94,23 +116,25 @@ export const FriendsList = ({ friends, visibleLayer, mode }) => {
       );
     }
   };
+  
+  const renderFriends = (arr, title) => {
+    if(arr.length > 0){ 
+        return (<><SubTitle>{title}</SubTitle>
+        {arr.map(friend => handleFriends(friend))}</>
+        )
+      }
+    }   
 
-  const sortFriends = () => {
-    friends
-    .sort((a, b) => (a.status > b.status ? 1 : -1))
-    .map((friend) => handleFriends(friend))
-  }
   return (
     <Wrapper visible={visibleLayer}>
-      <Title>Friends</Title>
-      {friends ? (
-        friends.length > 0 ? (
-            friends.map((friend) => handleFriends(friend))
-        ) : (
-          <></>
-        )
-      ) : (
-        <></>
+      <Title>Friendlist</Title>
+      {friends && friends.length > 0 ? (<>
+        {renderFriends(declined, "Declined")}
+        {renderFriends(recieved, "Recieved")}
+        {renderFriends(pending, "Pending")}
+        {renderFriends(accepted, "Friends")}
+       </>) : (
+        <>No friends {":/"} </>
       )}
     </Wrapper>
   );

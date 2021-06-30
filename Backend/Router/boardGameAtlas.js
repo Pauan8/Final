@@ -135,7 +135,7 @@ router.post("/profile/:id/addFriend/:username", async (req, res) => {
         id,
         {
           $push: {
-            friends: { username: username, status: 0, state: "sender" },
+            friends: { username: username, avatar: req.body.avatar, status: 0, state: "sender" },
           },
         },
         { new: true }
@@ -144,7 +144,7 @@ router.post("/profile/:id/addFriend/:username", async (req, res) => {
         { username: username },
         {
           $push: {
-            friends: { username: user.username, status: 0, state: "reciever" },
+            friends: { username: user.username, avatar: user.avatar, status: 0, state: "reciever" },
           },
         }
       );
@@ -165,15 +165,14 @@ router.post("/profile/:id/friendRequest/:username", async (req, res) => {
   const { status } = req.query;
 
   try {
-    const friend = await User.findOneAndUpdate(
-      { username: username, "friends._id": id },
-      { $set: { "friends.$.status": status } }
-      ,{ new: true }
-    );
     const user = await User.findOneAndUpdate(
       { _id: id, "friends.username": username },
       { $set: { "friends.$.status": status } },
       { new: true }
+    );
+    await User.findOneAndUpdate(
+      { username: username, "friends._id": id },
+      { $set: { "friends.$.status": status } }
     );
     res.json({
       friends: user.friends,
