@@ -164,7 +164,8 @@ router.post("/profile/:id/friendRequest/:username", async (req, res) => {
   const { id, username } = req.params;
   const { status } = req.query;
 
-  try {
+  try { 
+    if(username === "Bubbles"){
     const user = await User.findOneAndUpdate(
       { _id: id, "friends.username": username },
       { $set: { "friends.$.status": status } },
@@ -179,6 +180,7 @@ router.post("/profile/:id/friendRequest/:username", async (req, res) => {
       success: true,
       loggedOut: false,
     });
+  }
   } catch (err) {
     catchError(res, err, "Invalid user id");
   }
