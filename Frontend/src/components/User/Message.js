@@ -1,9 +1,11 @@
+import { StoreTwoTone } from "@material-ui/icons";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components/macro";
 
 export const Message = () => {
   const [message, setMessage] = useState("");
+  const user = useSelector(store => store.user.userInfo)
   const handleClick = () => {
     return fetch(
       `https://secure-escarpment-13722.herokuapp.com/profile/${localStorage.getItem(
@@ -17,6 +19,8 @@ export const Message = () => {
         },
         body: JSON.stringify({
           message: [message],
+          sender: user.username,
+          reciever: "Bubbles"
         }),
       }
     )
