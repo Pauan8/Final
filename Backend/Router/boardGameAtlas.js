@@ -166,9 +166,7 @@ router.post('/profile/:id/sendMessage', async (req, res) => {
   const { username } = req.query;
   
   try {
-    const user = await User.finByIdAndUpdate(id, {$push: {messages: {message: req.body.message, sender: req.body.sender, reciever: req.body.reciever}}}, {new:true});
-    user.friends.findOneAndUpdate({username: username}, {$push: {messages: {message: req.body.message, sender: req.body.sender, reciever: req.body.reciever}}}, {new:true})
-
+    const user = await User.finOneAndUpdate({_id: id, username: username}, {$push: {messages: {message: req.body.message, sender: req.body.sender, reciever: req.body.reciever}}}, {new:true});
     const messages = user.friends.map(friend => friend.username === [username]? friend.messages : null) 
     res.json({
       messages: messages,
