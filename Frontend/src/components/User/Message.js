@@ -18,7 +18,7 @@ export const Message = () => {
           Authorization: localStorage.getItem("token"),
         },
         body: JSON.stringify({
-          message: [message],
+          message: message,
           sender: user.username,
           reciever: "Bubbles"
         }),
