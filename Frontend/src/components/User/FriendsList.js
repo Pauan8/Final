@@ -48,6 +48,7 @@ const Image = styled.img`
 
 export const FriendsList = ({ friends, visibleLayer, mode }) => {
   const dispatch = useDispatch();
+
   const handleFriends = (friend) => {
     if (friend.status === 0 && friend.state === 'sender') {
       return (
@@ -66,6 +67,7 @@ export const FriendsList = ({ friends, visibleLayer, mode }) => {
         </FriendContainer>
       );
     } else if (friend.status === 0 && friend.state === 'reciever') {
+       
       return (
         <FriendContainer key={friend._id}>
           {mode === 'private' ? (
