@@ -49,17 +49,9 @@ const UserSchema = mongoose.Schema({
     wishlist: [list.schema],
     ownedgames: [list.schema],
   },
-  friends:{
-    username: {
-        type: String,
-        index: true,
-        unique: true,
-        required: [true, 'A username is required.'],
-      },
-      status: Number,
-      state: String,
-      messages: [message.schema]
-    },
+  friends: { 
+    type: [friend.schema]
+  },
   messages: [message.schema]
 });
 
