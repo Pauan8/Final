@@ -73,13 +73,13 @@ export const FriendsList = ({ friends, visibleLayer, mode }) => {
               <Image src={friend.avatar} />
               <Text>{friend.username} - requested</Text>
               <TransparentBtn
-                handleClick={() => dispatch(answerFriendRequest(friend._id, 1))}
+                handleClick={() => dispatch(answerFriendRequest(friend.username, 1))}
                 fontSize='30px'
                 text='✓'
                 color='#C1D98F'
               />
               <TransparentBtn
-                handleClick={() => dispatch(answerFriendRequest(friend._id, 2))}
+                handleClick={() => dispatch(answerFriendRequest(friend.username, 2))}
                 fontSize='30px'
                 color='#F2811D'
                 text='✗'

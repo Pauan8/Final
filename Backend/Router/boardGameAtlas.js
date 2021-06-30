@@ -142,13 +142,13 @@ router.post('/profile/:id/addFriend/:username', async (req, res) => {
     }
   });
 
-router.post('/profile/:id/friendRequest/:userId', authenticateUser)
-router.post('/profile/:id/friendRequest/:userId', async (req, res) => {
-  const { id, userId } = req.params;
+router.post('/profile/:id/friendRequest/:username', authenticateUser)
+router.post('/profile/:id/friendRequest/:username', async (req, res) => {
+  const { id, username} = req.params;
   const { status } = req.query;
 
   try {
-   const user = await User.findOneAndUpdate({_id: id, friends: {_id: userId}},  {$set:{"friends.status": status}}, {new:true}); 
+   const user = await User.findOneAndUpdate({_id: id, 'friends.username': username},  {$set:{"friends.$.status": status}}, {new:true}); 
    /*  await findOneAndUpdate({username: username, 'friends.username': user.username}, {set: {'friends.status': status}}, {new: true}); */
       res.json({
         friends: user.friends,

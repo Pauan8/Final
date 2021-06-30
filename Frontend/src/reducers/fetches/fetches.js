@@ -79,11 +79,11 @@ export const fetches = {
         .then((response) => 
           testResponse(response));
       },
-    answerFriendRequest: (userId, status) =>{
+    answerFriendRequest: (username, status) =>{
       return fetch(
         `${BASE_URL}/profile/${
           localStorage.getItem('userID')
-        }/friendRequest/${userId}?status=${status}`,
+        }/friendRequest/${username}?status=${status}`,
         {
           method: 'POST',
           headers: authHeaders,
