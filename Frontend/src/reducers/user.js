@@ -167,10 +167,10 @@ export const addFriend = (username) => {
   }
 };
 
-export const answerFriendRequest = (username, status) => {
+export const answerFriendRequest = (username, status, userID) => {
   return (dispatch) => {
     fetches.profile
-    .answerFriendRequest(username, status)
+    .answerFriendRequest(username, status, userID)
     .then((data) => {
       if(data.success){
         dispatch(user.actions.setFriends(data.friends))

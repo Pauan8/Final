@@ -79,7 +79,7 @@ export const fetches = {
         .then((response) => 
           testResponse(response));
       },
-    answerFriendRequest: (username, status) =>{
+    answerFriendRequest: (username, status, userID) =>{
       return fetch(
         `${BASE_URL}/profile/${
           localStorage.getItem('userID')
@@ -87,6 +87,9 @@ export const fetches = {
         {
           method: 'POST',
           headers: authHeaders,
+          body: JSON.stringify({
+            userId: userID
+          })
         })
         .then((response) => 
           testResponse(response));

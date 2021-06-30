@@ -150,7 +150,7 @@ router.post('/profile/:id/friendRequest/:username', async (req, res) => {
 
   try {
    const user = await User.findOneAndUpdate({_id: id, 'friends.username': username},  {$set:{"friends.$.status": status}}, {new:true}); 
-   await findOneAndUpdate({username: username, 'friends.username': user.username}, {$set: {'friends.$.status': status}}, {new: true});
+   await findOneAndUpdate({_id: req.body.userId, 'friends.username': user.username}, {$set: {"friends.$.status": status}}, {new: true});
       res.json({
         friends: user.friends,
         success: true,

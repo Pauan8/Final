@@ -73,13 +73,13 @@ export const FriendsList = ({ friends, visibleLayer, mode }) => {
               <Image src={friend.avatar} />
               <Text>{friend.username} - requested</Text>
               <TransparentBtn
-                handleClick={() => dispatch(answerFriendRequest(friend.username, 1))}
+                handleClick={() => dispatch(answerFriendRequest(friend.username, 1, friend._id))}
                 fontSize='30px'
                 text='✓'
                 color='#C1D98F'
               />
               <TransparentBtn
-                handleClick={() => dispatch(answerFriendRequest(friend.username, 2))}
+                handleClick={() => dispatch(answerFriendRequest(friend.username, 2, friend._id))}
                 fontSize='30px'
                 color='#F2811D'
                 text='✗'
@@ -93,17 +93,20 @@ export const FriendsList = ({ friends, visibleLayer, mode }) => {
     }
   };
 
-  console.log(friends)
-
-  const sorting =()=> {
-    let friendsArr = friends.sort((a, b) => (a.status > b.status ? 1 : -1))
-    return friendsArr.map((friend) => handleFriends(friend))
+  const sortFriends = () => {
+    friends
+    .sort((a, b) => (a.status > b.status ? 1 : -1))
+    .map((friend) => handleFriends(friend))
   }
   return (
     <Wrapper visible={visibleLayer}>
       <Title>Friends</Title>
       {friends ? (
-        friends.map(friend => handleFriends(friend))
+        friends.length > 0 ? (
+            friends.map((friend) => handleFriends(friend))
+        ) : (
+          <></>
+        )
       ) : (
         <></>
       )}
