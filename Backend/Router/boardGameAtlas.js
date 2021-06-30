@@ -165,13 +165,12 @@ router.post("/profile/:id/friendRequest/:username", async (req, res) => {
   const { status } = req.query;
 
   try { 
-    if(username === "Bubbles"){
     const user = await User.findOneAndUpdate(
       { _id: id, "friends.username": username },
       { $set: { "friends.$.status": status } },
       { new: true }
     );
-    await User.findOneAndUpdate(
+    User.findOneAndUpdate(
       { username: username, "friends._id": id },
       { $set: { "friends.$.status": status } },
     );
@@ -180,7 +179,6 @@ router.post("/profile/:id/friendRequest/:username", async (req, res) => {
       success: true,
       loggedOut: false,
     });
-  }
   } catch (err) {
     catchError(res, err, "Invalid user id");
   }
