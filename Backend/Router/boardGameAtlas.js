@@ -2,7 +2,6 @@ import express from "express";
 import listEndpoints from "express-list-endpoints";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt-nodejs";
-import { ObjectId } from "mongodb";
 
 const User = require("../models/User");
 
