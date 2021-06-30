@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const MessageSchema = mongoose.Schema({
+const MessageSchema = mongoose.Schema([{
     createdAt: {
         type: Date,
         default: () => new Date()
@@ -12,7 +12,7 @@ const MessageSchema = mongoose.Schema({
         maxlength: 500
     },
  
-})
+}])
 
 const message = mongoose.model('message', MessageSchema);
 module.exports = message;    
