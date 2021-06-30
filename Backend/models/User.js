@@ -52,7 +52,6 @@ const UserSchema = mongoose.Schema({
   friends: { 
     type: [friend.schema]
   },
-  messages: [message.schema]
 });
 
 const User = mongoose.model('User', UserSchema);
