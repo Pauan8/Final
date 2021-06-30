@@ -190,7 +190,7 @@ router.post("/profile/:id/sendMessage", async (req, res) => {
   const { username } = req.query;
 
   try {
-    const user = await User.finOneAndUpdate(
+    const user = await User.findOneAndUpdate(
       { _id: id, "friends.username": username },
       {
         $push: {

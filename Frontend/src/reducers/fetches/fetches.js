@@ -69,15 +69,12 @@ export const fetches = {
       ).then((response) => 
         testResponse(response));
     },
-    addFriend: (username, avatar) => {
+    addFriend: (username) => {
       return fetch(
         `${BASE_URL}/profile/${localStorage.getItem('userID')}/addFriend/${username}`,
         {
           method: 'POST',
           headers: authHeaders,
-          body: JSON.stringify({
-            avatar
-          })
         })
         .then((response) => 
           testResponse(response));

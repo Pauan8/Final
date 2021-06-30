@@ -152,10 +152,10 @@ export const editProfile = (
   };
 };
 
-export const addFriend = (username, avatar) => {
+export const addFriend = (username) => {
   return (dispatch) => {
     fetches.profile
-    .addFriend(username, avatar)
+    .addFriend(username)
     .then((data) => {
       if(data.success){
         dispatch(user.actions.setFriends(data.friends))

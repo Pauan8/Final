@@ -44,10 +44,6 @@ const FriendContainer = styled.div`
   margin-bottom: 10px;
 `;
 
-const Image = styled.img`
-  height: 50px;
-  width: 50px;
-`;
 
 export const FriendsList = ({ friends, visibleLayer, mode }) => {
   const dispatch = useDispatch();
@@ -85,7 +81,6 @@ export const FriendsList = ({ friends, visibleLayer, mode }) => {
     } else if (friend.status === 1) {
       return (
         <FriendContainer key={friend._id}>
-          <Image src={friend.avatar?require(`../../assets/avatar/${friend.avatar}`): ""} />
           <Text>{friend.username}</Text>
         </FriendContainer>
       );
@@ -94,7 +89,6 @@ export const FriendsList = ({ friends, visibleLayer, mode }) => {
         <FriendContainer key={friend._id}>
           {mode === 'private' ? (
             <>
-              <Image src={friend.avatar?require(`../../assets/avatar/${friend.avatar}`): ""} />
               <Text>{friend.username} - requested</Text>
               <TransparentBtn
                 handleClick={() => dispatch(answerFriendRequest(friend.username, 1, friend._id))}
