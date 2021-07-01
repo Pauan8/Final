@@ -152,10 +152,11 @@ export const editProfile = (
   };
 };
 
-export const addFriend = (username) => {
+export const handleFriend = (friend_id, state) => {
   return (dispatch) => {
-    fetches.profile
-    .addFriend(username)
+    state === 'add'
+    ? fetches.profile.addFriend(friend_id)
+    : fetches.profile.removeFriend(friend_id)
     .then((data) => {
       if(data.success){
         dispatch(user.actions.setFriends(data.friends))
@@ -167,10 +168,25 @@ export const addFriend = (username) => {
   }
 };
 
-export const answerFriendRequest = (username, status, userID) => {
+export const answerFriendRequest = (status, friend_id) => {
   return (dispatch) => {
     fetches.profile
-    .answerFriendRequest(username, status, userID)
+    .answerFriendRequest(friend_id, status)
+    .then((data) => {
+      if(data.success){
+        dispatch(user.actions.setFriends(data.friends))
+      } else {
+        dispatch(user.actions.setErrors(data));
+      }
+    })
+    .catch((error) => dispatch(user.actions.setErrors('catch error')));
+  }
+};
+
+export const sendMessage = (friend_id, message) => {
+  return (dispatch) => {
+    fetches.profile
+    .sendMessage(friend_id, message)
     .then((data) => {
       if(data.success){
         dispatch(user.actions.setFriends(data.friends))

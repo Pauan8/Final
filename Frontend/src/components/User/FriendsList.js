@@ -57,7 +57,7 @@ export const FriendsList = ({ friends, visibleLayer, mode }) => {
     if (friend.status === 2 && friend.state === 'sender') {
         return (
           mode === 'private' ? (
-          <FriendContainer key={friend._id}>
+          <FriendContainer key={friend.user_id}>
               <Text>{friend.username}</Text>
               <TransparentBtn  
                 handleClick={()=>console.log("clicked")}
@@ -72,7 +72,7 @@ export const FriendsList = ({ friends, visibleLayer, mode }) => {
     } else if (friend.status === 0 && friend.state === 'sender') {
       return (
         mode === 'private' ? (
-        <FriendContainer key={friend._id}>
+        <FriendContainer key={friend.user_id}>
             <Text>{friend.username}</Text>
         </FriendContainer>
           ) : (
@@ -81,24 +81,24 @@ export const FriendsList = ({ friends, visibleLayer, mode }) => {
         )
     } else if (friend.status === 1) {
       return (
-        <FriendContainer key={friend._id}>
+        <FriendContainer key={friend.user_id}>
           <Text>{friend.username}</Text>
         </FriendContainer>
       );
     }  else if (friend.status === 0 && friend.state === 'reciever') {
       return (
-        <FriendContainer key={friend._id}>
+        <FriendContainer key={friend.user_id}>
           {mode === 'private' ? (
             <>
               <Text>{friend.username}</Text>
               <TransparentBtn
-                handleClick={() => dispatch(answerFriendRequest(friend.username, 1, friend._id))}
+                handleClick={() => dispatch(answerFriendRequest(friend.user_id, 1))}
                 fontSize='30px'
                 text='✓'
                 color='#C1D98F'
               />
               <TransparentBtn
-                handleClick={() => dispatch(answerFriendRequest(friend.username, 2, friend._id))}
+                handleClick={() => dispatch(answerFriendRequest(friend.user_id, 2))}
                 fontSize='30px'
                 color='#F2811D'
                 text='✗'

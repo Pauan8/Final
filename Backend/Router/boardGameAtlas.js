@@ -122,10 +122,10 @@ router.get("/profile/:id", async (req, res) => {
   }
 });
 
-router.post("/profile/:id/friends/:user_id", authenticateUser);
-router.post("/profile/:id/friends/:user_id", async (req, res) => {
-  const { id,user_id } = req.params;
-  const { status} = req.query;
+router.post("/profile/:id/addFriend/:user_id", authenticateUser);
+router.post("/profile/:id/addFriend/:user_id", async (req, res) => {
+  const { id, user_id } = req.params;
+  const { status } = req.query;
 
   try {
     const friendToInvite = await User.findById(user_id);
@@ -163,28 +163,28 @@ router.post("/profile/:id/friends/:user_id", async (req, res) => {
   }
 });
 
-router.post("/profile/:id/friends/", authenticateUser);
-router.post("/profile/:id/friends/", async (req, res) => {
-  const { id } = req.params;
-  const { status } = req.query;
+router.post("/profile/:id/updateFriend/:user_id", authenticateUser);
+router.post("/profile/:id/updateFriend/:user_id", async (req, res) => {
+  const { id, user_id } = req.params;
+  const {status} = req.query;
   const user = "";
 
   try {
     if (status === "2") {
       user = await User.findByIdAndUpdate(
         id,
-        { $pull: { friends: { username: username } } },
+        { $pull: { 'friends.user_id': user_id } },
         { new: true }
       );
     } else {
       user = await User.findOneAndUpdate(
-        { _id: id, "friends.username": username },
+        { _id: id, "friends.user_id": user_id },
         { $set: { "friends.$.status": status } },
         { new: true }
       );
     }
     await User.findOneAndUpdate(
-      { username: username, "friends.username": user.username },
+      { _id: user_id, "friends.user_id": id },
       { $set: { "friends.$.status": status } }
     );
     res.json({
@@ -197,38 +197,55 @@ router.post("/profile/:id/friends/", async (req, res) => {
   }
 });
 
-router.post("/profile/:id/sendMessage", authenticateUser);
-router.post("/profile/:id/sendMessage", async (req, res) => {
-  const { id } = req.params;
-  const { username } = req.query;
+router.post("/profile/:id/message/:user_id", authenticateUser);
+router.post("/profile/:id/message/:user_id", async (req, res) => {
+  const { id,  user_id } = req.params;
 
+  const friendToMessage = await User.findById(user_id)
+  const userAsSender = await User.findById(id)
   try {
     const user = await User.findOneAndUpdate(
-      { _id: id, "friends.username": username },
+      { _id: id, "friends.user_id": user_id },
       {
         $push: {
           "friends.$.messages": {
             message: req.body.message,
-            sender: req.body.sender,
-            reciever: req.body.reciever,
+            sender: userAsSender,
+            reciever: friendToMessage,
           },
         },
       },
       { new: true }
     );
     await User.findOneAndUpdate(
-      { username: username, "friends.username": user.username },
+      { _id: user_id, "friends.user_id": id },
       {
         $push: {
           "friends.$.messages": {
             message: req.body.message,
-            sender: req.body.sender,
-            reciever: req.body.reciever,
+            sender: userAsSender,
+            reciever: friendToMessage,
           },
         },
       }
     );
     res.json({
+      messages: user.friends,
+      success: true,
+      loggedOut: false,
+    });
+  } catch (err) {
+    catchError(res, err, "Invalid user id");
+  }
+});
+
+router.delete("/profile/:id/removeFriend/:user_id", authenticateUser);
+router.delete("/profile/:id/removeFriend/:user_id", async (req, res) => {
+  const {id, user_id} = req.params;
+
+  try{
+     const user = await User.findByIdAndUpdate(id, { pull: { 'friends.user_id': user_id}})
+     res.json({
       messages: user.friends,
       success: true,
       loggedOut: false,

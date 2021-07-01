@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 import { FriendsList } from '../User/FriendsList'
-import { addFriend } from '../../reducers/user'
+import { handleFriend } from '../../reducers/user'
 import { Message } from '../User/Message'
 
 const Container = styled.div`
@@ -172,7 +172,7 @@ export const ProfileCard = ({ id, mode }) => {
             </Edit>
           </EditLink>
         ) : (
-          <Button onClick={() => dispatch(addFriend(profile.username))}>
+          <Button onClick={() => dispatch(handleFriend(profile._id, "add"))}>
             <PersonAddIcon />
           </Button>
         )}

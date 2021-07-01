@@ -1,32 +1,13 @@
-import { StoreTwoTone } from "@material-ui/icons";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components/macro";
+import { useDispatch} from "react-redux";
 
-export const Message = () => {
+import { sendMessage } from "reducers/user";
+
+export const Message = ({user}) => {
   const [message, setMessage] = useState("");
-  const user = useSelector(store => store.user.userInfo)
+  const dispatch = useDispatch();
   const handleClick = () => {
-    return fetch(
-      `https://secure-escarpment-13722.herokuapp.com/profile/${localStorage.getItem(
-        "userID"
-      )}/sendMessage?username=Bubbles`,
-      {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-          Authorization: localStorage.getItem("token"),
-        },
-        body: JSON.stringify({
-          message: message,
-          sender: user.username,
-          reciever: "Bubbles"
-        }),
-      }
-    )
-      .then((res) => res.json())
-      .then((res) => console.log(res))
-      .catch((error) => console.log("catch error"));
+    dispatch(sendMessage(user._id, message))
   };
 
   return (

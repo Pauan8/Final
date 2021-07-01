@@ -1,6 +1,10 @@
 import mongoose from 'mongoose';
 
 const MessageSchema = mongoose.Schema({
+    user_id: {
+        type: mongoose.Types.ObjectId,
+        ref: "friend"
+      },
     createdAt: {
         type: Date,
         default: () => new Date()

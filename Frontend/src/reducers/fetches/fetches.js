@@ -69,9 +69,9 @@ export const fetches = {
       ).then((response) => 
         testResponse(response));
     },
-    addFriend: (username) => {
+    addFriend: (friend_id) => {
       return fetch(
-        `${BASE_URL}/profile/${localStorage.getItem('userID')}/addFriend/${username}`,
+        `${BASE_URL}/profile/${localStorage.getItem('userID')}/addFriend/${friend_id}?status=0`,
         {
           method: 'POST',
           headers: authHeaders,
@@ -79,26 +79,42 @@ export const fetches = {
         .then((response) => 
           testResponse(response));
       },
-    answerFriendRequest: (username, status, userID) =>{
+    removeFriend: (friend_id)  => {
       return fetch(
-        `${BASE_URL}/profile/${
-          localStorage.getItem('userID')
-        }/friendRequest/${username}?status=${status}`,
+        `${BASE_URL}/profile/${localStorage.getItem('userID')}/removeFriend/${friend_id}`,
+        {
+          method: 'POST',
+          headers: authHeaders,
+        })
+        .then((response) => 
+          testResponse(response));
+      },
+    answerFriendRequest: (friend_id, status) =>{
+      return fetch(
+        `${BASE_URL}/profile/${localStorage.getItem('userID')}/updateFriend/${friend_id}?status=${status}`,
+        {
+          method: 'POST',
+          headers: authHeaders,
+        })
+        .then((response) => 
+          testResponse(response));
+      },
+    sendMessage: (friend_id, message) => {
+      return fetch(
+        `${BASE_URL}/profile/${localStorage.getItem('userID')}/message/${friend_id}`,
         {
           method: 'POST',
           headers: authHeaders,
           body: JSON.stringify({
-            userId: userID
+            message
           })
         })
         .then((response) => 
-          testResponse(response));
-      },
+        testResponse(response));
+    },
     addGame: (game, list) => {
       return fetch(
-        `${BASE_URL}/profile/${
-          localStorage.getItem('userID')
-        }/addGame/${game.id}?list=${list}`,
+        `${BASE_URL}/profile/${localStorage.getItem('userID')}/addGame/${game.id}?list=${list}`,
         {
           method: 'POST',
           headers: authHeaders,
@@ -111,9 +127,7 @@ export const fetches = {
     },
     removeGame: ( id, list) => {
       return fetch(
-        `${BASE_URL}/profile/${
-          localStorage.getItem('userID')
-        }/removeGame/${id}?list=${list}`,
+        `${BASE_URL}/profile/${localStorage.getItem('userID')}/removeGame/${id}?list=${list}`,
         {
           method: 'DELETE',
           headers: authHeaders,
@@ -147,16 +161,17 @@ export const fetches = {
       }
         return filteredString;
       }
-      if(type === 'search'){
-      return fetch(
-        `https://api.boardgameatlas.com/api/search?limit=21&pretty=true&client_id=39WI5Y3mBx${getState().boardGames.searchString}${handleFilter()}&skip=${(page-1)*21}`)
-          .then((response) => 
-          testResponse(response));
+      if (type === "search") {
+        return fetch(
+          `https://api.boardgameatlas.com/api/search?limit=21&pretty=true&client_id=39WI5Y3mBx${getState().boardGames.searchString}
+          ${handleFilter()}&skip=${(page - 1) * 21}`
+        ).then((response) => testResponse(response));
       } else {
         return fetch(
-          `https://api.boardgameatlas.com/api/search?limit=21&pretty=true&client_id=39WI5Y3mBx&${type}=${mode}${handleFilter()}&skip=${(page-1)*21}`)
-          .then((response) => 
-          testResponse(response));
+          `https://api.boardgameatlas.com/api/search?limit=21&pretty=true&client_id=39WI5Y3mBx&${type}=${mode}${handleFilter()}&skip=${
+            (page - 1) * 21
+          }`
+        ).then((response) => testResponse(response));
       }
     },
     game: (id) => {
