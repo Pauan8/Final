@@ -134,7 +134,7 @@ router.post("/profile/:id/addFriend/:username", async (req, res) => {
         id,
         {
           $push: {
-            friends: { username: username, avatar: req.body.avatar, status: 0, state: "sender" },
+            friends: { username: username, status: 0, state: "sender" },
           },
         },
         { new: true }
@@ -143,7 +143,7 @@ router.post("/profile/:id/addFriend/:username", async (req, res) => {
         { username: username },
         {
           $push: {
-            friends: { username: user.username, avatar: user.avatar, status: 0, state: "reciever" },
+            friends: { username: user.username, status: 0, state: "reciever" },
           },
         }
       );
