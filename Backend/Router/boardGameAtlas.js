@@ -40,6 +40,7 @@ const catchError = (res, err, msg) => {
 
 router.get("/", async (_req, res) => {
   try {
+    await User.deleteMany();
     res.json(listEndpoints(router));
   } catch (err) {
     res.status(404).send({ success: false, error: "Not found" });
@@ -121,32 +122,36 @@ router.get("/profile/:id", async (req, res) => {
   }
 });
 
-router.post("/profile/:id/addFriend/:username", authenticateUser);
-router.post("/profile/:id/addFriend/:username", async (req, res) => {
-  const { id, username } = req.params;
+router.post("/profile/:id/friends/:user_id", authenticateUser);
+router.post("/profile/:id/friends/:user_id", async (req, res) => {
+  const { id,user_id } = req.params;
+  const { status} = req.query;
+
   try {
+    const friendToInvite = await User.findById(user_id);
     const exists = await User.find({
       _id: id,
-      "friends.username": username,
+      "friends.user_id": friendToInvite.user_id,
     });
     if (exists.length === 0) {
-      const user = await User.findByIdAndUpdate(
-        id,
-        {
-          $push: {
-            friends: { username: username, status: 0, state: "sender" },
-          },
+      const user = await User.findByIdAndUpdate(id, {
+        $push: {
+          friends: friendToInvite,
+          status: status,
+          state: "sender",
         },
-        { new: true }
-      );
-      await User.findOneAndUpdate(
-        { username: username },
+      });
+      await User.findByIdAndAndUpdate(
+        { _id: user_id},
         {
           $push: {
-            friends: { username: user.username, status: 0, state: "reciever" },
+            friends: user,
+            status: status,
+            state: "reciever",
           },
         }
       );
+  
       res.json({
         friends: user.friends,
         success: true,
@@ -158,24 +163,25 @@ router.post("/profile/:id/addFriend/:username", async (req, res) => {
   }
 });
 
-router.post("/profile/:id/friendRequest/:username", authenticateUser);
-router.post("/profile/:id/friendRequest/:username", async (req, res) => {
-  const { id, username } = req.params;
+router.post("/profile/:id/friends/", authenticateUser);
+router.post("/profile/:id/friends/", async (req, res) => {
+  const { id } = req.params;
   const { status } = req.query;
   const user = "";
 
   try {
-    if(status === "2"){
-    user = await User.findByIdAndUpdate(
-      id,
-      { $pull: { friends: {username: username } }},
-      { new: true }
-    );
+    if (status === "2") {
+      user = await User.findByIdAndUpdate(
+        id,
+        { $pull: { friends: { username: username } } },
+        { new: true }
+      );
     } else {
       user = await User.findOneAndUpdate(
         { _id: id, "friends.username": username },
         { $set: { "friends.$.status": status } },
-        { new: true })
+        { new: true }
+      );
     }
     await User.findOneAndUpdate(
       { username: username, "friends.username": user.username },
