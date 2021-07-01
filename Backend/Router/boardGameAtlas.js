@@ -378,7 +378,7 @@ router.post("/users", async (req, res) => {
 
 router.delete("/users", async (_req, res) => {
   try {
-    const deleteAll = await User.deleteMany();
+    const deleteAll = await User.deleteMany().exec();
     res.json(deleteAll, { success: true });
   } catch (err) {
     catchError(res, err, "Something went wrong");

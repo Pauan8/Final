@@ -7,10 +7,7 @@ const FriendSchema = mongoose.Schema([{
     type: mongoose.Types.ObjectId,
     ref: "User"
   },
-  username: {
-      type: String,
-      required: [true, 'A username is required.'],
-  },
+  username: String,
   status: Number,
   state: String,
   message: {
