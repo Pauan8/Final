@@ -168,7 +168,7 @@ export const handleFriend = (friend_id, state) => {
   }
 };
 
-export const answerFriendRequest = (status, friend_id) => {
+export const answerFriendRequest = (friend_id, status) => {
   return (dispatch) => {
     fetches.profile
     .answerFriendRequest(friend_id, status)

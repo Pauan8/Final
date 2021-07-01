@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchUser } from 'reducers/user';
 import { LottieAnimation } from '../animation/LottieAnimation';
 import loading from 'animation/json/loading.json';
-import { ProfileCard } from '../components/User/ProfileCard';
+import { Profile } from '../components/User/Profile';
 import { ProfileGameList } from '../components/User/ProfileGameList';
 import { Menu } from '../components/Menu';
 
@@ -45,7 +45,7 @@ const PrivateProfile = () => {
       <Wrapper>
         {!isLoading ? (
           <>
-            <ProfileCard id={id} mode="private" />
+            <Profile id={id} mode="private" />
             <ProfileGameList mode='private' />
           </>
         ) : (

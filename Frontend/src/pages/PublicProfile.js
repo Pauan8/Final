@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import { useParams } from 'react-router-dom';
 
 import { SearchUser } from '../components/SearchUser'
-import { ProfileCard } from '../components/User/ProfileCard'
+import { Profile } from '../components/User/Profile'
 import { ProfileGameList } from 'components/User/ProfileGameList';
 import { Menu } from '../components/Menu'
 
@@ -42,7 +42,7 @@ const PublicProfile = () => {
  
 
   useEffect(() => {
-    fetch(`https://secure-escarpment-13722.herokuapp.com/user/${username}`)
+    fetch(`http://localhost:8080/user/${username}`)
       .then((res) => res.json())
       .then((json) => setUser(json));
   }, [ username]);
@@ -54,7 +54,7 @@ const PublicProfile = () => {
    
       {user.success? 
       <>
-      <ProfileCard id="" mode={user} />
+      <Profile id="" mode={user} />
       <ProfileGameList mode={user} />  </>
       : <>
         <p>User doesn't exist. </p>

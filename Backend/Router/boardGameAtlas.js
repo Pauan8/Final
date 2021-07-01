@@ -128,30 +128,24 @@ router.post("/profile/:id/addFriend/:user_id", async (req, res) => {
   const { status } = req.query;
 
   try {
-    const friendToInvite = await User.findById(user_id);
     const exists = await User.find({
       _id: id,
-      "friends.user_id": friendToInvite.user_id,
+      "friends.user_id": user_id,
     });
     if (exists.length === 0) {
-      const user = await User.findByIdAndUpdate(id, {
+      const friendToInvite = await User.findById(user_id);
+      const user = await User.findByIdAndUpdate( id, {
         $push: {
-          friends: friendToInvite,
-          status: status,
-          state: "sender",
+          friends: {user_id: friendToInvite._id, username: friendToInvite.username, stat: status, state: 'sender'},
         },
       });
-      await User.findByIdAndAndUpdate(
-        { _id: user_id},
+      await User.findByIdAndUpdate(
+        user_id,
         {
           $push: {
-            friends: user,
-            status: status,
-            state: "reciever",
+            friends: {user_id: id, username: user.username, stat: status, state: 'reciever'},
           },
-        }
-      );
-  
+        });
       res.json({
         friends: user.friends,
         success: true,
@@ -179,14 +173,15 @@ router.post("/profile/:id/updateFriend/:user_id", async (req, res) => {
     } else {
       user = await User.findOneAndUpdate(
         { _id: id, "friends.user_id": user_id },
-        { $set: { "friends.$.status": status } },
+        { $set: { "friends.$.stat": status } },
         { new: true }
       );
     }
     await User.findOneAndUpdate(
       { _id: user_id, "friends.user_id": id },
-      { $set: { "friends.$.status": status } }
+      { $set: { "friends.$.stat": status } }
     );
+
     res.json({
       friends: user.friends,
       success: true,
