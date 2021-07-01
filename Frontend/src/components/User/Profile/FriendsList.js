@@ -4,8 +4,8 @@ import styled from "styled-components/macro";
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-import { answerFriendRequest } from "../../reducers/user";
-import { TransparentBtn } from "components/Reusable/TransparentBtn";
+import user,{ answerFriendRequest } from "../../../reducers/user";
+import { TransparentBtn } from "../../../components/Reusable/TransparentBtn";
 
 const Wrapper = styled.div`
   width: 300px;
@@ -35,6 +35,7 @@ const SubTitle = styled.h3``;
 const Text = styled.p`
 margin-left: 10px;
   color: #f2d3ac;
+  font-weight: bold;
 `;
 
 const FriendContainer = styled.div`
@@ -65,15 +66,18 @@ const Btn = styled.button`
 `
 
 const Img = styled.image`
-width: 50px;
-height: 50px;`
+    width: 50px;
+    height: 50px;`
+
+const ButtonContainer = styled.div`
+  display: flex;`
 
 export const FriendsList = ({
   friends,
   visibleLayer,
   setVisibleLayer,
   mode,
-  setCurrentFriend
+  setMessageMode
 }) => {
   const dispatch = useDispatch();
   let declined = friends && friends.length > 0 ? friends.filter((friend) => friend.stat === 2) : [];
@@ -82,97 +86,86 @@ export const FriendsList = ({
   let accepted = friends && friends.length > 0 ? friends.filter((friend) => friend.stat === 1) : [];
 
   const handleClick = (friend) => {
-    setCurrentFriend(friend)
-    setVisibleLayer("message")
+    dispatch(user.actions.setActiveFriend(friend))
+    setMessageMode('chat')
+    setVisibleLayer('message')
   }
 
   const handleFriends = (friend) => {
     if (friend.stat === 2 && friend.state === "sender") {
-      return mode === "private" ? (
-        <FriendContainer key={friend.user_id}>
+      return (
+        <>
           <Text>{friend.username}</Text>
           <TransparentBtn
-            handleClick={() => console.log("clicked")}
+            handleClick={() => dispatch(handleFriends(friend.user_id, "remove"))}
             fontSize="30px"
             color="#F2811D"
             text="✗"
           />
-        </FriendContainer>
-      ) : (
-        <></>
+        </>
       );
     } else if (friend.stat === 0 && friend.state === "sender") {
-      return mode === "private" ? (
-        <FriendContainer key={friend.user_id}>
-          <Text>{friend.username}</Text>
-        </FriendContainer>
-      ) : (
-        <></>
-      );
+      return <Text>{friend.username}</Text>;
     } else if (friend.stat === 1) {
       return (
-        <FriendContainer key={friend.user_id}>
-            <FriendContainerInner>{friend.avatar
-                ? <Img src={require(`../../assets/avatar/${friend.avatar}`)} />
-                : <AccountCircleIcon style={{ fontSize: 50 }} />}
-                <Text>{friend.username}</Text>
-            </FriendContainerInner>
-            <Btn handleClick={() => handleClick(friend)}> 
-                <MailOutlineIcon /> 
-            </Btn>   
-        </FriendContainer>
+        <>
+          <FriendContainerInner>
+            {friend.avatar ? (
+              <Img src={require(`../../../assets/avatar/${friend.avatar}`)} />
+            ) : (
+              <AccountCircleIcon style={{ fontSize: 50 }} />
+            )}
+            <Text>{friend.username}</Text>
+          </FriendContainerInner>
+          <Btn onClick={() => handleClick(friend)}>
+            <MailOutlineIcon />
+          </Btn>
+        </>
       );
     } else if (friend.stat === 0 && friend.state === "reciever") {
       return (
-        <FriendContainer key={friend.user_id}>
-          {mode === "private" ? (
-            <>
-              <Text>{friend.username}</Text>
-              <TransparentBtn
-                handleClick={() =>
-                  dispatch(answerFriendRequest(friend.user_id, 1))
-                }
-                fontSize="30px"
-                text="Accept"
-                color="#C1D98F"
-              />
-              <TransparentBtn
-                handleClick={() =>
-                  dispatch(answerFriendRequest(friend.user_id, 2))
-                }
-                fontSize="30px"
-                color="#F2811D"
-                text="Decline"
-              />
-            </>
-          ) : (
-            <></>
-          )}
-        </FriendContainer>
+        <>
+          <Text>{friend.username}</Text>
+          <ButtonContainer>
+            <TransparentBtn
+              handleClick={() =>
+                dispatch(answerFriendRequest(friend.user_id, 1))
+              }
+              fontSize="14px"
+              text="Accept"
+              color="#C1D98F"
+            />
+            <TransparentBtn
+              handleClick={() =>
+                dispatch(answerFriendRequest(friend.user_id, 2))
+              }
+              fontSize="14px"
+              color="#F2811D"
+              text="Decline"
+            />
+          </ButtonContainer>
+        </>
       );
     }
   };
 
   const renderFriends = (arr, title) => {
     if (arr.length > 0) {
-      if (title === "Declined" || title === "Recieved" || title === "Pending") {
-        return (
-          <>
-            {mode === "private" ? (
-              <>
-                <SubTitle>{title}</SubTitle>
-                {arr.map((friend) => handleFriends(friend))}
-              </>
-            ) : (
-              <></>
-            )}
-          </>
-        );
-      } else {
+      if (
+        ((title === "Declined" ||
+          title === "Recieved" ||
+          title === "Pending") &&
+          mode === "private") ||
+        title === "Friends"
+      ) {
         return (
           <>
             <SubTitle>{title}</SubTitle>
-            {arr.map((friend) => handleFriends(friend))}
+            {arr.map((friend) => (
+              <FriendContainer key={friend.user_id}>
+                {handleFriends(friend)}
+              </FriendContainer>
+            ))}
           </>
         );
       }

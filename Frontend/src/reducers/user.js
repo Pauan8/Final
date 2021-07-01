@@ -37,14 +37,14 @@ const user = createSlice({
       friends: {
         username: null,
         status: null,
-        state: null
-      }
+        state: null,
+        
+      },
+      activeFriend: [],
     },
   },
+  
   errors: {
-    loggedOut: !localStorage.getItem('token')
-        ? true
-        : false,
   },
   reducers: {
     setUser: (store, action) => {
@@ -58,6 +58,10 @@ const user = createSlice({
     setFriends: (store, action) => {
       const friends = action.payload;
       store.userInfo.friends = friends;
+    },
+    setActiveFriend : (store, action) => {
+      const { user_id, ...active} = action.payload;
+      store.userInfo.activeFriend = active;
     },
     setErrors: (store, action) => {
       store.errors = action.payload;
@@ -183,10 +187,10 @@ export const answerFriendRequest = (friend_id, status) => {
   }
 };
 
-export const sendMessage = (friend_id, message) => {
+export const sendMessage = (username, message) => {
   return (dispatch) => {
     fetches.profile
-    .sendMessage(friend_id, message)
+    .sendMessage(username, message)
     .then((data) => {
       if(data.success){
         dispatch(user.actions.setFriends(data.friends))

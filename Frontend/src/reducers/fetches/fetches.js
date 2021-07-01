@@ -100,9 +100,9 @@ export const fetches = {
         .then((response) => 
           testResponse(response));
       },
-    sendMessage: (friend_id, message) => {
+    sendMessage: (username, message) => {
       return fetch(
-        `${BASE_URL}/profile/${localStorage.getItem('userID')}/message/${friend_id}`,
+        `${BASE_URL}/profile/${localStorage.getItem('userID')}/message/${username}`,
         {
           method: 'POST',
           headers: authHeaders,

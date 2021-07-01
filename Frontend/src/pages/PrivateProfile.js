@@ -6,8 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchUser } from 'reducers/user';
 import { LottieAnimation } from '../animation/LottieAnimation';
 import loading from 'animation/json/loading.json';
-import { Profile } from '../components/User/Profile';
-import { ProfileGameList } from '../components/User/ProfileGameList';
+import { Profile } from '../components/User/Profile/Profile';
+import { ProfileGameList } from '../components/User/Profile/ProfileGameList';
 import { Menu } from '../components/Menu';
 
 const Wrapper = styled.div`

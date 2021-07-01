@@ -6,7 +6,7 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import EditIcon from '@material-ui/icons/Edit';
 
-import { handleFriend } from '../../reducers/user'
+import { handleFriend } from '../../../reducers/user'
 
 
 const EditLink = styled(Link)`
@@ -130,7 +130,7 @@ return (
     )}
     <ImgContainer>
       {profile.avatar ? (
-        <Img src={require(`../../assets/avatar/${profile.avatar}`)} />
+        <Img src={require(`../../../assets/avatar/${profile.avatar}`)} />
       ) : (
         <AccountCircleIcon style={{ fontSize: 150 }} />
       )}

@@ -3,8 +3,8 @@ import styled from 'styled-components/macro';
 import { useParams } from 'react-router-dom';
 
 import { SearchUser } from '../components/SearchUser'
-import { Profile } from '../components/User/Profile'
-import { ProfileGameList } from 'components/User/ProfileGameList';
+import { Profile } from '../components/User/Profile/Profile'
+import { ProfileGameList } from 'components/User/Profile/ProfileGameList';
 import { Menu } from '../components/Menu'
 
 

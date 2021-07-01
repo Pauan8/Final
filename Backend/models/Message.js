@@ -1,10 +1,6 @@
 import mongoose from 'mongoose';
 
 const MessageSchema = mongoose.Schema({
-    user_id: {
-        type: mongoose.Types.ObjectId,
-        ref: "friend"
-      },
     createdAt: {
         type: Date,
         default: () => new Date()
@@ -17,7 +13,6 @@ const MessageSchema = mongoose.Schema({
     },
     sender: String,
     reciever: String
- 
 })
 
 const message = mongoose.model('message', MessageSchema);

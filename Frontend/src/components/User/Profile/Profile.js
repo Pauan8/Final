@@ -6,7 +6,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 
 import { FriendsList } from './FriendsList'
-import { Message } from './Message'
+import { Messages } from '../Messages/Messages'
 import { ProfileCard } from './ProfileCard';
 
 const Container = styled.div`
@@ -33,9 +33,10 @@ const Tab = styled.button`
 
 export const Profile = ({ id, mode }) => {
   const [visibleLayer, setVisibleLayer] = useState('profile');
-  const [currentFriend, setCurrentFriend] = useState('');
+  const [messageMode, setMessageMode] = useState('messageList')
   const user = useSelector((store) => store.user.userInfo);
   const profile = mode === 'private' ? user : mode;
+  
 
   return (
     <Container>
@@ -68,15 +69,13 @@ export const Profile = ({ id, mode }) => {
         friends={profile.friends}
         visibleLayer={visibleLayer}
         setVisibleLayer={setVisibleLayer}
-        currentFriend={currentFriend}
-        setCurrentFriend={setCurrentFriend}
+        setMessageMode={setMessageMode}
         mode={mode}
       />
-      <Message         
+      <Messages         
         visibleLayer={visibleLayer}
         setVisibleLayer={setVisibleLayer}
-        currentFriend={currentFriend}
-        setCurrentFriend={setCurrentFriend}
+        messageMode={messageMode}
         />
       <ProfileCard id={id} visibleLayer={visibleLayer} mode={mode} profile={profile}/>
     </Container>

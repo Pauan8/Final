@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom';
-import { LottieAnimation } from '../../animation/LottieAnimation';
-import emptylist from '../../animation/json/emptylist.json';
-import { RemoveGame } from '../User/RemoveGame';
+import { LottieAnimation } from '../../../animation/LottieAnimation';
+import emptylist from '../../../animation/json/emptylist.json';
+import { RemoveGame } from './RemoveGame';
 
 const Wrapper = styled.div`
   display: flex;

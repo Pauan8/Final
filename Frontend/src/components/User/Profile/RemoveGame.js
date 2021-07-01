@@ -4,7 +4,7 @@ import styled from 'styled-components/macro';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
-import { removeGame } from '../../reducers/user';
+import { removeGame } from '../../../reducers/user';
 
 const Wrapper = styled.div`
   display: flex;
