@@ -210,6 +210,19 @@ router.post("/profile/:id/sendMessage", async (req, res) => {
       },
       { new: true }
     );
+    await User.findOneAndUpdate(
+      { username: username, "friends._id": id },
+      {
+        $push: {
+          "friends.$.messages": {
+            message: req.body.message,
+            sender: req.body.sender,
+            reciever: req.body.reciever,
+          },
+        },
+      },
+      { new: true }
+    );
     res.json({
       messages: user.friends,
       success: true,
