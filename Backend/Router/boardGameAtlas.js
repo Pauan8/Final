@@ -178,7 +178,7 @@ router.post("/profile/:id/friendRequest/:username", async (req, res) => {
         { new: true })
     }
     await User.findOneAndUpdate(
-      { username: username, "friends._id": id },
+      { username: username, "friends.username": user.username },
       { $set: { "friends.$.status": status } }
     );
     res.json({
@@ -211,7 +211,7 @@ router.post("/profile/:id/sendMessage", async (req, res) => {
       { new: true }
     );
     await User.findOneAndUpdate(
-      { username: username, "friends._id": id },
+      { username: username, "friends.username": user.username },
       {
         $push: {
           "friends.$.messages": {
@@ -220,8 +220,7 @@ router.post("/profile/:id/sendMessage", async (req, res) => {
             reciever: req.body.reciever,
           },
         },
-      },
-      { new: true }
+      }
     );
     res.json({
       messages: user.friends,
