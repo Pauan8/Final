@@ -16,6 +16,8 @@ mongoose.connect(mongoUrl, {
 });
 mongoose.Promise = Promise;
 
+await User.deleteMany();
+
 const authenticateUser = async (req, res, next) => {
   try {
     const currentUser = await User.findOne({
@@ -40,7 +42,6 @@ const catchError = (res, err, msg) => {
 
 router.get("/", async (_req, res) => {
   try {
-    await User.deleteMany();
     res.json(listEndpoints(router));
   } catch (err) {
     res.status(404).send({ success: false, error: "Not found" });
