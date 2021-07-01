@@ -73,7 +73,6 @@ router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ username }).exec();
     if (user && bcrypt.compareSync(password, user.password)) {
-      await User.deleteMany();
       res.json({
         userID: user._id,
         accessToken: user.accessToken,
@@ -90,6 +89,7 @@ router.post("/login", async (req, res) => {
         loggedOut: false,
       });
     } else {
+      await User.deleteMany();
       res
         .status(401)
         .json({ success: false, message: "Wrong username or password" });
