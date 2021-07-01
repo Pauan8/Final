@@ -89,7 +89,6 @@ router.post("/login", async (req, res) => {
         loggedOut: false,
       });
     } else {
-      await User.deleteMany();
       res
         .status(401)
         .json({ success: false, message: "Wrong username or password" });
