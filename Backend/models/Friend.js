@@ -4,7 +4,7 @@ const message = require('./Message')
 
 const FriendSchema = mongoose.Schema([{
   user_id: {
-    type: mongoose.Types.Schema.ObjectId,
+    type: mongoose.Types.ObjectId,
     ref: "User"
   },
   username: {
