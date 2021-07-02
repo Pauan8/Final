@@ -76,6 +76,7 @@ export const Profile = ({ id, mode }) => {
         visibleLayer={visibleLayer}
         setVisibleLayer={setVisibleLayer}
         messageMode={messageMode}
+        setMessageMode={setMessageMode}
         />
       <ProfileCard id={id} visibleLayer={visibleLayer} mode={mode} profile={profile}/>
     </Container>

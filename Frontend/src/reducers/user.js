@@ -37,8 +37,7 @@ const user = createSlice({
       friends: {
         username: null,
         status: null,
-        state: null,
-        
+        state: null, 
       },
       activeFriend: [],
     },
@@ -61,7 +60,6 @@ const user = createSlice({
     },
     setMessages: (store, action) => {
       const { username, messages} = action.payload;
-      console.log(messages)
       const friends =  store.userInfo.friends.map( friend => {
         if(friend.username === username) {
           return {...friend, messages: messages}

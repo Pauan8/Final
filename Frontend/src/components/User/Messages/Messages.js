@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 
-import { ChatWindow } from './ChatWindow';
+import { ChatWindow } from './Chat';
 import { MessageList } from './MessageList';
 
 const Wrapper = styled.div`
@@ -25,13 +25,27 @@ const Wrapper = styled.div`
   }
 `;
 
-export const Messages = ({ visibleLayer, messageMode, setMessageMode}) => {
+export const Messages = ({
+  visibleLayer,
+  setVisibleLayer,
+  messageMode,
+  setMessageMode,
+}) => {
   return (
     <Wrapper visible={visibleLayer}>
       {messageMode === 'chat' ? (
-        <ChatWindow mode={visibleLayer} messageMode={messageMode} />
+        <ChatWindow
+          visibleLayer={visibleLayer}
+          setVisibleLayer={setVisibleLayer}
+          messageMode={messageMode}
+          setMessageMode={setMessageMode}
+        />
       ) : (
-        <MessageList messageMode={messageMode} setMesageMode={setMessageMode} />
+        <MessageList
+          messageMode={messageMode}
+          setMessageMode={setMessageMode}
+          setVisibleLayer={setVisibleLayer}
+        />
       )}
     </Wrapper>
   );

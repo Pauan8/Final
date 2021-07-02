@@ -22,15 +22,35 @@ const Wrapper = styled.div`
   margin-top: 89px;
   color: #733c3c;
 
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #a65151 transparent;
+
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #F2B279;
+    border-radius: 20px;
+    border: 3px solid #F2B279;
+  }
+
   @media (min-width: 768px) {
     border-right: none;
     border-radius: 5px 0 0 5px;
   }
 `;
 
-const Title = styled.h2``;
+const Title = styled.h2`
+margin: 0;`;
 
-const SubTitle = styled.h3``;
+const SubTitle = styled.h3`
+margin-bottom: 3px;`;
 
 const Text = styled.p`
 margin-left: 10px;
@@ -45,7 +65,7 @@ const FriendContainer = styled.div`
   height: 70px;
   background: #a65151;
   padding: 0 10px;
-  width: 100%;
+  width: calc(100% - 20px);
   border-radius: 5px;
   margin-bottom: 10px;
 `;

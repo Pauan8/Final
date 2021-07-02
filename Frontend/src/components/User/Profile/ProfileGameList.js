@@ -79,6 +79,7 @@ const ImageContainer = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
 const GameImg = styled.img`
   height: 100%;
   object-fit: cover;
