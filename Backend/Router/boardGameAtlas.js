@@ -233,6 +233,24 @@ router.post("/profile/:id/message/:username", async (req, res) => {
   }
 });
 
+router.get("/profile/:id/message/:username", authenticateUser);
+router.get("/profile/:id/message/:username", async (req, res) => {
+  const { id,  username } = req.params;
+
+  try {
+    const user = await User.findById(id)
+    const friend= user.friends.filter(frien => frien.username === username)
+
+    res.json({
+      messages: friend[0].messages,
+      success: true,
+      loggedOut: false,
+    })
+  } catch (err) {
+    catchError(res, err, "Invalid user id");
+  }
+});
+
 router.delete("/profile/:id/removeFriend/:user_id", authenticateUser);
 router.delete("/profile/:id/removeFriend/:user_id", async (req, res) => {
   const {id, user_id} = req.params;

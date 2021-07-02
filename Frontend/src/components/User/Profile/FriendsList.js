@@ -1,11 +1,11 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import styled from "styled-components/macro";
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import styled from 'styled-components/macro';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-import user,{ answerFriendRequest } from "../../../reducers/user";
-import { TransparentBtn } from "../../../components/Reusable/TransparentBtn";
+import user,{ answerFriendRequest } from '../../../reducers/user';
+import { TransparentBtn } from '../../../components/Reusable/TransparentBtn';
 
 const Wrapper = styled.div`
   width: 300px;
@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   background: #f2d3ac;
   border: solid #a65151 1px;
   border-radius: 5px;
-  display: ${(props) => (props.visible === "friends" ? "flex" : "none")};
+  display: ${(props) => (props.visible === 'friends' ? 'flex' : 'none')};
   flex-direction: column;
   align-items: center;
   padding: 20px;
@@ -77,34 +77,34 @@ export const FriendsList = ({
   visibleLayer,
   setVisibleLayer,
   mode,
-  setMessageMode
+  setMessageMode,
 }) => {
   const dispatch = useDispatch();
   let declined = friends && friends.length > 0 ? friends.filter((friend) => friend.stat === 2) : [];
-  let pending = friends && friends.length > 0 ? friends.filter((friend) => friend.stat === 0 && friend.state === "sender") : [];
-  let recieved = friends && friends.length > 0 ? friends.filter((friend) => friend.stat === 0 && friend.state === "reciever") : [];
+  let pending = friends && friends.length > 0 ? friends.filter((friend) => friend.stat === 0 && friend.state === 'sender') : [];
+  let recieved = friends && friends.length > 0 ? friends.filter((friend) => friend.stat === 0 && friend.state === 'reciever') : [];
   let accepted = friends && friends.length > 0 ? friends.filter((friend) => friend.stat === 1) : [];
 
   const handleClick = (friend) => {
-    dispatch(user.actions.setActiveFriend(friend))
+    dispatch(user.actions.setActiveFriend(friend.username))
     setMessageMode('chat')
     setVisibleLayer('message')
   }
 
   const handleFriends = (friend) => {
-    if (friend.stat === 2 && friend.state === "sender") {
+    if (friend.stat === 2 && friend.state === 'sender') {
       return (
         <>
           <Text>{friend.username}</Text>
           <TransparentBtn
-            handleClick={() => dispatch(handleFriends(friend.user_id, "remove"))}
-            fontSize="30px"
-            color="#F2811D"
-            text="✗"
+            handleClick={() => dispatch(handleFriends(friend.user_id, 'remove'))}
+            fontSize='30px'
+            color='#F2811D'
+            text='✗'
           />
         </>
       );
-    } else if (friend.stat === 0 && friend.state === "sender") {
+    } else if (friend.stat === 0 && friend.state === 'sender') {
       return <Text>{friend.username}</Text>;
     } else if (friend.stat === 1) {
       return (
@@ -122,7 +122,7 @@ export const FriendsList = ({
           </Btn>
         </>
       );
-    } else if (friend.stat === 0 && friend.state === "reciever") {
+    } else if (friend.stat === 0 && friend.state === 'reciever') {
       return (
         <>
           <Text>{friend.username}</Text>
@@ -131,17 +131,17 @@ export const FriendsList = ({
               handleClick={() =>
                 dispatch(answerFriendRequest(friend.user_id, 1))
               }
-              fontSize="14px"
-              text="Accept"
-              color="#C1D98F"
+              fontSize='14px'
+              text='Accept'
+              color='#C1D98F'
             />
             <TransparentBtn
               handleClick={() =>
                 dispatch(answerFriendRequest(friend.user_id, 2))
               }
-              fontSize="14px"
-              color="#F2811D"
-              text="Decline"
+              fontSize='14px'
+              color='#F2811D'
+              text='Decline'
             />
           </ButtonContainer>
         </>
@@ -152,11 +152,11 @@ export const FriendsList = ({
   const renderFriends = (arr, title) => {
     if (arr.length > 0) {
       if (
-        ((title === "Declined" ||
-          title === "Recieved" ||
-          title === "Pending") &&
-          mode === "private") ||
-        title === "Friends"
+        ((title === 'Declined' ||
+          title === 'Recieved' ||
+          title === 'Pending') &&
+          mode === 'private') ||
+        title === 'Friends'
       ) {
         return (
           <>
@@ -177,13 +177,13 @@ export const FriendsList = ({
       <Title>Friendlist</Title>
       {friends && friends.length > 0 ? (
         <>
-          {renderFriends(declined, "Declined")}
-          {renderFriends(recieved, "Recieved")}
-          {renderFriends(pending, "Pending")}
-          {renderFriends(accepted, "Friends")}
+          {renderFriends(declined, 'Declined')}
+          {renderFriends(recieved, 'Recieved')}
+          {renderFriends(pending, 'Pending')}
+          {renderFriends(accepted, 'Friends')}
         </>
       ) : (
-        <>No friends {":/"} </>
+        <>No friends {':/'} </>
       )}
     </Wrapper>
   );

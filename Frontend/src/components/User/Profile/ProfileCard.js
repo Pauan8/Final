@@ -124,7 +124,7 @@ return (
         </Edit>
       </EditLink>
     ) : (
-      <Button onClick={() => dispatch(handleFriend(profile.userID, "add"))}>
+      <Button onClick={() => dispatch(handleFriend(profile.userID, 'add'))}>
         <PersonAddIcon />
       </Button>
     )}

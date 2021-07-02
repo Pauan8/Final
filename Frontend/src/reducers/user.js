@@ -59,8 +59,19 @@ const user = createSlice({
       const friends = action.payload;
       store.userInfo.friends = friends;
     },
-    setActiveFriend : (store, action) => {
-      const { user_id, ...active} = action.payload;
+    setMessages: (store, action) => {
+      const { username, messages} = action.payload;
+      console.log(messages)
+      const friends =  store.userInfo.friends.map( friend => {
+        if(friend.username === username) {
+          return {...friend, messages: messages}
+        } else {
+          return friend;
+        }})
+      store.userInfo.friends = friends;
+    },
+    setActiveFriend: (store, action) => {
+      const active = action.payload;
       store.userInfo.activeFriend = active;
     },
     setErrors: (store, action) => {
@@ -179,6 +190,22 @@ export const answerFriendRequest = (friend_id, status) => {
     .then((data) => {
       if(data.success){
         dispatch(user.actions.setFriends(data.friends))
+      } else {
+        dispatch(user.actions.setErrors(data));
+      }
+    })
+    .catch((error) => dispatch(user.actions.setErrors('catch error')));
+  }
+};
+
+export const fetchMessages = (username) => {
+  return (dispatch) => {
+    fetches.profile
+    .getMessages(username)
+    .then((data) => {
+      if(data.success){
+        console.log(data)
+        dispatch(user.actions.setMessages({username: username, messages: data.messages}))
       } else {
         dispatch(user.actions.setErrors(data));
       }

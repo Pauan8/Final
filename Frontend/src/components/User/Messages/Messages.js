@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from 'react';
 import styled from 'styled-components/macro';
 
-import { ChatWindow } from "./ChatWindow";
-import { MessageList } from "./MessageList"
+import { ChatWindow } from './ChatWindow';
+import { MessageList } from './MessageList';
 
 const Wrapper = styled.div`
   width: 300px;
@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   background: #f2d3ac;
   border: solid #a65151 1px;
   border-radius: 5px;
-  display: ${props => props.visible === 'message' ? 'flex' : 'none'};
+  display: ${(props) => (props.visible === 'message' ? 'flex' : 'none')};
   flex-direction: column;
   align-items: center;
   padding: 20px;
@@ -25,13 +25,14 @@ const Wrapper = styled.div`
   }
 `;
 
-export const Messages = ({visibleLayer, messageMode, setMessageMode}) => {
-
+export const Messages = ({ visibleLayer, messageMode, setMessageMode}) => {
   return (
     <Wrapper visible={visibleLayer}>
-    {messageMode === 'chat'
-      ? <ChatWindow />
-      : <MessageList messageMode={messageMode} setMesageMode={setMessageMode}/>}
+      {messageMode === 'chat' ? (
+        <ChatWindow mode={visibleLayer} messageMode={messageMode} />
+      ) : (
+        <MessageList messageMode={messageMode} setMesageMode={setMessageMode} />
+      )}
     </Wrapper>
   );
 };

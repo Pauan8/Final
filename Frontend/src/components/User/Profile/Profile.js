@@ -72,7 +72,7 @@ export const Profile = ({ id, mode }) => {
         setMessageMode={setMessageMode}
         mode={mode}
       />
-      <Messages         
+      <Messages     
         visibleLayer={visibleLayer}
         setVisibleLayer={setVisibleLayer}
         messageMode={messageMode}

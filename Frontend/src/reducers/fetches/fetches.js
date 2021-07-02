@@ -100,7 +100,16 @@ export const fetches = {
         .then((response) => 
           testResponse(response));
       },
-    sendMessage: (username, message) => {
+      getMessages: (username) => {
+        return fetch(
+          `${BASE_URL}/profile/${localStorage.getItem('userID')}/message/${username}`,
+          {
+          headers: authHeaders
+          })
+        .then((response) => 
+        testResponse(response));
+      }, 
+      sendMessage: (username, message) => {
       return fetch(
         `${BASE_URL}/profile/${localStorage.getItem('userID')}/message/${username}`,
         {
