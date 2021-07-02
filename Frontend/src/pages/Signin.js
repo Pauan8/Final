@@ -53,7 +53,7 @@ const Signin = () => {
 
   if (validate) {
     dispatch(login(value.username, value.password));
-    if (!errors || errors === null) {
+    if (errors === null) {
       history.push('/');
       setValidate();
       validateString="";
