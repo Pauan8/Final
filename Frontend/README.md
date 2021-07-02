@@ -1,7 +1,7 @@
 ** Live **
 
 frontend:
-https://thirsty-joliot-313e91.netlify.app/
+https://boarders-final.netlify.app/
 
 backend:
 https://boarders-final-project.herokuapp.com/
