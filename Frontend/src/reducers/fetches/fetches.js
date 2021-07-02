@@ -1,13 +1,6 @@
 //const BASE_URL = 'https://secure-escarpment-13722.herokuapp.com'
 const BASE_URL = 'http://localhost:8080'
 
-const testResponse = (response) => {
-  if (!response.ok) {
-    throw Error(response.statusText);
-  }
-  return response.json();
-};
-
 const authHeaders =  {
     'content-type': 'application/json',
     Authorization: localStorage.getItem('token'),
@@ -33,8 +26,7 @@ export const fetches = {
       return fetch(`${BASE_URL}/profile/${localStorage.getItem('userID')}`, {
         headers: authHeaders,
       })
-      .then((response) => 
-        testResponse(response));
+      .then((response) => response.json());
     },
     signup: (username, password, name, surname, e_mail) => {
       return fetch(`${BASE_URL}/users`, {
@@ -49,8 +41,7 @@ export const fetches = {
           surname,
           e_mail,
         }),
-      }).then((response) => 
-        testResponse(response));
+      }).then((response) => response.json());
     },
     edit: (avatar, name, surname, e_mail, description, age) => {
       return fetch(
@@ -67,8 +58,7 @@ export const fetches = {
             age,
           }),
         }
-      ).then((response) => 
-        testResponse(response));
+      ).then((response) => response.json());
     },
     addFriend: (friend_id) => {
       return fetch(
@@ -77,8 +67,7 @@ export const fetches = {
           method: 'POST',
           headers: authHeaders,
         })
-        .then((response) => 
-          testResponse(response));
+        .then((response) => response.json());
       },
     removeFriend: (friend_id)  => {
       return fetch(
@@ -87,8 +76,7 @@ export const fetches = {
           method: 'DELETE',
           headers: authHeaders,
         })
-        .then((response) => 
-          testResponse(response));
+        .then((response) => response.json());
       },
     answerFriendRequest: (friend_id, status) =>{
       return fetch(
@@ -97,8 +85,7 @@ export const fetches = {
           method: 'POST',
           headers: authHeaders,
         })
-        .then((response) => 
-          testResponse(response));
+        .then((response) => response.json());
       },
       getMessages: (username) => {
         return fetch(
@@ -106,8 +93,7 @@ export const fetches = {
           {
           headers: authHeaders
           })
-        .then((response) => 
-        testResponse(response));
+          .then((response) => response.json());
       }, 
       sendMessage: (username, message) => {
       return fetch(
@@ -119,8 +105,7 @@ export const fetches = {
             message
           })
         })
-        .then((response) => 
-        testResponse(response));
+        .then((response) => response.json());
     },
     addGame: (game, list) => {
       return fetch(
@@ -132,8 +117,7 @@ export const fetches = {
             [list]: game
           })
         }
-      ).then((response) => 
-        testResponse(response));
+      ).then((response) => response.json());
     },
     removeGame: ( id, list) => {
       return fetch(
@@ -142,8 +126,7 @@ export const fetches = {
           method: 'DELETE',
           headers: authHeaders,
         }
-      ).then((response) => 
-        testResponse(response));
+      ).then((response) => response.json());
     },
   },
 
@@ -151,14 +134,12 @@ export const fetches = {
     list: (type, value, page) => {
       return fetch(
         `https://api.boardgameatlas.com/api/search?limit=21&pretty=true&client_id=39WI5Y3mBx&${type}=${value}&skip=${(page-1)*21}`
-      ).then((response) => 
-        testResponse(response));
+      ).then((response) => response.json());
     },
     searchList: (getState, page) => {
       return fetch(
         `https://api.boardgameatlas.com/api/search?limit=21&pretty=true&client_id=39WI5Y3mBx${getState().boardGames.searchString}&skip=${(page-1)*21}`
-      ).then((response) => 
-        testResponse(response));
+      ).then((response) => response.json());
     },
     filterList: ( getState, type, mode, page) => {
       let filteredString = ""
@@ -175,20 +156,19 @@ export const fetches = {
         return fetch(
           `https://api.boardgameatlas.com/api/search?limit=21&pretty=true&client_id=39WI5Y3mBx${getState().boardGames.searchString}
           ${handleFilter()}&skip=${(page - 1) * 21}`
-        ).then((response) => testResponse(response));
+        ).then((response) => response.json());
       } else {
         return fetch(
           `https://api.boardgameatlas.com/api/search?limit=21&pretty=true&client_id=39WI5Y3mBx&${type}=${mode}${handleFilter()}&skip=${
             (page - 1) * 21
           }`
-        ).then((response) => testResponse(response));
+        ).then((response) => response.json());
       }
     },
     game: (id) => {
       return fetch(
         `https://api.boardgameatlas.com/api/search?limit=20&pretty=true&client_id=39WI5Y3mBx&ids=${id}`
-      ).then((response) => 
-        testResponse(response));
+      ).then((response) => response.json());
     },
   },
 };

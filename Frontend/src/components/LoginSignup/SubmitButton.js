@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components/macro';
 
 const ButtonContainer = styled.div`
@@ -7,8 +8,8 @@ const ButtonContainer = styled.div`
   flex-direction: column;
 
   &:after {
-    color: ${(props) => (props.validate ? 'black' : 'red')};
-    content: '${(props) => (props.validate ? '' : 'Invalid username')}';
+    color: ${(props) => (props.validate ? props.errors !== null && props.errors ? 'red' : 'black': 'red')};
+    content: '${(props) => (props.errors !== null && props.errors ? props.errors.error : props.validate === false ? 'Not valid info, try again!' : '')}';
   }
 `;
 
@@ -24,8 +25,10 @@ const Button = styled.button`
 `;
 
 export const SubmitButton = ({ btntext, handleClick, validate }) => {
+  const errors = useSelector(store => store.user.errors)
+
   return (
-    <ButtonContainer validate={validate}>
+    <ButtonContainer errors={errors} validate={validate}>
       <Button onClick={handleClick} validate={validate}>
         {btntext}
       </Button>

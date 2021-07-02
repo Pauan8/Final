@@ -40,9 +40,8 @@ const user = createSlice({
         state: null, 
       },
       activeFriend: [],
-    },
+    }
   },
-  
   errors: {
   },
   reducers: {
@@ -91,13 +90,13 @@ export const signUp = ({ username, password, name, surname, e_mail }) => {
         if (data.success) {
           localStorage.setItem('userID', data.userID);
           localStorage.setItem('token', data.accessToken);
-          dispatch(user.actions.setUser(data));
           dispatch(user.actions.setErrors(null));
+          dispatch(user.actions.setUser(data));
         } else {
           dispatch(user.actions.setErrors(data));
         }
       })
-      .catch((error) => dispatch(user.actions.setErrors('catch error')));
+      .catch((error) => user.actions.setErrors("catch"));
   };
 };
 
@@ -130,8 +129,8 @@ export const login = (username, password) => {
         if (json.accessToken) {
           localStorage.setItem('token', json.accessToken);
           localStorage.setItem('userID', json.userID);
-          dispatch(user.actions.setUser(json));
           dispatch(user.actions.setErrors(null));
+          dispatch(user.actions.setUser(json));
         } else {
           dispatch(user.actions.setErrors(json));
         }

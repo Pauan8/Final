@@ -28,7 +28,7 @@ export const TextInput = ({ title, setValue, value, regexp }) => {
       setErrorText('Enter a valid e-mail');
       setError(true);
     } else if (!regexp.test(newValue)) {
-      setErrorText('Should not contain special characters');
+      setErrorText('That is to short/long or contains special characters');
       setError(true);
     } else {
       setErrorText('');
