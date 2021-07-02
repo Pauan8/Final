@@ -9,16 +9,16 @@ const ButtonContainer = styled.div`
 
   &:after {
     color: ${(props) =>
-      props.validate !== false
-        ? props.errors !== null && props.errors
-          ? 'red'
-          : 'black'
+      props.errors !== null && props.errors
+        ? 'red'
+          : props.validate !== false
+          ? 'black'
         : 'red'};
     content: '${(props) =>
-     props.validate !== false
-        ? props.errors !== null && props.errors
+        props.errors !== null && props.errors
           ? props.errors.error
-          : ''
+          : props.validate !== false 
+          ? ''
         : 'Not valid info, try again!'}';
   }
 `;
