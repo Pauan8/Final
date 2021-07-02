@@ -31,8 +31,7 @@ const Wrapper = styled.div`
 `;
 
 const Bubble = styled.div`
-  align-self: ${(props) =>
-    props.user === 'friend' ? 'flex-start' : 'flex-end'};
+  align-self: ${(props) => props.user === 'friend' ? 'flex-start' : 'flex-end'};
   margin: 10px;
   background: #f2d3ac;
   border-radius: 10px;
@@ -48,10 +47,7 @@ const FriendImg = styled.img`
 const Text = styled.p`
   font-size: ${(props) => (props.type === 'TimeStamp' ? '12px' : '14px')};
   font-weight: ${(props) => (props.type === 'Name' ? 'bold' : 'normal')};
-  color: ${(props) =>
-    props.type === 'Message'
-      ? 'black'
-      : '#a65151'};
+  color: ${(props) => props.type === 'Message'? 'black' : '#a65151'};
 `;
 
 const Friend = styled.div`

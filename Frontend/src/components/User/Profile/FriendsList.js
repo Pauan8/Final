@@ -1,10 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components/macro';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-import user,{ answerFriendRequest } from '../../../reducers/user';
+import user, { answerFriendRequest, handleFriend } from '../../../reducers/user';
 import { TransparentBtn } from '../../../components/Reusable/TransparentBtn';
 
 const Wrapper = styled.div`
@@ -35,9 +36,9 @@ const Wrapper = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: #F2B279;
+    background-color: #f2b279;
     border-radius: 20px;
-    border: 3px solid #F2B279;
+    border: 3px solid #f2b279;
   }
 
   @media (min-width: 768px) {
@@ -47,13 +48,15 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.h2`
-margin: 0;`;
+  margin: 0;
+`;
 
 const SubTitle = styled.h3`
-margin-bottom: 3px;`;
+  margin-bottom: 3px;
+`;
 
 const Text = styled.p`
-margin-left: 10px;
+  margin-left: 10px;
   color: #f2d3ac;
   font-weight: bold;
 `;
@@ -71,26 +74,37 @@ const FriendContainer = styled.div`
 `;
 
 const FriendContainerInner = styled.div`
-    display: flex;`
+  display: flex;
+`;
 
 const Btn = styled.button`
-    background: transparent;
-    border: none;
-    padding: none;
+  background: transparent;
+  border: none;
+  padding: none;
 
-    &:active,
-    &:hover,
-    &:focus{
-        background: #f2d3ac;
-    }
-`
+  &:active,
+  &:hover,
+  &:focus {
+    background: #f2d3ac;
+  }
+`;
 
 const Img = styled.image`
-    width: 50px;
-    height: 50px;`
+  width: 50px;
+  height: 50px;
+`;
 
 const ButtonContainer = styled.div`
-  display: flex;`
+  display: flex;
+`;
+
+const FriendLink = styled(Link)`
+  text-decoration: none;
+  color: #733c3c;
+`;
+
+const EmptyState = styled.div`
+  margin: 50px 0;`
 
 export const FriendsList = ({
   friends,
@@ -100,16 +114,32 @@ export const FriendsList = ({
   setMessageMode,
 }) => {
   const dispatch = useDispatch();
-  let declined = friends && friends.length > 0 ? friends.filter((friend) => friend.stat === 2) : [];
-  let pending = friends && friends.length > 0 ? friends.filter((friend) => friend.stat === 0 && friend.state === 'sender') : [];
-  let recieved = friends && friends.length > 0 ? friends.filter((friend) => friend.stat === 0 && friend.state === 'reciever') : [];
-  let accepted = friends && friends.length > 0 ? friends.filter((friend) => friend.stat === 1) : [];
+  let declined =
+    friends && friends.length > 0
+      ? friends.filter((friend) => friend.stat === 2)
+      : [];
+  let pending =
+    friends && friends.length > 0
+      ? friends.filter(
+          (friend) => friend.stat === 0 && friend.state === 'sender'
+        )
+      : [];
+  let recieved =
+    friends && friends.length > 0
+      ? friends.filter(
+          (friend) => friend.stat === 0 && friend.state === 'reciever'
+        )
+      : [];
+  let accepted =
+    friends && friends.length > 0
+      ? friends.filter((friend) => friend.stat === 1)
+      : [];
 
   const handleClick = (friend) => {
-    dispatch(user.actions.setActiveFriend(friend.username))
-    setMessageMode('chat')
-    setVisibleLayer('message')
-  }
+    dispatch(user.actions.setActiveFriend(friend.username));
+    setMessageMode('chat');
+    setVisibleLayer('message');
+  };
 
   const handleFriends = (friend) => {
     if (friend.stat === 2 && friend.state === 'sender') {
@@ -117,7 +147,9 @@ export const FriendsList = ({
         <>
           <Text>{friend.username}</Text>
           <TransparentBtn
-            handleClick={() => dispatch(handleFriends(friend.user_id, 'remove'))}
+            handleClick={() =>
+              dispatch(handleFriend(friend.user_id, 'remove'))
+            }
             fontSize='30px'
             color='#F2811D'
             text='✗'
@@ -125,27 +157,39 @@ export const FriendsList = ({
         </>
       );
     } else if (friend.stat === 0 && friend.state === 'sender') {
-      return <Text>{friend.username}</Text>;
+      return (
+        <FriendLink to={`/user/${friend.username}`}>
+          <Text>{friend.username}</Text>;
+        </FriendLink>
+      );
     } else if (friend.stat === 1) {
       return (
         <>
-          <FriendContainerInner>
-            {friend.avatar ? (
-              <Img src={require(`../../../assets/avatar/${friend.avatar}`)} />
-            ) : (
-              <AccountCircleIcon style={{ fontSize: 50 }} />
-            )}
-            <Text>{friend.username}</Text>
-          </FriendContainerInner>
-          <Btn onClick={() => handleClick(friend)}>
-            <MailOutlineIcon />
-          </Btn>
+          <FriendLink to={`/user/${friend.username}`}>
+            <FriendContainerInner>
+              {friend.avatar ? (
+                <Img src={require(`../../../assets/avatar/${friend.avatar}`)} />
+              ) : (
+                <AccountCircleIcon style={{ fontSize: 50 }} />
+              )}
+              <Text>{friend.username}</Text>
+            </FriendContainerInner>
+          </FriendLink>
+          {mode === 'private' ? (
+            <Btn onClick={() => handleClick(friend)}>
+              <MailOutlineIcon />
+            </Btn>
+          ) : (
+            <></>
+          )}
         </>
       );
     } else if (friend.stat === 0 && friend.state === 'reciever') {
       return (
         <>
-          <Text>{friend.username}</Text>
+          <FriendLink to={`/user/${friend.username}`}>
+            <Text>{friend.username}</Text>
+          </FriendLink>
           <ButtonContainer>
             <TransparentBtn
               handleClick={() =>
@@ -203,7 +247,7 @@ export const FriendsList = ({
           {renderFriends(accepted, 'Friends')}
         </>
       ) : (
-        <>No friends {':/'} </>
+        <EmptyState>No friends {':/'} </EmptyState>
       )}
     </Wrapper>
   );

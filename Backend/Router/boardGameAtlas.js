@@ -161,12 +161,13 @@ router.post("/profile/:id/updateFriend/:user_id", authenticateUser);
 router.post("/profile/:id/updateFriend/:user_id", async (req, res) => {
   const { id, user_id } = req.params;
   const {status} = req.query;
+
   try {
     let user;
     if (status === "2") {
       user = await User.findByIdAndUpdate(
         id,
-        { $pull: { "friends.user_id": user_id } },
+        { $pull: { friends: {user_id: user_id }} },
         { new: true }
       );
     } else { 
@@ -251,12 +252,13 @@ router.get("/profile/:id/message/:username", async (req, res) => {
   }
 });
 
+
 router.delete("/profile/:id/removeFriend/:user_id", authenticateUser);
 router.delete("/profile/:id/removeFriend/:user_id", async (req, res) => {
   const {id, user_id} = req.params;
 
   try{
-     const user = await User.findByIdAndUpdate(id, { pull: { 'friends.user_id': user_id}})
+     const user = await User.findByIdAndUpdate(id, {$pull: { friends:{ user_id: user_id}}})
      res.json({
       messages: user.friends,
       success: true,

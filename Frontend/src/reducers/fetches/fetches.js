@@ -84,7 +84,7 @@ export const fetches = {
       return fetch(
         `${BASE_URL}/profile/${localStorage.getItem('userID')}/removeFriend/${friend_id}`,
         {
-          method: 'POST',
+          method: 'DELETE',
           headers: authHeaders,
         })
         .then((response) => 
