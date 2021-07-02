@@ -15,11 +15,11 @@ const ButtonContainer = styled.div`
           : 'black'
         : 'red'};
     content: '${(props) =>
-      props.errors !== null && props.errors
-        ? props.errors.error
-        : props.validate === false
-        ? 'Not valid info, try again!'
-        : ''}';
+     props.validate
+        ? props.errors !== null && props.errors
+          ? props.errors.error
+          : ''
+        : 'Not valid info, try again!'}';
   }
 `;
 
