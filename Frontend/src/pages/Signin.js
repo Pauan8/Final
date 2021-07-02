@@ -44,7 +44,7 @@ const Signin = () => {
         }
       }
     });
-    if (!validateString.includes('false')) {
+    if (validateString.includes('false')) {
       setValidate(false);
     } else {
       setValidate(true);
