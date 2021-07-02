@@ -161,16 +161,15 @@ router.post("/profile/:id/updateFriend/:user_id", authenticateUser);
 router.post("/profile/:id/updateFriend/:user_id", async (req, res) => {
   const { id, user_id } = req.params;
   const {status} = req.query;
-  const user = "";
-
   try {
+    let user;
     if (status === "2") {
       user = await User.findByIdAndUpdate(
         id,
-        { $pull: { 'friends.user_id': user_id } },
+        { $pull: { "friends.user_id": user_id } },
         { new: true }
       );
-    } else {
+    } else { 
       user = await User.findOneAndUpdate(
         { _id: id, "friends.user_id": user_id },
         { $set: { "friends.$.stat": status } },
@@ -180,7 +179,7 @@ router.post("/profile/:id/updateFriend/:user_id", async (req, res) => {
     await User.findOneAndUpdate(
       { _id: user_id, "friends.user_id": id },
       { $set: { "friends.$.stat": status } }
-    );
+    );  
 
     res.json({
       friends: user.friends,
@@ -198,7 +197,6 @@ router.post("/profile/:id/message/:username", async (req, res) => {
 
 
   try {
-    const friendToMessage = await User.findOne({username: username})
     const userAsSender = await User.findById(id)
     const user = await User.findOneAndUpdate(
       { _id: id, "friends.username": username },
@@ -207,7 +205,7 @@ router.post("/profile/:id/message/:username", async (req, res) => {
           "friends.$.messages": {
             message: req.body.message,
             sender: userAsSender.username,
-            reciever: friendToMessage.username,
+            reciever: username,
           },
         },
       },
@@ -220,7 +218,7 @@ router.post("/profile/:id/message/:username", async (req, res) => {
           "friends.$.messages": {
             message: req.body.message,
             sender: userAsSender.username,
-            reciever: friendToMessage.username,
+            reciever: username
           },
         },
       }

@@ -15,9 +15,7 @@ const FriendSchema = mongoose.Schema({
   avatar: String,
   stat: Number,
   state: String,
-  message: {
-    type: [message.schema]
-  }
+  messages: [message.schema]
 })
 
     const friend = mongoose.model('friend', FriendSchema);

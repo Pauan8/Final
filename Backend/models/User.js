@@ -3,7 +3,6 @@ import crypto from 'crypto';
 
 const list = require('./Lists');
 const friend = require('./Friend')
-const message = require('./Message')
 
 const UserSchema = mongoose.Schema({
   avatar: String,
