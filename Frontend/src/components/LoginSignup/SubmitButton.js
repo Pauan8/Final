@@ -9,13 +9,13 @@ const ButtonContainer = styled.div`
 
   &:after {
     color: ${(props) =>
-      props.validate
+      props.validate !== false
         ? props.errors !== null && props.errors
           ? 'red'
           : 'black'
         : 'red'};
     content: '${(props) =>
-     props.validate
+     props.validate !== false
         ? props.errors !== null && props.errors
           ? props.errors.error
           : ''
