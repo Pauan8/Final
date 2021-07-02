@@ -6,10 +6,15 @@ import { Search } from "./Reusable/Search";
 
 const SearchContainer = styled.div`
   display: flex;
-  width: calc(100vw - 70px) ;
-  padding-right: 30px;
-  justify-content: flex-end;
+  width: calc(100vw - 70px);
+  padding-right: 40px;
+  justify-content: ${props => props.mode === 'expanded'? 'center' : 'flex-end'};
   margin-top: 5px;   
+
+  @media (min-width: 768px){
+    width: calc(100vw - 110px);
+  padding-right: 70px;
+  }
 `;
 
 const SearchBar = styled.div`
@@ -42,11 +47,12 @@ export const SearchUser = ({ mode }) => {
   const [expand, setExpand] = useState(false);
 
   return (
-    <SearchContainer>
-    {mode === 'expanded'? <></> :<>
+    <SearchContainer mode={mode}>
+    
         <SearchBar expand={mode === "expanded" ? true : expand}>
             <Search mode="user" />
         </SearchBar>
+        {mode === 'expanded'? <></> :<>
         <SearchButton onClick={() => setExpand(!expand)}>
             {expand ? <RemoveCircleIcon /> : <SearchIcon src={require("../assets/search.png")} />}
         </SearchButton>  </>}

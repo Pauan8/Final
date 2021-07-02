@@ -23,18 +23,14 @@ const Wrapper = styled.div`
   }
 `;
 
-const SearchContainer = styled.div`
-    position: relative;
-    width: 100%;
-    height: 50px;
+const NoUser = styled.div` 
     display: flex;
-    justify-content: center;
-`
+    flex-direction: column;
+    justify-content: center;` 
 
-const SearchBar = styled.div`
-        width: 250px;
-    `
-
+const Text = styled.p`
+    flex: 1 1 auto;
+    text-align: center;`
 
 const PublicProfile = () => {
   const [user, setUser] = useState([]);
@@ -56,15 +52,13 @@ const PublicProfile = () => {
       <>
       <Profile id="" mode={user} />
       <ProfileGameList mode={user} />  </>
-      : <>
-        <p>User doesn't exist. </p>
-        <p>New Search? </p>
-        <SearchContainer>
-            <SearchBar>
-                <SearchUser mode='expanded'/>
-            </SearchBar>
-        </SearchContainer>
-        </>
+      : 
+        <NoUser>
+            <Text>User doesn't exist. </Text>
+            <Text>New Search? </Text>
+            <SearchUser mode='expanded'/>
+        </NoUser>
+     
     }
     </Wrapper>
     </>
