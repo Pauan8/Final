@@ -65,7 +65,7 @@ const Signup = () => {
 
   if (validate) {
     dispatch(signUp({ ...value }));
-    if (errors === null) {
+    if (!errors || errors === null) {
       history.push({ pathname: '/' });
       setValidate();
       validateString="";
