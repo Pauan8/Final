@@ -6,8 +6,7 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import EditIcon from '@material-ui/icons/Edit';
 
-import { handleFriend } from '../../../reducers/user'
-
+import { handleFriend } from '../../../reducers/user';
 
 const EditLink = styled(Link)`
   width: 100%;
@@ -38,7 +37,7 @@ const ImgCard = styled.div`
   background: #f2d3ac;
   border: solid #a65151 1px;
   border-radius: 5px;
-  display: ${props => props.visible === 'profile' ? 'flex' : 'none'};
+  display: ${(props) => (props.visible === 'profile' ? 'flex' : 'none')};
   flex-direction: column;
   align-items: center;
   padding: 20px;
@@ -111,60 +110,59 @@ const Button = styled.button`
   align-self: flex-start;
 `;
 
+export const ProfileCard = ({ id, visibleLayer, mode, profile }) => {
+  const dispatch = useDispatch();
 
-export const ProfileCard = ({id, visibleLayer, mode, profile}) => {
-    const dispatch = useDispatch();
- 
-return (
-    <ImgCard visible={visibleLayer} >
-    {mode === 'private' ? (
-      <EditLink to={`/profile/${id}/edit`}>
-        <Edit>
-          <EditIcon />
-        </Edit>
-      </EditLink>
-    ) : (
-      <Button onClick={() => dispatch(handleFriend(profile.userID, 'add'))}>
-        <PersonAddIcon />
-      </Button>
-    )}
-    <ImgContainer>
-      {profile.avatar ? (
-        <Img src={require(`../../../assets/avatar/${profile.avatar}`)} />
+  return (
+    <ImgCard visible={visibleLayer}>
+      {mode === 'private' ? (
+        <EditLink to={`/profile/${id}/edit`}>
+          <Edit>
+            <EditIcon />
+          </Edit>
+        </EditLink>
       ) : (
-        <AccountCircleIcon style={{ fontSize: 150 }} />
+        <Button onClick={() => dispatch(handleFriend(profile.userID, 'add'))}>
+          <PersonAddIcon />
+        </Button>
       )}
-    </ImgContainer>
-    <TextContainer>
-      <Name age={profile.age ? true : false}> {profile.username} </Name>
-      {profile.age ? <Age>lvl {profile.age}</Age> : <></>}
-    </TextContainer>
-    <TextContainer>
-      {profile.name ? (
-        <Info>
-          <Bold>Name:</Bold> {profile.name}
-        </Info>
+      <ImgContainer>
+        {profile.avatar ? (
+          <Img src={require(`../../../assets/avatar/${profile.avatar}`)} />
+        ) : (
+          <AccountCircleIcon style={{ fontSize: 150 }} />
+        )}
+      </ImgContainer>
+      <TextContainer>
+        <Name age={profile.age ? true : false}> {profile.username} </Name>
+        {profile.age ? <Age>lvl {profile.age}</Age> : <></>}
+      </TextContainer>
+      <TextContainer>
+        {profile.name ? (
+          <Info>
+            <Bold>Name:</Bold> {profile.name}
+          </Info>
+        ) : (
+          <></>
+        )}
+        {profile.surname ? <Info>{profile.surname}</Info> : <></>}
+      </TextContainer>
+      <TextContainer>
+        {profile.e_mail ? (
+          <Info>
+            <Bold>E-mail:</Bold> {profile.e_mail}
+          </Info>
+        ) : (
+          <></>
+        )}
+      </TextContainer>
+      {profile.description ? (
+        <Cite>
+          <Description>'{profile.description}'</Description>
+        </Cite>
       ) : (
         <></>
       )}
-      {profile.surname ? <Info>{profile.surname}</Info> : <></>}
-    </TextContainer>
-    <TextContainer>
-      {profile.e_mail ? (
-        <Info>
-          <Bold>E-mail:</Bold> {profile.e_mail}
-        </Info>
-      ) : (
-        <></>
-      )}
-    </TextContainer>
-    {profile.description ? (
-      <Cite>
-        <Description>'{profile.description}'</Description>
-      </Cite>
-    ) : (
-      <></>
-    )}
-  </ImgCard>
-    )
-}
+    </ImgCard>
+  );
+};

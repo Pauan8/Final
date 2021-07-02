@@ -12,13 +12,17 @@ const boardGames = createSlice({
     searchString: null,
     filters: [{}],
   },
-  error: 'Error',
+  errors: 'Error',
   reducers: {
     setGameLists: (store, action) => {
       const { listType, arr } = action.payload;
       const newarr = { ...store.gameLists, [listType]: arr };
 
       store.gameLists = newarr;
+    },
+    setErrors: (store, action) => {
+      const errors = action. payload;
+      store.errors = errors;
     },
     setGame: (store, action) => {
       const newGame = action.payload;
@@ -51,9 +55,10 @@ export const generateGamesList = (type, value, page) => {
         dispatch(
           boardGames.actions.setGameLists({ arr: data.games, listType: value })
         );
+        dispatch(boardGames.actions.setErrors(null))
         dispatch(ui.actions.setLoading(false));
       })
-      .catch((error) => console.log('catch error'));
+      .catch((error) => dispatch(boardGames.actions.setErrors('catch error')));
   };
 };
 
@@ -64,9 +69,10 @@ export const fetchSingleGame = (id) => {
       .game(id)
       .then((data) => {
         dispatch(boardGames.actions.setGame(data.games[0]));
+        dispatch(boardGames.actions.setErrors(null))
         dispatch(ui.actions.setLoading(false));
       })
-      .catch((error) => console.log('catch error'));
+      .catch((error) => dispatch(boardGames.actions.setErrors('catch error')));
   };
 };
 
@@ -78,9 +84,10 @@ export const genereateSearchList = (value, page) => {
         dispatch(
           boardGames.actions.setGameLists({ arr: data.games, listType: value })
         );
+        dispatch(boardGames.actions.setErrors(null))
         dispatch(ui.actions.setLoading(false));
       })
-      .catch((error) => console.log('catch error'));
+      .catch((error) => dispatch(boardGames.actions.setErrors('catch error')));
   };
 };
 
@@ -89,13 +96,13 @@ export const filterList = (type, mode, page) =>{
       dispatch(ui.actions.setLoading(true));
   fetches.games.filterList(getState, type, mode, page)
   .then((data) => {
-    console.log(data.games)
     dispatch(
       boardGames.actions.setGameLists({ arr: data.games, listType: type === 'search' ? type : mode })
     );
+    dispatch(boardGames.actions.setErrors(null))
     dispatch(ui.actions.setLoading(false));
   })
-  .catch((error) => console.log('catch error'));
+  .catch((error) => dispatch(boardGames.actions.setErrors('catch error')));
   };
 }
 

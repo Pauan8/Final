@@ -24,7 +24,7 @@ const IconContainer = styled.div`
   position: absolute;
   z-index: 8;
   right: 5px;
-  top: 0; ;
+  top: 0;
 
   @media (min-width: 768px) {
     right: 50px;
@@ -105,7 +105,9 @@ export const UserMenu = ({ font }) => {
         />
       </IconContainer>
       <Expanded expand={expand}>
-        {localStorage.getItem('token') ? renderMenu(loggedInArr) : renderMenu(loggedOutArr)}
+        {localStorage.getItem('token')
+          ? renderMenu(loggedInArr)
+          : renderMenu(loggedOutArr)}
       </Expanded>
     </Wrapper>
   );

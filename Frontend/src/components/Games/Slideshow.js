@@ -85,7 +85,6 @@ export const Slideshow = ({ type, value }) => {
       slideNumber = 1;
     }
     if (data[value]) {
-      console.log(Math.floor(data[value].length / slideNumber));
       for (let i = 0; i < data[value].length; i += slideNumber) {
         resultsRender.push(
           <ContainerOuter index={i} slideIndex={slideIndex} key={`${i}A`}>

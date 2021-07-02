@@ -172,6 +172,7 @@ export const handleFriend = (friend_id, state) => {
     .then((data) => {
       if(data.success){
         dispatch(user.actions.setFriends(data.friends))
+        dispatch(user.actions.setErrors(null));
       } else {
         dispatch(user.actions.setErrors(data));
       }
@@ -187,6 +188,7 @@ export const answerFriendRequest = (friend_id, status) => {
     .then((data) => {
       if(data.success){
         dispatch(user.actions.setFriends(data.friends))
+        dispatch(user.actions.setErrors(null));
       } else {
         dispatch(user.actions.setErrors(data));
       }
@@ -201,8 +203,8 @@ export const fetchMessages = (username) => {
     .getMessages(username)
     .then((data) => {
       if(data.success){
-        console.log(data)
         dispatch(user.actions.setMessages({username: username, messages: data.messages}))
+        dispatch(user.actions.setErrors(null));
       } else {
         dispatch(user.actions.setErrors(data));
       }
@@ -218,6 +220,7 @@ export const sendMessage = (username, message) => {
     .then((data) => {
       if(data.success){
         dispatch(user.actions.setFriends(data.friends))
+        dispatch(user.actions.setErrors(null));
       } else {
         dispatch(user.actions.setErrors(data));
       }

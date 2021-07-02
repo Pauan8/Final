@@ -33,7 +33,7 @@ const PrivateProfile = () => {
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
-      dispatch(fetchUser())
+      dispatch(fetchUser());
     } else {
       history.push('/signup');
     }
@@ -45,13 +45,12 @@ const PrivateProfile = () => {
       <Wrapper>
         {!isLoading ? (
           <>
-            <Profile id={id} mode="private" />
+            <Profile id={id} mode='private' />
             <ProfileGameList mode='private' />
           </>
         ) : (
           <LottieAnimation lotti={loading} height={300} width={300} />
         )}
-
       </Wrapper>
     </>
   );

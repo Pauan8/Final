@@ -1,17 +1,17 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import {  Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 
 const ExitLink = styled(Link)`
-    position: relative;
-    cursor: pointer;
-`
+  position: relative;
+  cursor: pointer;
+`;
 
 export const ExitButton = () => {
-    return (
-    <ExitLink to='/' > 
-        <CancelOutlinedIcon /> 
+  return (
+    <ExitLink to='/'>
+      <CancelOutlinedIcon />
     </ExitLink>
-    )
-}
+  );
+};

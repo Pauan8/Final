@@ -8,7 +8,7 @@ import {
   FormControl,
   Select,
   Chip,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {

@@ -43,15 +43,15 @@ const Signup = () => {
     regexArr.map((item) => {
       if (item.value === 'password' || item.value === 'username') {
         if (item.regex.test(value[item.value])) {
-          validateString += "true";
+          validateString += 'true';
         } else {
-          validateString += "false";
+          validateString += 'false';
         }
       } else if (value[item.value] !== '' && item.value !== 'age') {
         if (item.regex.test(value[item.value])) {
-          validateString += "true";
+          validateString += 'true';
         } else {
-          validateString += "false";
+          validateString += 'false';
         }
       }
     });
@@ -65,7 +65,7 @@ const Signup = () => {
 
   if (validate) {
     dispatch(signUp({ ...value }));
-    setValidate(false)
+    setValidate(false);
     if (errors === null) {
       history.push({ pathname: '/' });
       setValidate();

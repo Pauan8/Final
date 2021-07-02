@@ -8,8 +8,18 @@ const ButtonContainer = styled.div`
   flex-direction: column;
 
   &:after {
-    color: ${(props) => (props.validate ? props.errors !== null && props.errors ? 'red' : 'black': 'red')};
-    content: '${(props) => (props.errors !== null && props.errors ? props.errors.error : props.validate === false ? 'Not valid info, try again!' : '')}';
+    color: ${(props) =>
+      props.validate
+        ? props.errors !== null && props.errors
+          ? 'red'
+          : 'black'
+        : 'red'};
+    content: '${(props) =>
+      props.errors !== null && props.errors
+        ? props.errors.error
+        : props.validate === false
+        ? 'Not valid info, try again!'
+        : ''}';
   }
 `;
 
@@ -25,7 +35,7 @@ const Button = styled.button`
 `;
 
 export const SubmitButton = ({ btntext, handleClick, validate }) => {
-  const errors = useSelector(store => store.user.errors)
+  const errors = useSelector((store) => store.user.errors);
 
   return (
     <ButtonContainer errors={errors} validate={validate}>

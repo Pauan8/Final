@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React, { useState } from 'react';
 import styled from 'styled-components/macro';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import LaunchIcon from '@material-ui/icons/Launch';
 
 import { SaveGame } from './SaveGame';
@@ -21,7 +21,8 @@ const TitleContainer = styled.div`
   width: 250px;
   display: flex;
   justify-content: space-between;
-  height: 70px;`
+  height: 70px;
+`;
 
 const Title = styled.h1`
   font-size: 16px;
@@ -35,11 +36,12 @@ const GameLink = styled(Link)`
   margin-top: 15px;
   margin-left: 5px;
   display: inline-block;
-  color: #F29A2E;
-  
+  color: #f29a2e;
+
   &:hover {
-    color: #D94A56;
-  }`
+    color: #d94a56;
+  }
+`;
 
 const ImageContainer = styled.div`
   width: 250px;

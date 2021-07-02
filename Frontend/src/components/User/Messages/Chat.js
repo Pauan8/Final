@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components/macro';
 import EmailIcon from '@material-ui/icons/Email';
 
-
 import user from 'reducers/user';
 import { ChatScreen } from './ChatScreen';
 import { SendMessage } from './SendMessage';
@@ -17,10 +16,10 @@ const Chat = styled.div`
 `;
 
 const Text = styled.p`
-    color: #f2d3ac;
-    font-size: 12px;
-    margin-left: 10px;`
-
+  color: #f2d3ac;
+  font-size: 12px;
+  margin-left: 10px;
+`;
 
 const Btn = styled.button`
   background: transparent;
@@ -38,21 +37,24 @@ const BtnText = styled.p`
   margin: 0;
 `;
 
-export const ChatWindow = ({ setVisibleLayer, visibleLayer, messageMode, setMessageMode }) => {
+export const ChatWindow = ({
+  setVisibleLayer,
+  visibleLayer,
+  messageMode,
+  setMessageMode,
+}) => {
   const dispatch = useDispatch();
   const profile = useSelector((store) => store.user.userInfo);
   const friend = profile.friends.find(
     (friend) => friend.username === profile.activeFriend
   );
   const [message, setMessage] = useState('');
-  
 
   const handleClick = () => {
     dispatch(user.actions.setActiveFriend(null));
     setMessageMode('messageList');
     setVisibleLayer('message');
-  }
-
+  };
 
   return (
     <>
@@ -61,9 +63,13 @@ export const ChatWindow = ({ setVisibleLayer, visibleLayer, messageMode, setMess
         <BtnText> Back to inbox</BtnText>
       </Btn>
       <Chat>
-        <ChatScreen visibleLayer={visibleLayer}  messageMode={messageMode} {...friend} />
+        <ChatScreen
+          visibleLayer={visibleLayer}
+          messageMode={messageMode}
+          {...friend}
+        />
         <Text type='Info'>You're chatting with {friend.username}</Text>
-            <SendMessage setMessage={setMessage} message={message} {...friend} />
+        <SendMessage setMessage={setMessage} message={message} {...friend} />
       </Chat>
     </>
   );

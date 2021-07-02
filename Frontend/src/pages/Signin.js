@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import styled from "styled-components/macro";
-import { useHistory, Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from 'react';
+import styled from 'styled-components/macro';
+import { useHistory, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { login } from "../reducers/user";
-import { TextInput } from "../components/Reusable/TextInput";
-import { PasswordInput } from "../components/LoginSignup/PasswordInput";
-import { SubmitButton } from "../components/LoginSignup/SubmitButton";
-import { Button } from "../components/Reusable/Button";
-import { regexArr } from "../data/regExValdate";
-import { ExitButton } from "../components/Reusable/ExitButton";
+import { login } from '../reducers/user';
+import { TextInput } from '../components/Reusable/TextInput';
+import { PasswordInput } from '../components/LoginSignup/PasswordInput';
+import { SubmitButton } from '../components/LoginSignup/SubmitButton';
+import { Button } from '../components/Reusable/Button';
+import { regexArr } from '../data/regExValdate';
+import { ExitButton } from '../components/Reusable/ExitButton';
 
 const Wrapper = styled.div`
   position: relative;
@@ -29,22 +29,22 @@ const Signin = () => {
   const [validate, setValidate] = useState();
   const errors = useSelector((store) => store.user.errors);
   const [value, setValue] = useState({
-    username: "",
-    password: "",
+    username: '',
+    password: '',
   });
   let validateString;
 
   const handleClick = () => {
     regexArr.map((item) => {
-      if (item.value === "password" || item.value === "username") {
+      if (item.value === 'password' || item.value === 'username') {
         if (item.regex.test(value[item.value])) {
-          validateString += "true";
+          validateString += 'true';
         } else {
-          validateString += "false";
+          validateString += 'false';
         }
       }
     });
-    if (!validateString.includes("false")) {
+    if (!validateString.includes('false')) {
       setValidate(false);
     } else {
       setValidate(true);
@@ -53,9 +53,9 @@ const Signin = () => {
 
   if (validate) {
     dispatch(login(value.username, value.password));
-    setValidate(false)
+    setValidate(false);
     if (errors === null) {
-      history.push("/");
+      history.push('/');
     }
   }
 
@@ -67,19 +67,19 @@ const Signin = () => {
     <>
       <ExitButton />
       <Wrapper>
-        {!localStorage.getItem("token") ? (
+        {!localStorage.getItem('token') ? (
           <>
             <Title>Login</Title>
             <TextInput
-              title="username"
-              helptext="Enter your Username"
+              title='username'
+              helptext='Enter your Username'
               value={value}
               setValue={setValue}
               regexp={regexArr[0].regex}
             />
-            <PasswordInput type="Login" value={value} setValue={setValue} />
+            <PasswordInput type='Login' value={value} setValue={setValue} />
             <SubmitButton
-              btntext="Login"
+              btntext='Login'
               handleClick={handleClick}
               validate={validate}
             />
@@ -87,10 +87,10 @@ const Signin = () => {
         ) : (
           <Wrapper>
             <Title>Already logged in</Title>
-            <Button text="back" handleClick={onBackClick} />
+            <Button text='back' handleClick={onBackClick} />
           </Wrapper>
         )}
-        <Link to="/signup"> No account? Click here to Sign Up!</Link>
+        <Link to='/signup'> No account? Click here to Sign Up!</Link>
       </Wrapper>
     </>
   );

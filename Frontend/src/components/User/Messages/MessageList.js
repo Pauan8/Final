@@ -74,7 +74,10 @@ export const MessageList = ({ setMessageMode, setVisibleLayer }) => {
       <Title>Messages</Title>
       {filteredFriends &&
         filteredFriends.map((friend) => (
-          <MessageDisplay key={friend.user_id} onClick={() => handleClick(friend)}>
+          <MessageDisplay
+            key={friend.user_id}
+            onClick={() => handleClick(friend)}
+          >
             <UserContainer>
               {friend.avatar ? (
                 <Image src={require(`../../../assets/${friend.avatar}`)} />

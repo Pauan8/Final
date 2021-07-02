@@ -5,7 +5,10 @@ import styled from 'styled-components/macro';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-import user, { answerFriendRequest, handleFriend } from '../../../reducers/user';
+import user, {
+  answerFriendRequest,
+  handleFriend,
+} from '../../../reducers/user';
 import { TransparentBtn } from '../../../components/Reusable/TransparentBtn';
 
 const Wrapper = styled.div`
@@ -104,7 +107,8 @@ const FriendLink = styled(Link)`
 `;
 
 const EmptyState = styled.div`
-  margin: 50px 0;`
+  margin: 50px 0;
+`;
 
 export const FriendsList = ({
   friends,
@@ -147,9 +151,7 @@ export const FriendsList = ({
         <>
           <Text>{friend.username}</Text>
           <TransparentBtn
-            handleClick={() =>
-              dispatch(handleFriend(friend.user_id, 'remove'))
-            }
+            handleClick={() => dispatch(handleFriend(friend.user_id, 'remove'))}
             fontSize='30px'
             color='#F2811D'
             text='✗'

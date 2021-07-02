@@ -28,7 +28,7 @@ let typeArr = [];
 export const SaveGame = ({ name, id, setFlip, like, setLike }) => {
   const dispatch = useDispatch();
   const lister = useSelector((store) => store.user.userInfo.lists);
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
 
   const [values, setValues] = useState({
     favourites: false,

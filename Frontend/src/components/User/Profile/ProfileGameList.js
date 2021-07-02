@@ -110,7 +110,7 @@ const Button = styled.button`
   margin-bottom: -2px;
 `;
 
-export const ProfileGameList = ({mode}) => {
+export const ProfileGameList = ({ mode }) => {
   const user = useSelector((store) => store.user.userInfo);
   const [active, setActive] = useState('favourites');
   const [clicked, setClicked] = useState(false);
@@ -163,21 +163,28 @@ export const ProfileGameList = ({mode}) => {
           name='favourites'
           onClick={() => handleClick('favourites')}
         >
-         <span role='img' aria-label='emoji'>💗</span> 
+          <span role='img' aria-label='emoji'>
+            💗
+          </span>
         </Button>
         <Button
           active={active}
           name='wishlist'
           onClick={() => handleClick('wishlist')}
         >
-          <span role='img' aria-label='emoji'>💎</span>
+          <span role='img' aria-label='emoji'>
+            💎
+          </span>
         </Button>
         <Button
           active={active}
           name='ownedgames'
           onClick={() => handleClick('ownedgames')}
         >
-         <span role='img' aria-label='emoji'> ✅</span>
+          <span role='img' aria-label='emoji'>
+            {' '}
+            ✅
+          </span>
         </Button>
       </ButtonContainer>
       <GameList active={active} name='favourites'>

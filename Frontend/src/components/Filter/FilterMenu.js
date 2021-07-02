@@ -93,7 +93,6 @@ export const FilterMenu = ({ isNew, type, mode }) => {
 
   let filterArr = [];
   const handleFilters = (type, arr) => {
-    console.log(type, arr.length);
     if (type && arr[0].value.length > 1) {
       filterArr.push(
         { [arr[0].name[0]]: arr[0].value[0] },

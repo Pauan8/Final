@@ -27,7 +27,10 @@ export const Select = ({ arr, value, handleChange, title }) => {
         {arr.map((option) => (
           <MenuItem key={option.name} value={option.name}>
             {title === 'avatar' ? (
-              <img src={require(`../../assets/avatar/${option.name}`)} alt='user avatar'/>
+              <img
+                src={require(`../../assets/avatar/${option.name}`)}
+                alt='user avatar'
+              />
             ) : (
               option.name
             )}

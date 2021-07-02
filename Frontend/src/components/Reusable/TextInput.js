@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
-import { 
+import {
   makeStyles,
   OutlinedInput,
   InputLabel,
   FormControl,
-  FormHelperText 
- } from '@material-ui/core';
+  FormHelperText,
+} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   margin: {
@@ -24,7 +24,7 @@ export const TextInput = ({ title, setValue, value, regexp }) => {
 
   const handleChange = (e) => {
     const newValue = e.target.value;
-    if ((title === 'e_mail' && !regexp.test(newValue))) {
+    if (title === 'e_mail' && !regexp.test(newValue)) {
       setErrorText('Enter a valid e-mail');
       setError(true);
     } else if (!regexp.test(newValue)) {

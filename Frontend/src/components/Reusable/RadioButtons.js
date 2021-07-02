@@ -1,12 +1,12 @@
 import React from 'react';
-import { 
+import {
   makeStyles,
   Radio,
   RadioGroup,
   FormControlLabel,
   FormControl,
-  FormLabel 
- } from '@material-ui/core';
+  FormLabel,
+} from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
   checkboxLabel: {
