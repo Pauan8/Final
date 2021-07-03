@@ -80,7 +80,7 @@ export const MessageList = ({ setMessageMode, setVisibleLayer }) => {
           >
             <UserContainer>
               {friend.avatar ? (
-                <Image src={require(`../../../assets/${friend.avatar}`)} />
+                <Image src={require(`../../../assets/avatar/${friend.avatar}`)} />
               ) : (
                 <AccountCircleIcon style={{ fontSize: '40px' }} />
               )}

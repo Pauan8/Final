@@ -1,3 +1,20 @@
+# Project
+
+## Description
+
+## Tech & Tools
+
+<span>Tech: </span>
+<ul>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+<span>Tools: </span>
+
 # Live
 
 ### frontend:
@@ -35,11 +52,11 @@ https://boarders-final-project.herokuapp.com/
 
 # - Account - 
 
-<!-- <div>
+<div>
   <br>
     <div>
         <h2>Sign in/Sign up</h2>
-        <img src="./Frontend/src/assets/Screenshots/homescreen.png" />
+        <img src="./Frontend/src/assets/Screenshots/signupin.png" />
     </div>
       <br>
       <div>
@@ -47,7 +64,7 @@ https://boarders-final-project.herokuapp.com/
         <img src="./Frontend/src/assets/Screenshots/profileandgames.png" />
     </div>
       <br>
-    <div>
+<!--     <div>
         <h2>Friends</h2>
         <img src="./Frontend/src/assets/Screenshots/addgame.png" />
     </div>
@@ -55,14 +72,14 @@ https://boarders-final-project.herokuapp.com/
     <div>
         <h2>Messages</h2>
         <img src="./Frontend/src/assets/Screenshots/addgame.png" />
-    </div>
+    </div> -->
     <br>
         <div>
         <h2>Edit Profile</h2>
         <img src="./Frontend/src/assets/Screenshots/editprofile.png" />
     </div>
       <br>
-</div> -->
+</div>
 
 
 
