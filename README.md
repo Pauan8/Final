@@ -14,11 +14,11 @@ https://boarders-final-project.herokuapp.com/
 <div>
     <div>
         <h4>Home</h4>
-        <img src="../Frontend/src/Screenshots/homescreen.png" />
+        <img src="./Frontend/src/assets/Screenshots/homescreen.png" />
     </div>
       <div>
         <h4>Home</h4>
-        <img src="../Frontend/src/Screenshots/.png" />
+        <img src="./Frontend/src/assets/Screenshots/.png" />
     </div>
 </div>
 
