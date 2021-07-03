@@ -4,7 +4,7 @@
 
 ## Tech & Tools
 
-<span>Tech: </span>
+### Tech: 
 <ul>
     <li></li>
     <li></li>
@@ -13,7 +13,8 @@
     <li></li>
     <li></li>
 </ul>
-<span>Tools: </span>
+
+### Tools
 
 # Live
 

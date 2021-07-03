@@ -353,13 +353,6 @@ router.post("/profile/:id/edit", async (req, res) => {
       $set: params,
     }, {new: true});
 
-    await User.updateMany({'friends.user_id': id}, {
-        $set: {
-            "friends.$.avatar": updateProfile.avatar,
-        }
-    }, {
-        multi: true
-    });
     res.json({
       name: updateProfile.name,
       surname: updateProfile.surname,
