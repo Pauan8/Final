@@ -16,7 +16,6 @@ mongoose.connect(mongoUrl, {
 });
 mongoose.Promise = Promise;
 
-
 const authenticateUser = async (req, res, next) => {
   try {
     const currentUser = await User.findOne({
@@ -134,18 +133,28 @@ router.post("/profile/:id/addFriend/:user_id", async (req, res) => {
     });
     if (exists.length === 0) {
       const friendToInvite = await User.findById(user_id);
-      const user = await User.findByIdAndUpdate( id, {
+      const user = await User.findByIdAndUpdate(id, {
         $push: {
-          friends: {user_id: friendToInvite._id, username: friendToInvite.username, avatar: friendToInvite.avatar, stat: status, state: 'sender'},
+          friends: {
+            user_id: friendToInvite._id,
+            username: friendToInvite.username,
+            avatar: friendToInvite.avatar,
+            stat: status,
+            state: "sender",
+          },
         },
       });
-      await User.findByIdAndUpdate(
-        user_id,
-        {
-          $push: {
-            friends: {user_id: id, username: user.username, avatar: user.avatar, stat: status, state: 'reciever'},
+      await User.findByIdAndUpdate(user_id, {
+        $push: {
+          friends: {
+            user_id: id,
+            username: user.username,
+            avatar: user.avatar,
+            stat: status,
+            state: "reciever",
           },
-        });
+        },
+      });
       res.json({
         friends: user.friends,
         success: true,
@@ -160,17 +169,17 @@ router.post("/profile/:id/addFriend/:user_id", async (req, res) => {
 router.post("/profile/:id/updateFriend/:user_id", authenticateUser);
 router.post("/profile/:id/updateFriend/:user_id", async (req, res) => {
   const { id, user_id } = req.params;
-  const {status} = req.query;
+  const { status } = req.query;
 
   try {
     let user;
     if (status === "2") {
       user = await User.findByIdAndUpdate(
         id,
-        { $pull: { friends: {user_id: user_id }} },
+        { $pull: { friends: { user_id: user_id } } },
         { new: true }
       );
-    } else { 
+    } else {
       user = await User.findOneAndUpdate(
         { _id: id, "friends.user_id": user_id },
         { $set: { "friends.$.stat": status } },
@@ -180,7 +189,7 @@ router.post("/profile/:id/updateFriend/:user_id", async (req, res) => {
     await User.findOneAndUpdate(
       { _id: user_id, "friends.user_id": id },
       { $set: { "friends.$.stat": status } }
-    );  
+    );
 
     res.json({
       friends: user.friends,
@@ -194,11 +203,10 @@ router.post("/profile/:id/updateFriend/:user_id", async (req, res) => {
 
 router.post("/profile/:id/message/:username", authenticateUser);
 router.post("/profile/:id/message/:username", async (req, res) => {
-  const { id,  username } = req.params;
-
+  const { id, username } = req.params;
 
   try {
-    const userAsSender = await User.findById(id)
+    const userAsSender = await User.findById(id);
     const user = await User.findOneAndUpdate(
       { _id: id, "friends.username": username },
       {
@@ -219,7 +227,7 @@ router.post("/profile/:id/message/:username", async (req, res) => {
           "friends.$.messages": {
             message: req.body.message,
             sender: userAsSender.username,
-            reciever: username
+            reciever: username,
           },
         },
       }
@@ -236,30 +244,31 @@ router.post("/profile/:id/message/:username", async (req, res) => {
 
 router.get("/profile/:id/message/:username", authenticateUser);
 router.get("/profile/:id/message/:username", async (req, res) => {
-  const { id,  username } = req.params;
+  const { id, username } = req.params;
 
   try {
-    const user = await User.findById(id)
-    const friend= user.friends.filter(frien => frien.username === username)
+    const user = await User.findById(id);
+    const friend = user.friends.filter((frien) => frien.username === username);
 
     res.json({
       messages: friend[0].messages,
       success: true,
       loggedOut: false,
-    })
+    });
   } catch (err) {
     catchError(res, err, "Invalid user id");
   }
 });
 
-
 router.delete("/profile/:id/removeFriend/:user_id", authenticateUser);
 router.delete("/profile/:id/removeFriend/:user_id", async (req, res) => {
-  const {id, user_id} = req.params;
+  const { id, user_id } = req.params;
 
-  try{
-     const user = await User.findByIdAndUpdate(id, {$pull: { friends:{ user_id: user_id}}})
-     res.json({
+  try {
+    const user = await User.findByIdAndUpdate(id, {
+      $pull: { friends: { user_id: user_id } },
+    });
+    res.json({
       messages: user.friends,
       success: true,
       loggedOut: false,
@@ -338,6 +347,14 @@ router.post("/profile/:id/edit", async (req, res) => {
     let updateProfile = await User.findByIdAndUpdate(id, {
       $set: params,
     }).exec();
+
+    await User.updateMany({'friends.user_id': id}, {
+        $set: {
+            "friends.$.avatar": updateProfile.avatar,
+        }
+    }, {
+        "multi": true
+    });
     res.json({
       name: updateProfile.name,
       surname: updateProfile.surname,
