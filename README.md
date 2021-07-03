@@ -12,19 +12,24 @@ https://boarders-final-project.herokuapp.com/
 ## Boardgames
 
 <div>
+  <br>
     <div>
-        <h3>Home</h3>
+        <h2>Home</h2>
         <img src="./Frontend/src/assets/Screenshots/homescreen.png" />
     </div>
+      <br>
       <div>
-        <h3>Search & Filter</h3>
+        <h2>Search & Filter</h2>
         <img src="./Frontend/src/assets/Screenshots/searchandfilter.png" />
     </div>
+    <br>
         <div>
-        <h3>Add Game (user specific)</h3>
+        <h2>Add Game (user specific)</h2>
         <img src="./Frontend/src/assets/Screenshots/addgame.png" />
     </div>
 </div>
+<br>
+<br>
 
 ## Account
 
