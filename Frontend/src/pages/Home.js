@@ -37,14 +37,6 @@ const Title = styled.h2`
 const Home = () => {
   const dispatch = useDispatch();
 
-  const handleClick = () => {
-    fetch(`https://secure-escarpment-13722.herokuapp.com/users`,
-    {
-    method: 'DELETE'
-    })
-    .then(res => res.json())
-  }
-
   useEffect(() => {
     if(localStorage.getItem('token')){
      dispatch(fetchUser());
@@ -56,7 +48,6 @@ const Home = () => {
          <Header />
       <SearchMenu />
       <Sidebar />
-      <button style={{position: "relative", zIndex: "10"}} onClick={ handleClick}>delete</button>
       <Wrapper>
         <ListLink to='/GameList/order_by/popularity'>
           <Title> &#8640; Top Rated</Title>

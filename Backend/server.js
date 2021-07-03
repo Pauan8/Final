@@ -19,6 +19,5 @@ app.use((req, res, next) => {
 app.use('/', boardGameAtlas);
 
 app.listen(port, () => {
-  // eslint-disable-next-line
-  console.log(`Server running on http://localhost:${port}`);
+
 });
