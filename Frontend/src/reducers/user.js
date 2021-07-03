@@ -15,9 +15,10 @@ const RESET_STATE = {
   lists: null,
   friends: {
     username: null,
-    status: null,
+    stat: null,
     state: null,
-    messages: null
+    messages: null,
+    avatar: null
   }
 };
 
