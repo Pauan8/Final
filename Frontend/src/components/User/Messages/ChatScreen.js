@@ -94,7 +94,7 @@ export const ChatScreen = ({
               <Friend>
                 {avatar ? (
                   <FriendImg
-                    src={require(`../../../assets/${avatar}`)}
+                    src={require(`../../../assets/avatar/${avatar}`)}
                   ></FriendImg>
                 ) : (
                   <AccountCircleIcon style={{ fontSize: 50 }} />

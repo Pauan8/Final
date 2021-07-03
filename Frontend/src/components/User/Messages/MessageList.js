@@ -41,8 +41,8 @@ const Text = styled.p`
 `;
 
 const Image = styled.img`
-  height: 40px;
-  width: 40px;
+  height: 50px;
+  width: 50px;
 `;
 
 export const MessageList = ({ setMessageMode, setVisibleLayer }) => {
@@ -80,7 +80,7 @@ export const MessageList = ({ setMessageMode, setVisibleLayer }) => {
           >
             <UserContainer>
               {friend.avatar ? (
-                <Image src={require(`../../../assets/avatar/${friend.avatar}`)} />
+                    <Image src={require(`../../../assets/avatar/${friend.avatar}`)} />
               ) : (
                 <AccountCircleIcon style={{ fontSize: '40px' }} />
               )}
