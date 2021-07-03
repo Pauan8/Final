@@ -6,10 +6,12 @@ https://boarders-final.netlify.app/
 ### backend:
 https://boarders-final-project.herokuapp.com/
 
+<hr />
+
 
 # Media
 
-## Boardgames
+# - Boardgames -
 
 <div>
   <br>
@@ -31,25 +33,35 @@ https://boarders-final-project.herokuapp.com/
 <br>
 <br>
 
-## Account
+# - Account - 
 
 <!-- <div>
+  <br>
     <div>
-        <h3>Sign in/Sign up</h3>
+        <h2>Sign in/Sign up</h2>
         <img src="./Frontend/src/assets/Screenshots/homescreen.png" />
     </div>
+      <br>
       <div>
-        <h3>User gamelist</h3>
-        <img src="./Frontend/src/assets/Screenshots/searchandfilter.png" />
+        <h2>Profile and user gamelist</h2>
+        <img src="./Frontend/src/assets/Screenshots/profileandgames.png" />
     </div>
+      <br>
     <div>
-        <h3>Friends</h3>
+        <h2>Friends</h2>
         <img src="./Frontend/src/assets/Screenshots/addgame.png" />
     </div>
+      <br>
     <div>
-        <h3>Messages</h3>
+        <h2>Messages</h2>
         <img src="./Frontend/src/assets/Screenshots/addgame.png" />
     </div>
+    <br>
+        <div>
+        <h2>Edit Profile</h2>
+        <img src="./Frontend/src/assets/Screenshots/editprofile.png" />
+    </div>
+      <br>
 </div> -->
 
 

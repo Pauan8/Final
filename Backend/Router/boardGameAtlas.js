@@ -136,14 +136,14 @@ router.post("/profile/:id/addFriend/:user_id", async (req, res) => {
       const friendToInvite = await User.findById(user_id);
       const user = await User.findByIdAndUpdate( id, {
         $push: {
-          friends: {user_id: friendToInvite._id, username: friendToInvite.username, stat: status, state: 'sender'},
+          friends: {user_id: friendToInvite._id, username: friendToInvite.username, avatar: friendToInvite.avatar, stat: status, state: 'sender'},
         },
       });
       await User.findByIdAndUpdate(
         user_id,
         {
           $push: {
-            friends: {user_id: id, username: user.username, stat: status, state: 'reciever'},
+            friends: {user_id: id, username: user.username, avatar: user.avatar, stat: status, state: 'reciever'},
           },
         });
       res.json({
