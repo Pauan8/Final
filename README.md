@@ -10,10 +10,15 @@ https://boarders-final-project.herokuapp.com/
 # Media
 
 ## Boardgames
+
 <div>
     <div>
-        <h1> Start </h1>
-        
+        <h4>Home</h4>
+        <img src="../Frontend/src/Screenshots/homescreen.png" />
+    </div>
+      <div>
+        <h4>Home</h4>
+        <img src="../Frontend/src/Screenshots/.png" />
     </div>
 </div>
 
