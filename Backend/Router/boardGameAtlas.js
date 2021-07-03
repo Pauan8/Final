@@ -342,18 +342,23 @@ router.post("/profile/:id/edit", async (req, res) => {
   try {
     let params = {};
     for (let prop in req.body)
-      if (req.body[prop]) params[prop] = req.body[prop];
+    {
+      if (req.body[prop]) 
+      {
+        params[prop] = req.body[prop];
+      }
+    }
 
-    let updateProfile = await User.findByIdAndUpdate(id, {
+    const updateProfile = await User.findByIdAndUpdate(id, {
       $set: params,
-    }).exec();
+    }, {new: true});
 
     await User.updateMany({'friends.user_id': id}, {
         $set: {
             "friends.$.avatar": updateProfile.avatar,
         }
     }, {
-        "multi": true
+        multi: true
     });
     res.json({
       name: updateProfile.name,
