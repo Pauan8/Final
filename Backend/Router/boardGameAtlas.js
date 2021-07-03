@@ -359,6 +359,7 @@ router.post("/profile/:id/edit", async (req, res) => {
       avatar: updateProfile.avatar,
       e_mail: updateProfile.e_mail,
       age: updateProfile.age,
+      friends: updateProfile.friends,
       description: updateProfile.description,
       success: true,
       loggedOut: false,
