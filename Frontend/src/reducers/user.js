@@ -127,11 +127,11 @@ export const login = (username, password) => {
     fetches.profile
       .auth(username, password)
       .then((json) => {
-        if (json.user.accessToken) {
-          localStorage.setItem('token', json.user.accessToken);
-          localStorage.setItem('userID', json.user.userID);
+        if (json.accessToken) {
+          localStorage.setItem('token', json.accessToken);
+          localStorage.setItem('userID', json.userID);
           dispatch(user.actions.setErrors(null));
-          dispatch(user.actions.setUser(json.user));
+          dispatch(user.actions.setUser(json));
         } else {
           dispatch(user.actions.setErrors(json));
         }
