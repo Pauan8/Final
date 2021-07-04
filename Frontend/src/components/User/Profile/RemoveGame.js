@@ -35,7 +35,7 @@ export const RemoveGame = ({ type, id, clicked, setClicked }) => {
     <Wrapper>
       {id ? (
         <ButtonContainer>
-          <Button onMouseDown={handleClick} onMouseUp={() => setClicked(false)}>
+          <Button onMouseDown={handleClick} onMouseUp={() => setClicked(false)} onClick={handleClick}>
             {' '}
             {clicked ? (
               <DeleteForeverIcon />
