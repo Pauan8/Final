@@ -73,17 +73,7 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ username }).exec();
     if (user && bcrypt.compareSync(password, user.password)) {
       res.json({
-        userID: user._id,
-        accessToken: user.accessToken,
-        username: user.username,
-        name: user.name,
-        surname: user.surname,
-        avatar: user.avatar,
-        e_mail: user.e_mail,
-        lists: user.lists,
-        age: user.age,
-        description: user.description,
-        friends: user.friends,
+        user,
         success: true,
         loggedOut: false,
       });
@@ -101,18 +91,10 @@ router.get("/profile/:id", authenticateUser);
 router.get("/profile/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    let privateProfile = await User.findById(id).exec();
+    const user = await User.findById(id, {new:true})
+    const {accessToken, ...userProfile} = user;
     res.json({
-      userID: privateProfile._id,
-      username: privateProfile.username,
-      name: privateProfile.name,
-      surname: privateProfile.surname,
-      avatar: privateProfile.avatar,
-      e_mail: privateProfile.e_mail,
-      lists: privateProfile.lists,
-      age: privateProfile.age,
-      description: privateProfile.description,
-      friends: privateProfile.friends,
+      userProfile,
       success: true,
       loggedOut: false,
     });
@@ -352,7 +334,6 @@ router.post("/profile/:id/edit", async (req, res) => {
     const updateProfile = await User.findByIdAndUpdate(id, {
       $set: params,
     }, {new: true});
-
     await User.updateMany({'friends.user_id': id}, {
         $set: {
             "friends.$.avatar": updateProfile.avatar,
@@ -360,15 +341,10 @@ router.post("/profile/:id/edit", async (req, res) => {
     }, {
         multi: true
     });
+    
+    const {accessToken, ...returnProfile} = updateProfile;
     res.json({
-      name: updateProfile.name,
-      surname: updateProfile.surname,
-      avatar: updateProfile.avatar,
-      e_mail: updateProfile.e_mail,
-      age: updateProfile.age,
-      lists: updateProfile.lists,
-      friends: updateProfile.friends,
-      description: updateProfile.description,
+      returnProfile,
       success: true,
       loggedOut: false,
     });
