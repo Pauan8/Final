@@ -126,6 +126,7 @@ const ExpandButton = styled.button`
   border-right: none;
   display: ${(props) => (props.expand ? 'block' : 'none')};
   background: white;
+  cursor: pointer;
 
   @media (min-width: 768px) {
     display: block;

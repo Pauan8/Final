@@ -84,7 +84,8 @@ const Btn = styled.button`
   background: transparent;
   border: none;
   padding: none;
-
+  cursor: pointer; 
+  
   &:active,
   &:hover,
   &:focus {

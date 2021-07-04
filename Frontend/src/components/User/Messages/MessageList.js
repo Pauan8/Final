@@ -22,6 +22,7 @@ const MessageDisplay = styled.div`
   padding: 2px;
   margin: 10px 0;
   justify-content: space-between;
+  cursor: pointer;
 `;
 
 const Title = styled.h2`

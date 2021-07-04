@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/macro';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 import { generateGamesList } from '../../reducers/boardGames';
 import { GameCard } from './GameCard';
@@ -36,6 +38,7 @@ const ContainerOuter = styled.div`
 const Button = styled.button`
   background: transparent;
   border: none;
+  width: 20px;
   border-radius: 10px;
   height: 20%;
   align-self: center;
@@ -43,6 +46,7 @@ const Button = styled.button`
   text-shadow: 2px 2px lightgray;
   padding: 5px;
   margin: 3px 0;
+  cursor: pointer;
 
   &:hover {
     font-size: 1.1em;
@@ -88,11 +92,11 @@ export const Slideshow = ({ type, value }) => {
       for (let i = 0; i < data[value].length; i += slideNumber) {
         resultsRender.push(
           <ContainerOuter index={i} slideIndex={slideIndex} key={`${i}A`}>
-            <Button onClick={() => handleClick('left', slideNumber)}>◀</Button>
+            <Button onClick={() => handleClick('left', slideNumber)}><ArrowBackIosIcon /></Button>
             {data[value].slice(i, i + slideNumber).map((item) => (
               <GameCard key={item.id} {...item} />
             ))}
-            <Button onClick={() => handleClick('right', slideNumber)}>▶</Button>
+            <Button onClick={() => handleClick('right', slideNumber)}><ArrowForwardIosIcon /></Button>
           </ContainerOuter>
         );
       }

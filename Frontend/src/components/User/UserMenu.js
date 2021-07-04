@@ -18,6 +18,17 @@ const Wrapper = styled.div`
 
 const MenuLink = styled(Link)`
   text-decoration: none;
+  color: #a65151;
+
+  &:visited{
+    color: #a65151;
+  }
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: #f2811d;
+  }
 `;
 
 const IconContainer = styled.div`
@@ -25,6 +36,7 @@ const IconContainer = styled.div`
   z-index: 8;
   right: 5px;
   top: 0;
+  cursor: pointer;
 
   @media (min-width: 768px) {
     right: 50px;
@@ -36,6 +48,14 @@ const MenuItem = styled.h3`
   margin-top: 100px;
   display: flex;
   justify-content: center;
+  cursor: pointer;
+  color: #a65151;
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: #f2811d;
+  }
 `;
 
 const Expanded = styled.div`

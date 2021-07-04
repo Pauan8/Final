@@ -36,7 +36,7 @@ export const Footer = () => {
   return (
     <Wrapper>
       <BgImage />
-      <Text>&copy; Pauline Andersson</Text>
+      <Text>&copy; Pauline Andersson 2021</Text>
     </Wrapper>
   );
 };

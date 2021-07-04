@@ -16,11 +16,19 @@ const ButtonContainer = styled.div`
   width: 30px;
   height: 30px;
   margin: 5px;
+
 `;
 const Button = styled.button`
   background: transparent;
   border: none;
   cursor: pointer;
+  color: #a65151;
+
+  &:hover,
+  &:active,
+  &:focus {
+  color: black;
+  }
 `;
 
 export const RemoveGame = ({ type, id, clicked, setClicked }) => {
@@ -28,20 +36,14 @@ export const RemoveGame = ({ type, id, clicked, setClicked }) => {
 
   const handleClick = () => {
     dispatch(removeGame(type, id));
-    setClicked(true);
   };
 
   return (
     <Wrapper>
       {id ? (
-        <ButtonContainer>
-          <Button onMouseDown={handleClick} onMouseUp={() => setClicked(false)} onClick={handleClick}>
-            {' '}
-            {clicked ? (
-              <DeleteForeverIcon />
-            ) : (
-              <DeleteForeverOutlinedIcon />
-            )}{' '}
+        <ButtonContainer >
+          <Button onClick={handleClick}>
+            <DeleteForeverIcon />
           </Button>
         </ButtonContainer>
       ) : (
