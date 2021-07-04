@@ -92,9 +92,8 @@ router.get("/profile/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const user = await User.findById(id, {new:true})
-    const {accessToken, ...userProfile} = user;
     res.json({
-      userProfile,
+      user,
       success: true,
       loggedOut: false,
     });
@@ -342,9 +341,8 @@ router.post("/profile/:id/edit", async (req, res) => {
         multi: true
     });
     
-    const {accessToken, ...returnProfile} = updateProfile;
     res.json({
-      returnProfile,
+      updateProfile,
       success: true,
       loggedOut: false,
     });
@@ -361,13 +359,7 @@ router.get("/user/:username", async (req, res) => {
       { accessToken: 0, password: 0 }
     ).exec();
     res.json({
-      userID: userProfile._id,
-      username: userProfile.username,
-      name: userProfile.name,
-      surname: userProfile.surname,
-      avatar: userProfile.avatar,
-      e_mail: userProfile.e_mail,
-      friends: userProfile.friends,
+      userProfile,
       loggedOut: false,
       success: true,
     });
@@ -388,12 +380,7 @@ router.post("/users", async (req, res) => {
       e_mail,
     }).save();
     res.json({
-      userID: newUser._id,
-      username: newUser.username,
-      accessToken: newUser.accessToken,
-      name: newUser.name,
-      surname: newUser.surname,
-      e_mail: newUser.e_mail,
+      newUser,
       success: true,
     });
   } catch (err) {
