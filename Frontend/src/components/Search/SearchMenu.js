@@ -92,7 +92,7 @@ const ExpandContainer = styled.div`
 const Expand = styled.div`
   position: relative;
   display: flex;
-
+  overflow-y: auto;
   background: white;
   flex-direction: column;
   align-items: center;
