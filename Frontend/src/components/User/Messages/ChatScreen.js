@@ -73,14 +73,14 @@ export const ChatScreen = ({
     clearInterval(update);
     dispatch(fetchMessages(username));
     setMsgs(messages);
-  }, [setMsgs, dispatch, messages, username]);
+  }, [setMsgs, dispatch, messages, username, update]);
 
   useEffect(() => {
     update = setInterval(fetchMessageList, 1000);
     if (visibleLayer !== 'message' || messageMode !== 'chat') {
       return clearInterval(update);
     }
-  }, [fetchMessageList]);
+  }, [fetchMessageList, update]);
 
   if (sortMessages) {
     return (

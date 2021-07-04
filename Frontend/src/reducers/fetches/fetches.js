@@ -164,6 +164,7 @@ export const fetches = {
       }
     },
     game: (id) => {
+      console.log(id)
       return fetch(
         `https://api.boardgameatlas.com/api/search?limit=20&pretty=true&client_id=39WI5Y3mBx&ids=${id}`
       ).then((response) => response.json());

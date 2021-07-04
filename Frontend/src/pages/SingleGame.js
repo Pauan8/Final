@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -8,6 +8,7 @@ import categories from '../data/categories.json'
 import { fetchSingleGame } from '../reducers/boardGames'
 import { Menu } from '../components/Menu'
 import { SearchMenu } from 'components/Search/SearchMenu'
+import { Button } from 'components/Reusable/Button'
 
 const Wrapper = styled.div`
 position: relative;
@@ -34,13 +35,18 @@ const Bold = styled.span `
 font-weight: 600;`
 
 const Text = styled.p`
-width: 300px;`
+width: 300px;
+
+@media (min-width: 1024px){
+  width: 500px;
+}`
 
 const SingleGame = () => {
   const arr = [];
   const dispatch = useDispatch();
+  const history = useHistory();
   const { Id } = useParams()
-  const game= useSelector((store) => store.boardGames.game)
+  const game = useSelector((store) => store.boardGames.game)
 
   useEffect(() => {
       dispatch(fetchSingleGame(Id))
@@ -92,6 +98,8 @@ const SingleGame = () => {
     <Wrapper>
        <Menu />
        <SearchMenu />
+       {game ?
+       <>
       <Title>{game.name}</Title>
       <ImageContainer>
         <Image src={game.image_url} />
@@ -103,6 +111,9 @@ const SingleGame = () => {
       {renderCategoriesMechanics("Mechanics", game.mechanics, mechanics)}
       {renderGameInfo("Primary publisher", game.primary_publisher, null)}
       {renderGameInfo("Description", game.description_preview, null)}
+      </>
+      :<>No game found</>}
+    <Button text="Back" handleClick={() => history.goBack()} />
     </Wrapper>
   )
 }

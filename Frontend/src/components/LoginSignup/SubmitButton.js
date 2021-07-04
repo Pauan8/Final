@@ -9,17 +9,17 @@ const ButtonContainer = styled.div`
 
   &:after {
     color: ${(props) =>
-      props.errors !== null && props.errors
+      props.validate === false
         ? 'red'
-          : props.validate !== false
-          ? 'black'
-        : 'red'};
+        : props.errors !== null && props.errors
+        ? 'red'
+        : 'black'};
     content: '${(props) =>
-        props.errors !== null && props.errors
-          ? props.errors.error
-          : props.validate !== false 
-          ? ''
-        : 'Not valid info, try again!'}';
+      props.validate === false
+        ? 'Not valid info, try again!'
+        : props.errors !== null && props.errors
+        ? props.errors.error
+        : ''}';
   }
 `;
 
@@ -40,7 +40,7 @@ export const SubmitButton = ({ btntext, handleClick, validate }) => {
   return (
     <ButtonContainer errors={errors} validate={validate}>
       <Button onClick={handleClick} validate={validate}>
-        {btntext}
+        {errors === null && validate === true ? ' Success! >HOME<' : btntext}
       </Button>
     </ButtonContainer>
   );
