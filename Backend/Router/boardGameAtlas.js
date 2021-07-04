@@ -101,7 +101,7 @@ router.get("/profile/:id", authenticateUser);
 router.get("/profile/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const privateProfile = await User.findById(id,{new:true});
+    const privateProfile = await User.findById(id).exec();
     res.json({
       userID: privateProfile._id,
       username: privateProfile.username,

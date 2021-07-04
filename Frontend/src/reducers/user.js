@@ -92,7 +92,7 @@ export const signUp = ({ username, password, name, surname, e_mail }) => {
           localStorage.setItem('userID', data.userID);
           localStorage.setItem('token', data.accessToken);
           dispatch(user.actions.setErrors(null));
-          dispatch(user.actions.setUser(data.user));
+          dispatch(user.actions.setUser(data));
         } else {
           dispatch(user.actions.setErrors(data));
         }
