@@ -73,7 +73,17 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ username }).exec();
     if (user && bcrypt.compareSync(password, user.password)) {
       res.json({
-        user,
+        userID: user._id,
+        accessToken: user.accessToken,
+        username: user.username,
+        name: user.name,
+        surname: user.surname,
+        avatar: user.avatar,
+        e_mail: user.e_mail,
+        lists: user.lists,
+        age: user.age,
+        description: user.description,
+        friends: user.friends,
         success: true,
         loggedOut: false,
       });
@@ -91,9 +101,18 @@ router.get("/profile/:id", authenticateUser);
 router.get("/profile/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const user = await User.findById(id, {new:true})
+    const privateProfile = await User.findById(id,{new:true});
     res.json({
-      user,
+      userID: privateProfile._id,
+      username: privateProfile.username,
+      name: privateProfile.name,
+      surname: privateProfile.surname,
+      avatar: privateProfile.avatar,
+      e_mail: privateProfile.e_mail,
+      lists: privateProfile.lists,
+      age: privateProfile.age,
+      description: privateProfile.description,
+      friends: privateProfile.friends,
       success: true,
       loggedOut: false,
     });
@@ -333,6 +352,7 @@ router.post("/profile/:id/edit", async (req, res) => {
     const updateProfile = await User.findByIdAndUpdate(id, {
       $set: params,
     }, {new: true});
+
     await User.updateMany({'friends.user_id': id}, {
         $set: {
             "friends.$.avatar": updateProfile.avatar,
@@ -340,9 +360,16 @@ router.post("/profile/:id/edit", async (req, res) => {
     }, {
         multi: true
     });
-    
     res.json({
-      updateProfile,
+      username: updateProfile.username,
+      name: updateProfile.name,
+      surname: updateProfile.surname,
+      avatar: updateProfile.avatar,
+      e_mail: updateProfile.e_mail,
+      age: updateProfile.age,
+      lists: updateProfile.lists,
+      friends: updateProfile.friends,
+      description: updateProfile.description,
       success: true,
       loggedOut: false,
     });
@@ -359,7 +386,13 @@ router.get("/user/:username", async (req, res) => {
       { accessToken: 0, password: 0 }
     ).exec();
     res.json({
-      userProfile,
+      userID: userProfile._id,
+      username: userProfile.username,
+      name: userProfile.name,
+      surname: userProfile.surname,
+      avatar: userProfile.avatar,
+      e_mail: userProfile.e_mail,
+      friends: userProfile.friends,
       loggedOut: false,
       success: true,
     });
@@ -380,7 +413,12 @@ router.post("/users", async (req, res) => {
       e_mail,
     }).save();
     res.json({
-      newUser,
+      userID: newUser._id,
+      username: newUser.username,
+      accessToken: newUser.accessToken,
+      name: newUser.name,
+      surname: newUser.surname,
+      e_mail: newUser.e_mail,
       success: true,
     });
   } catch (err) {

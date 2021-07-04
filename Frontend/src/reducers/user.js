@@ -26,7 +26,7 @@ const user = createSlice({
   name: 'user',
   initialState: {
   userInfo: {
-      _id: null,
+      userID: null,
       avatar: null,
       name: null,
       surname: null,
@@ -89,8 +89,8 @@ export const signUp = ({ username, password, name, surname, e_mail }) => {
       .then((data) => {
         dispatch(ui.actions.setLoading(false));
         if (data.success) {
-          localStorage.setItem('userID', data.user._id);
-          localStorage.setItem('token', data.user.accessToken);
+          localStorage.setItem('userID', data.userID);
+          localStorage.setItem('token', data.accessToken);
           dispatch(user.actions.setErrors(null));
           dispatch(user.actions.setUser(data.user));
         } else {
@@ -107,10 +107,10 @@ export const fetchUser = () => {
     fetches.profile
       .user(dispatch)
       .then((data) => {
-        console.log(data)
         dispatch(ui.actions.setLoading(false));
         if (data.success) {
-          dispatch(user.actions.setUser(data.user));
+          dispatch(user.actions.setUser(data));
+          dispatch(user.actions.setGameLists(data.lists));
           dispatch(user.actions.setErrors(null));
         } else {
           dispatch(user.actions.setErrors(data));
@@ -128,9 +128,8 @@ export const login = (username, password) => {
       .auth(username, password)
       .then((json) => {
         if (json.user.accessToken) {
-          console.log(json.user._id)
           localStorage.setItem('token', json.user.accessToken);
-          localStorage.setItem('userID', json.user._id);
+          localStorage.setItem('userID', json.user.userID);
           dispatch(user.actions.setErrors(null));
           dispatch(user.actions.setUser(json.user));
         } else {
@@ -156,7 +155,7 @@ export const editProfile = (
       .then((data) => {
         dispatch(ui.actions.setLoading(false));
         if (data.success) {
-          dispatch(user.actions.updateUser(data.user));
+          dispatch(user.actions.updateUser(data));
           dispatch(user.actions.setErrors(null));
         } else {
           dispatch(user.actions.setErrors(data));
