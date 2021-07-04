@@ -152,12 +152,12 @@ export const fetches = {
       }
       if (type === "search") {
         return fetch(
-          `https://api.boardgameatlas.com/api/search?limit=21&pretty=true&client_id=39WI5Y3mBx${getState().boardGames.searchString}
-          ${handleFilter()}&skip=${(page - 1) * 21}`
+          `https://api.boardgameatlas.com/api/search?limit=21&pretty=true&client_id=39WI5Y3mBx${getState().boardGames.searchString +
+          handleFilter()}&skip=${(page - 1) * 21}`
         ).then((response) => response.json());
       } else {
         return fetch(
-          `https://api.boardgameatlas.com/api/search?limit=21&pretty=true&client_id=39WI5Y3mBx&${type}=${mode}${handleFilter()}&skip=${
+          `https://api.boardgameatlas.com/api/search?limit=21&pretty=true&client_id=39WI5Y3mBx&${type}=${mode + handleFilter()}&skip=${
             (page - 1) * 21
           }`
         ).then((response) => response.json());
