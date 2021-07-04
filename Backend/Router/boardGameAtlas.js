@@ -269,7 +269,7 @@ router.delete("/profile/:id/removeFriend/:user_id", async (req, res) => {
       $pull: { friends: { user_id: user_id } },
     });
     res.json({
-      messages: user.friends,
+      friends: user.friends,
       success: true,
       loggedOut: false,
     });

@@ -92,7 +92,7 @@ const Btn = styled.button`
   }
 `;
 
-const Img = styled.image`
+const Img = styled.img`
   width: 50px;
   height: 50px;
 `;
