@@ -42,6 +42,7 @@ export const Search = ({ mode }) => {
         }}
       />
       <Link
+        onClick={() => setUserInput('')}
         to={
           mode === 'games'
             ? `/GameList/name/${userInput}`
