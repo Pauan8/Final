@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import {  useDispatch } from 'react-redux';
 
 import user, { signUp, login } from '../../reducers/user';
 import { regexArr } from '../../data/regExValdate';
 import { SubmitButton } from './SubmitButton';
 
 export const Validation = ({ mode, value }) => {
-  const errors = useSelector((store) => store.user.errors);
   const [validate, setValidate] = useState();
-  const history = useHistory();
   const dispatch = useDispatch();
   let valid;
 
@@ -46,9 +43,6 @@ export const Validation = ({ mode, value }) => {
       mode === 'login'
         ? dispatch(login(value.username, value.password))
         : dispatch(signUp({ ...value }));
-      if (errors === null) {
-        history.push('/');
-      }
     }
   };
 

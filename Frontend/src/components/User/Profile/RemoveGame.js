@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components/macro';
-import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 import { removeGame } from '../../../reducers/user';

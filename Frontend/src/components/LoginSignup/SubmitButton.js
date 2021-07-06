@@ -1,11 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import styled from 'styled-components/macro';
 
 const ButtonContainer = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   &:after {
     color: ${(props) =>
@@ -36,12 +39,14 @@ const Button = styled.button`
 
 export const SubmitButton = ({ btntext, handleClick, validate }) => {
   const errors = useSelector((store) => store.user.errors);
+  const history = useHistory();
 
   return (
+    <>{errors === null && validate === true ? history.push('/') : 
     <ButtonContainer errors={errors} validate={validate}>
       <Button onClick={handleClick} validate={validate}>
-        {errors === null && validate === true ? ' Success! >HOME<' : btntext}
+        {btntext}
       </Button>
-    </ButtonContainer>
+    </ButtonContainer>}</>
   );
 };
